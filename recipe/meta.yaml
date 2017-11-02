@@ -1,6 +1,6 @@
 {% set name = "openmp" %}
-{% set version = "4.0.0" %}
-{% set sha256 = "db55d85a7bb289804dc42fc5c8e35ca24dfc3885782261b675a194fd7e206e26" %}
+{% set version = "5.0.0" %}
+{% set sha256 = "c0ef081b05e0725a04e8711d9ecea2e90d6c3fbb1622845336d3d095d0a3f7c5" %}
 
 package:
   name: {{ name|lower }}
@@ -26,8 +26,8 @@ requirements:
     - cmake
     - perl  ==5.22.2.1
     - python  # [win]
-  run:
-    - clangdev =={{ version }}
+  # run:
+  #  - clangdev =={{ version }}
 
 test:
   requires:
