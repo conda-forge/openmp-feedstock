@@ -15,6 +15,7 @@ config=$(cat <<CONDARC
 channels:
  - conda-forge
  - defaults
+ - numba
 
 conda-build:
  root-dir: /feedstock_root/build_artefacts
