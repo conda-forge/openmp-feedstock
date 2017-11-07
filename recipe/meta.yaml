@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 0
+  number: 1
   features:
     - vc9   # [win and py27]
     - vc14  # [win and py35]
@@ -22,12 +22,12 @@ build:
 requirements:
   build:
     - toolchain
-    - llvmdev =={{ version }}
+    - llvmdev {{ version }}|{{ version }}.*
     - cmake
     - perl  ==5.22.2.1
     - python  # [win]
   run:
-    - clangdev =={{ version }}
+    - clangdev {{ version }}|{{ version }}.*
 
 test:
   requires:
@@ -57,3 +57,4 @@ extra:
     - inducer
     - jakirkham
     - yesimon
+    - isuruf
