@@ -33,6 +33,7 @@ requirements:
 test:
   requires:
     - python {{ environ['PY_VER'] + '*' }}  # [win]
+    - clangdev
   commands:
     - if not exist %LIBRARY_BIN%\\libomp.dll exit 1   # [win]
     - test -f $PREFIX/lib/libomp.so                   # [linux]
