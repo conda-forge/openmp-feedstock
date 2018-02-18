@@ -26,6 +26,7 @@ requirements:
     - cmake
     - perl  ==5.22.2.1
     - python  # [win]
+    - ninja  # [win]
   run:
     - llvm-meta {{ version }}|{{ version }}.*
 
