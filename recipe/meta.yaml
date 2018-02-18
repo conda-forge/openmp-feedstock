@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 0
+  number: 1
   features:
     - vc9   # [win and py27]
     - vc14  # [win and py35]
@@ -27,7 +27,7 @@ requirements:
     - perl  ==5.22.2.1
     - python  # [win]
   run:
-    - clangdev {{ version }}|{{ version }}.*
+    - llvm-meta {{ version }}|{{ version }}.*
 
 test:
   requires:
