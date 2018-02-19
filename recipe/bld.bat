@@ -1,7 +1,7 @@
 mkdir build
 cd build
 
-cmake -G "NMake Makefiles" ^
+cmake -G "Ninja" ^
     -DCMAKE_BUILD_TYPE="Release" ^
     -DCMAKE_PREFIX_PATH=%LIBRARY_PREFIX% ^
     -DCMAKE_INSTALL_PREFIX:PATH=%LIBRARY_PREFIX% ^
@@ -9,10 +9,7 @@ cmake -G "NMake Makefiles" ^
 
 if errorlevel 1 exit 1
 
-nmake
-if errorlevel 1 exit 1
-
-nmake install
+cmake --build . --target install
 if errorlevel 1 exit 1
 
 if not exist "%LIBRARY_PREFIX%\lib\clang\%PKG_VERSION%\include\" mkdir "%LIBRARY_PREFIX%\lib\clang\%PKG_VERSION%\include"
