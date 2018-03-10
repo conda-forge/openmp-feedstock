@@ -1,6 +1,6 @@
 {% set name = "openmp" %}
-{% set version = "5.0.0" %}
-{% set sha256 = "c0ef081b05e0725a04e8711d9ecea2e90d6c3fbb1622845336d3d095d0a3f7c5" %}
+{% set version = "6.0.0" %}
+{% set sha256 = "7c0e050d5f7da3b057579fb3ea79ed7dc657c765011b402eb5bbe5663a7c38fc" %}
 
 package:
   name: {{ name|lower }}
@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 0
   features:
     - vc9   # [win and py27]
     - vc14  # [win and py35]
