@@ -14,14 +14,16 @@ Summary: The OpenMP API supports multi-platform shared-memory parallel programmi
 Current build status
 ====================
 
-Linux: [![Circle CI](https://circleci.com/gh/conda-forge/openmp-feedstock.svg?style=shield)](https://circleci.com/gh/conda-forge/openmp-feedstock)
-OSX: [![TravisCI](https://travis-ci.org/conda-forge/openmp-feedstock.svg?branch=master)](https://travis-ci.org/conda-forge/openmp-feedstock)
-Windows: [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/conda-forge/openmp-feedstock?svg=True)](https://ci.appveyor.com/project/conda-forge/openmp-feedstock/branch/master)
+[![Linux](https://img.shields.io/circleci/project/github/conda-forge/openmp-feedstock/master.svg?label=Linux)](https://circleci.com/gh/conda-forge/openmp-feedstock)
+[![OSX](https://img.shields.io/travis/conda-forge/openmp-feedstock/master.svg?label=macOS)](https://travis-ci.org/conda-forge/openmp-feedstock)
+![Windows disabled](https://img.shields.io/badge/Windows-disabled-lightgrey.svg)
 
 Current release info
 ====================
-Version: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/openmp/badges/version.svg)](https://anaconda.org/conda-forge/openmp)
-Downloads: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/openmp/badges/downloads.svg)](https://anaconda.org/conda-forge/openmp)
+
+| Name | Downloads | Version | Platforms |
+| --- | --- | --- | --- |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-openmp-green.svg)](https://anaconda.org/conda-forge/openmp) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/openmp.svg)](https://anaconda.org/conda-forge/openmp) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/openmp.svg)](https://anaconda.org/conda-forge/openmp) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/openmp.svg)](https://anaconda.org/conda-forge/openmp) |
 
 Installing openmp
 =================

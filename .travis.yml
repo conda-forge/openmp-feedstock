@@ -8,8 +8,10 @@ osx_image: xcode6.4
 
 env:
   matrix:
-    
-    - CONDA_PERL=5.22.2.1
+    - CONFIG=osx_python2.7
+    - CONFIG=osx_python3.5
+    - CONFIG=osx_python3.6
+
   global:
     # The BINSTAR_TOKEN secure variable. This is defined canonically in conda-forge.yml.
     - secure: "IE6uUXGQI8Gu8Hs6Y2QRia2o6lldXHRY1UZ/VRUTvXK+ThyAgvhplJsowkXyNNmnuX/A0dKumq/waPTL/e575b44Y8w6JL8U/+mAv0imcko9YP4CSxcKzqoqjUNf68TuPwUbXNrE0hzCpp3K7clM0LjUHX3a2Fm3tnf0HO4b5mMS0JPvPhn5N+ytaDOd4Tn2951vrjLOikBGcEZMfa59McHXtkPm0g48/wHH0fnlY2wIt04EPMbSo6wfnnuH1E1zKZnLXfX+1KysNScJCf7GP4OMc5eUa17hoPMVlvBDeLroRasUomfx7UrrksfSTitoW30bCNXoEpD7YKosXROvqS8dnbpWsHjdmWpDTl8rrGrDoBsKdXVHlJKU6NcfLgrS+v4dXG++iJiw/6//3aNe+59aiqrHxvth+fsbPuu3P9sfe/RsSoRfUZJbNkmOZWPFOFstyRCyWq28kHIS3TDPQUzkQ2h1K7HSVMajxcGEhXffng9XIRhmhlzADhW6iAPeXXaRRasuTLCisHPwn1IEefCf0PVLuG1UN1ONGUbV+Rj+pbaQVMH3e7ySIMrfaBnGUZJuSOrPOwfxxtJeLdBsZEhY9zo/VKYOhOiFcGWBATCEogtwnlDYgZ871DwvKF3iyyIi/k0FcbG5iUqZaWqUWSrlekt/nnvWlSyQ2BXMcU4="
@@ -18,7 +20,7 @@ env:
 before_install:
     # Fast finish the PR.
     - |
-      (curl https://raw.githubusercontent.com/conda-forge/conda-forge-build-setup-feedstock/master/recipe/ff_ci_pr_build.py | \
+      (curl https://raw.githubusercontent.com/conda-forge/conda-forge-ci-setup-feedstock/master/recipe/ff_ci_pr_build.py | \
           python - -v --ci "travis" "${TRAVIS_REPO_SLUG}" "${TRAVIS_BUILD_NUMBER}" "${TRAVIS_PULL_REQUEST}") || exit 1
 
     # Remove homebrew.
@@ -50,10 +52,10 @@ install:
       conda config --add channels defaults
       conda config --add channels conda-forge
       conda config --set show_channel_urls true
-      conda install --yes --quiet conda-forge-build-setup
+      conda install --yes --quiet conda-forge-ci-setup=1
       source run_conda_forge_build_setup
 
 script:
-  - conda build ./recipe
+  - conda build ./recipe -m ./.ci_support/${CONFIG}.yaml
 
-  - upload_or_check_non_existence ./recipe conda-forge --channel=main
+  - upload_or_check_non_existence ./recipe conda-forge --channel=main -m ./.ci_support/${CONFIG}.yaml
