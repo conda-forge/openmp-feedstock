@@ -12,21 +12,19 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
-  features:
-    - vc9   # [win and py27]
-    - vc14  # [win and py35]
-    - vc14  # [win and py36]
+  number: 2
   skip: true  # [win and py<36]
 
 requirements:
   build:
-    - toolchain
-    - llvmdev {{ version }}|{{ version }}.*
     - cmake
     - perl  ==5.22.2.1
-    - python  # [win]
     - ninja  # [win]
+    - {{ compiler('fortran') }}
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+  host:
+    - llvmdev {{ version }}|{{ version }}.*
   run:
     - llvm-meta {{ version }}|{{ version }}.*
 
