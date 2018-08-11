@@ -24,7 +24,7 @@ requirements:
     - toolchain
     - llvmdev {{ version }}|{{ version }}.*
     - cmake
-    - perl  ==5.22.2.1
+    - perl
     - python  # [win]
     - ninja  # [win]
   run:
