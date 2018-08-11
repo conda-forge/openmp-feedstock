@@ -1,6 +1,6 @@
 {% set name = "openmp" %}
-{% set version = "6.0.0" %}
-{% set sha256 = "7c0e050d5f7da3b057579fb3ea79ed7dc657c765011b402eb5bbe5663a7c38fc" %}
+{% set version = "6.0.1" %}
+{% set sha256 = "66afca2b308351b180136cf899a3b22865af1a775efaf74dc8a10c96d4721c5a" %}
 
 package:
   name: {{ name|lower }}
@@ -12,27 +12,22 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 2
-  features:
-    - vc9   # [win and py27]
-    - vc14  # [win and py35]
-    - vc14  # [win and py36]
-  skip: true  # [win and py<36]
+  number: 0
+  skip: true  # [win and vc<14]
 
 requirements:
   build:
-    - toolchain
-    - llvmdev {{ version }}|{{ version }}.*
+    - {{ compiler("cxx") }}
     - cmake
     - perl
-    - python  # [win]
     - ninja  # [win]
+  host:
+    - llvmdev {{ version }}|{{ version }}.*
   run:
     - llvm-meta {{ version }}|{{ version }}.*
 
 test:
   requires:
-    - python {{ environ['PY_VER'] + '*' }}  # [win]
     - clangdev
   commands:
     - if not exist %LIBRARY_BIN%\\libomp.dll exit 1   # [win]

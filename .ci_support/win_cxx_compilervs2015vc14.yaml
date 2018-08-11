@@ -1,0 +1,14 @@
+cxx_compiler:
+- vs2015
+perl:
+- '5.26'
+pin_run_as_build:
+  perl:
+    max_pin: x.x.x
+  vc:
+    max_pin: x
+vc:
+- '14'
+zip_keys:
+- - vc
+  - cxx_compiler
