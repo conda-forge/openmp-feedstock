@@ -1,7 +1,0 @@
-cxx_compiler:
-- toolchain_cxx
-perl:
-- '5.26'
-pin_run_as_build:
-  perl:
-    max_pin: x.x.x
