@@ -29,6 +29,7 @@ requirements:
 test:
   requires:
     - clangdev
+    - {{ compiler("cxx") }}
   commands:
     - if not exist %LIBRARY_BIN%\\libomp.dll exit 1   # [win]
     - test -f $PREFIX/lib/libomp.so                   # [linux]
