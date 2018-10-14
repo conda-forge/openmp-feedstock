@@ -1,6 +1,6 @@
 {% set name = "openmp" %}
-{% set version = "6.0.1" %}
-{% set sha256 = "66afca2b308351b180136cf899a3b22865af1a775efaf74dc8a10c96d4721c5a" %}
+{% set version = "7.0.0" %}
+{% set sha256 = "30662b632f5556c59ee9215c1309f61de50b3ea8e89dcc28ba9a9494bba238ff" %}
 
 package:
   name: {{ name|lower }}
@@ -36,8 +36,8 @@ test:
     - if not exist %LIBRARY_LIB%\\libomp.lib exit 1   # [win]
     - if not exist %LIBRARY_INC%\\omp.h exit 1        # [win]
     - test -f $PREFIX/include/omp.h                   # [unix]
-    - $PREFIX/bin/clang -v -fopenmp -L$PREFIX/lib -Wl,-rpath,$PREFIX/lib omp_hello.c -o omp_hello  # [not win]
-    - "%LIBRARY_BIN%\\clang -v -fopenmp -L%LIBRARY_PREFIX%\\lib omp_hello.c -o omp_hello.exe"  # [win]
+    - $PREFIX/bin/clang -v -fopenmp -I$PREFIX/include -L$PREFIX/lib -Wl,-rpath,$PREFIX/lib omp_hello.c -o omp_hello  # [not win]
+    - "%LIBRARY_BIN%\\clang -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe"  # [win]
     - ./omp_hello            # [unix]
     - "%cd%\\omp_hello.exe"  # [win]
   files:
