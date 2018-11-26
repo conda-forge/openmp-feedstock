@@ -29,7 +29,7 @@ requirements:
 test:
   requires:
     - clangdev
-    - lld
+    - ld64
   commands:
     - if not exist %LIBRARY_BIN%\\libomp.dll exit 1   # [win]
     - test -f $PREFIX/lib/libomp.so                   # [linux]
