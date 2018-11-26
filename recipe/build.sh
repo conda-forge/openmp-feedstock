@@ -1,3 +1,9 @@
+if [[ "$(uname)" == "Darwin" ]]
+then
+    export CPPFLAGS=$(echo "${CPPFLAGS}" | sed -E "s@ \-mmacosx\-version\-min=${MACOSX_DEPLOYMENT_TARGET}@@g")
+    export CPPFLAGS="-mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET} ${CPPFLAGS}"
+fi
+
 mkdir build
 cd build
 
