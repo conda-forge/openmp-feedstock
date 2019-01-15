@@ -29,6 +29,7 @@ requirements:
 test:
   requires:
     - clangdev
+    - lld
   commands:
     - if not exist %LIBRARY_BIN%\\libomp.dll exit 1   # [win]
     - test -f $PREFIX/lib/libomp.so                   # [linux]
@@ -36,7 +37,7 @@ test:
     - if not exist %LIBRARY_LIB%\\libomp.lib exit 1   # [win]
     - if not exist %LIBRARY_INC%\\omp.h exit 1        # [win]
     - test -f $PREFIX/include/omp.h                   # [unix]
-    - $PREFIX/bin/clang -v -fopenmp -I$PREFIX/include -L$PREFIX/lib -Wl,-rpath,$PREFIX/lib omp_hello.c -o omp_hello  # [not win]
+    - $PREFIX/bin/clang -v -fopenmp -I$PREFIX/include -L$PREFIX/lib -Wl,-rpath,$PREFIX/lib -fuse-ld=lld omp_hello.c -o omp_hello  # [not win]
     - "%LIBRARY_BIN%\\clang -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe"  # [win]
     - ./omp_hello            # [unix]
     - "%cd%\\omp_hello.exe"  # [win]
