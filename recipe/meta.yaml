@@ -23,8 +23,8 @@ requirements:
     - ninja  # [win]
   host:
     - llvmdev {{ version }}|{{ version }}.*
-  run:
-    - llvm-meta {{ version }}|{{ version }}.*
+  run_constrained:
+    - clangdev {{ version }}|{{ version }}.*
 
 test:
   requires:
