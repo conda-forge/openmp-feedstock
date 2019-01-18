@@ -28,6 +28,7 @@ requirements:
 
 test:
   requires:
+    - {{ compiler("cxx") }}  # [linux]
     - clangdev
     - lld
   commands:
