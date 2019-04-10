@@ -1,4 +1,4 @@
-{% set name = "openmp" %}
+{% set name = "llvm-openmp" %}
 {% set version = "8.0.0" %}
 {% set sha256 = "f7b1705d2f16c4fc23d6531f67d2dd6fb78a077dd346b02fed64f4b8df65c9d5" %}
 
@@ -14,18 +14,6 @@ source:
 build:
   number: 0
   skip: true  # [win and vc<14]
-
-requirements:
-  build:
-    - {{ compiler("cxx") }}
-    - cmake
-    - perl
-    - ninja  # [win]
-  host:
-    - llvmdev {{ version }}|{{ version }}.*
-  run_constrained:
-    - clangdev {{ version }}|{{ version }}.*
-    - llvmdev {{ version }}|{{ version }}.*
 
 test:
   requires:
@@ -44,6 +32,28 @@ test:
     - "%cd%\\omp_hello.exe"  # [win]
   files:
     - omp_hello.c
+
+outputs:
+  - name: llvm-openmp
+    script: build-llvm-openmp.sh  # [not win]
+    script: bld-llvm-openmp.bat   # [win]
+    requirements:
+      build:
+        - {{ compiler("cxx") }}
+        - cmake
+        - perl
+        - ninja  # [win]
+      host:
+        - llvmdev {{ version }}|{{ version }}.*
+      run_constrained:
+        - clangdev {{ version }}|{{ version }}.*
+        - llvmdev {{ version }}|{{ version }}.*
+        - openmp {{ version }}|{{ version }}.*
+
+  - name: openmp
+    requirements:
+      run:
+        - {{ pin_subpackage("llvm-openmp", exact=True) }}
 
 about:
   home: http://openmp.llvm.org/
