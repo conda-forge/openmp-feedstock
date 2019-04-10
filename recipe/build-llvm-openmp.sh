@@ -1,8 +1,10 @@
 mkdir build
 cd build
 
-# See https://github.com/AnacondaRecipes/aggregate/issues/107
-export CPPFLAGS="-mmacosx-version-min=10.9 -I${PREFIX}/include -D_FORTIFY_SOURCE=2"
+if [[ "${target_platform}" == "osx-64" ]]; then
+  # See https://github.com/AnacondaRecipes/aggregate/issues/107
+  export CPPFLAGS="-mmacosx-version-min=10.9 -I${PREFIX}/include -D_FORTIFY_SOURCE=2"
+fi
 
 cmake \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
