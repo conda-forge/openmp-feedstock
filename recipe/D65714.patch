@@ -1,0 +1,116 @@
+commit 326fdf3ea0c9b69bd92d2a5c7197e32a45ca477f
+Author: Isuru Fernando <isuruf@gmail.com>
+Date:   Sun Aug 4 01:40:08 2019 -0500
+
+    Add support for libgomp's GOMP_*_nonmonotonic_* functions
+    
+    These functions are aliases to names without nonmonotonic_*
+
+diff --git a/runtime/src/kmp_ftn_os.h b/runtime/src/kmp_ftn_os.h
+index 776db39..5e0e3a7 100644
+--- a/runtime/src/kmp_ftn_os.h
++++ b/runtime/src/kmp_ftn_os.h
+@@ -664,5 +664,25 @@
+   GOMP_loop_ull_doacross_guided_start
+ #define KMP_API_NAME_GOMP_LOOP_ULL_DOACROSS_RUNTIME_START                      \
+   GOMP_loop_ull_doacross_runtime_start
++#define KMP_API_NAME_GOMP_LOOP_NONMONOTONIC_DYNAMIC_NEXT                       \
++  GOMP_loop_nonmonotonic_dynamic_next
++#define KMP_API_NAME_GOMP_LOOP_NONMONOTONIC_DYNAMIC_START                      \
++  GOMP_loop_nonmonotonic_dynamic_start
++#define KMP_API_NAME_GOMP_LOOP_NONMONOTONIC_GUIDED_NEXT                        \
++  GOMP_loop_nonmonotonic_guided_next
++#define KMP_API_NAME_GOMP_LOOP_NONMONOTONIC_GUIDED_START                       \
++  GOMP_loop_nonmonotonic_guided_start
++#define KMP_API_NAME_GOMP_LOOP_ULL_NONMONOTONIC_DYNAMIC_NEXT                   \
++  GOMP_loop_ull_nonmonotonic_dynamic_next
++#define KMP_API_NAME_GOMP_LOOP_ULL_NONMONOTONIC_DYNAMIC_START                  \
++  GOMP_loop_ull_nonmonotonic_dynamic_start
++#define KMP_API_NAME_GOMP_LOOP_ULL_NONMONOTONIC_GUIDED_NEXT                    \
++  GOMP_loop_ull_nonmonotonic_guided_next
++#define KMP_API_NAME_GOMP_LOOP_ULL_NONMONOTONIC_GUIDED_START                   \
++  GOMP_loop_ull_nonmonotonic_guided_start
++#define KMP_API_NAME_GOMP_PARALLEL_LOOP_NONMONOTONIC_DYNAMIC                   \
++  GOMP_parallel_loop_nonmonotonic_dynamic
++#define KMP_API_NAME_GOMP_PARALLEL_LOOP_NONMONOTONIC_GUIDED                    \
++  GOMP_parallel_loop_nonmonotonic_guided
+ 
+ #endif /* KMP_FTN_OS_H */
+diff --git a/runtime/src/kmp_gsupport.cpp b/runtime/src/kmp_gsupport.cpp
+index c1f9bdd..0d10a3d 100644
+--- a/runtime/src/kmp_gsupport.cpp
++++ b/runtime/src/kmp_gsupport.cpp
+@@ -625,10 +625,16 @@ LOOP_START(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_STATIC_START), kmp_sch_static)
+ LOOP_NEXT(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_STATIC_NEXT), {})
+ LOOP_START(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_DYNAMIC_START),
+            kmp_sch_dynamic_chunked)
++LOOP_START(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_NONMONOTONIC_DYNAMIC_START),
++           kmp_sch_dynamic_chunked)
+ LOOP_NEXT(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_DYNAMIC_NEXT), {})
++LOOP_NEXT(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_NONMONOTONIC_DYNAMIC_NEXT), {})
+ LOOP_START(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_GUIDED_START),
+            kmp_sch_guided_chunked)
++LOOP_START(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_NONMONOTONIC_GUIDED_START),
++           kmp_sch_guided_chunked)
+ LOOP_NEXT(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_GUIDED_NEXT), {})
++LOOP_NEXT(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_NONMONOTONIC_GUIDED_NEXT), {})
+ LOOP_RUNTIME_START(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_RUNTIME_START),
+                    kmp_sch_runtime)
+ LOOP_NEXT(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_RUNTIME_NEXT), {})
+@@ -897,6 +903,16 @@ LOOP_NEXT_ULL(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_DYNAMIC_NEXT), {})
+ LOOP_START_ULL(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_GUIDED_START),
+                kmp_sch_guided_chunked)
+ LOOP_NEXT_ULL(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_GUIDED_NEXT), {})
++LOOP_START_ULL(
++    KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_NONMONOTONIC_DYNAMIC_START),
++               kmp_sch_dynamic_chunked)
++LOOP_NEXT_ULL(
++    KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_NONMONOTONIC_DYNAMIC_NEXT), {})
++LOOP_START_ULL(
++    KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_NONMONOTONIC_GUIDED_START),
++               kmp_sch_guided_chunked)
++LOOP_NEXT_ULL(
++    KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_NONMONOTONIC_GUIDED_NEXT), {})
+ LOOP_RUNTIME_START_ULL(
+     KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_RUNTIME_START), kmp_sch_runtime)
+ LOOP_NEXT_ULL(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_RUNTIME_NEXT), {})
+@@ -1502,6 +1518,12 @@ PARALLEL_LOOP(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_PARALLEL_LOOP_STATIC),
+               kmp_sch_static, OMPT_LOOP_PRE, OMPT_LOOP_POST)
+ PARALLEL_LOOP(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_PARALLEL_LOOP_DYNAMIC),
+               kmp_sch_dynamic_chunked, OMPT_LOOP_PRE, OMPT_LOOP_POST)
++PARALLEL_LOOP(
++    KMP_EXPAND_NAME(KMP_API_NAME_GOMP_PARALLEL_LOOP_NONMONOTONIC_GUIDED),
++              kmp_sch_guided_chunked, OMPT_LOOP_PRE, OMPT_LOOP_POST)
++PARALLEL_LOOP(
++    KMP_EXPAND_NAME(KMP_API_NAME_GOMP_PARALLEL_LOOP_NONMONOTONIC_DYNAMIC),
++              kmp_sch_dynamic_chunked, OMPT_LOOP_PRE, OMPT_LOOP_POST)
+ PARALLEL_LOOP(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_PARALLEL_LOOP_GUIDED),
+               kmp_sch_guided_chunked, OMPT_LOOP_PRE, OMPT_LOOP_POST)
+ PARALLEL_LOOP(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_PARALLEL_LOOP_RUNTIME),
+@@ -1991,6 +2013,26 @@ KMP_VERSION_SYMBOL(KMP_API_NAME_GOMP_LOOP_ULL_DOACROSS_GUIDED_START, 45,
+                    "GOMP_4.5");
+ KMP_VERSION_SYMBOL(KMP_API_NAME_GOMP_LOOP_ULL_DOACROSS_RUNTIME_START, 45,
+                    "GOMP_4.5");
++KMP_VERSION_SYMBOL(KMP_API_NAME_GOMP_LOOP_NONMONOTONIC_DYNAMIC_START, 45,
++                   "GOMP_4.5");
++KMP_VERSION_SYMBOL(KMP_API_NAME_GOMP_LOOP_NONMONOTONIC_DYNAMIC_NEXT, 45,
++                   "GOMP_4.5");
++KMP_VERSION_SYMBOL(KMP_API_NAME_GOMP_LOOP_NONMONOTONIC_GUIDED_START, 45,
++                   "GOMP_4.5");
++KMP_VERSION_SYMBOL(KMP_API_NAME_GOMP_LOOP_NONMONOTONIC_GUIDED_NEXT, 45,
++                   "GOMP_4.5");
++KMP_VERSION_SYMBOL(KMP_API_NAME_GOMP_LOOP_ULL_NONMONOTONIC_DYNAMIC_START, 45,
++                   "GOMP_4.5");
++KMP_VERSION_SYMBOL(KMP_API_NAME_GOMP_LOOP_ULL_NONMONOTONIC_DYNAMIC_NEXT, 45,
++                   "GOMP_4.5");
++KMP_VERSION_SYMBOL(KMP_API_NAME_GOMP_LOOP_ULL_NONMONOTONIC_GUIDED_START, 45,
++                   "GOMP_4.5");
++KMP_VERSION_SYMBOL(KMP_API_NAME_GOMP_LOOP_ULL_NONMONOTONIC_GUIDED_NEXT, 45,
++                   "GOMP_4.5");
++KMP_VERSION_SYMBOL(KMP_API_NAME_GOMP_PARALLEL_LOOP_NONMONOTONIC_DYNAMIC, 45,
++                   "GOMP_4.5");
++KMP_VERSION_SYMBOL(KMP_API_NAME_GOMP_PARALLEL_LOOP_NONMONOTONIC_GUIDED, 45,
++                   "GOMP_4.5");
+ #endif
+ 
+ #endif // KMP_USE_VERSION_SYMBOLS

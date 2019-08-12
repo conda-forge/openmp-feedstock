@@ -7,12 +7,13 @@ package:
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
   url: http://releases.llvm.org/{{ version }}/openmp-{{ version }}.src.tar.xz
   sha256: {{ sha256 }}
+  patches:
+    - D65714.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win and vc<14]
 
 test:
@@ -37,6 +38,10 @@ outputs:
   - name: llvm-openmp
     script: build-llvm-openmp.sh  # [not win]
     script: bld-llvm-openmp.bat   # [win]
+    build:
+      run_exports:
+        strong:
+          - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
     requirements:
       build:
         - {{ compiler("cxx") }}
