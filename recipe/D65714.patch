@@ -1,24 +1,16 @@
-From 3c7e9228cad7da4c5f148b788c59f2548df1b119 Mon Sep 17 00:00:00 2001
-From: Jonathan Peyton <jonathan.l.peyton@intel.com>
-Date: Mon, 5 Aug 2019 23:23:52 +0000
-Subject: [PATCH] [OpenMP] Add support for GOMP_*_nonmonotonic_* functions
+commit 326fdf3ea0c9b69bd92d2a5c7197e32a45ca477f
+Author: Isuru Fernando <isuruf@gmail.com>
+Date:   Sun Aug 4 01:40:08 2019 -0500
 
-Patch by Isuru Fernando
-
-Differential Revision: https://reviews.llvm.org/D65714
-
-
-git-svn-id: https://llvm.org/svn/llvm-project/openmp/trunk@367949 91177308-0d34-0410-b5e6-96231b3b80d8
----
- runtime/src/kmp_ftn_os.h     | 20 +++++++++++++++++
- runtime/src/kmp_gsupport.cpp | 42 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 62 insertions(+)
+    Add support for libgomp's GOMP_*_nonmonotonic_* functions
+    
+    These functions are aliases to names without nonmonotonic_*
 
 diff --git a/runtime/src/kmp_ftn_os.h b/runtime/src/kmp_ftn_os.h
-index 856479cb..41cafab1 100644
+index 776db39..5e0e3a7 100644
 --- a/runtime/src/kmp_ftn_os.h
 +++ b/runtime/src/kmp_ftn_os.h
-@@ -633,5 +633,25 @@
+@@ -664,5 +664,25 @@
    GOMP_loop_ull_doacross_guided_start
  #define KMP_API_NAME_GOMP_LOOP_ULL_DOACROSS_RUNTIME_START                      \
    GOMP_loop_ull_doacross_runtime_start
@@ -45,10 +37,10 @@ index 856479cb..41cafab1 100644
  
  #endif /* KMP_FTN_OS_H */
 diff --git a/runtime/src/kmp_gsupport.cpp b/runtime/src/kmp_gsupport.cpp
-index d41e027e..6fad7efb 100644
+index c1f9bdd..0d10a3d 100644
 --- a/runtime/src/kmp_gsupport.cpp
 +++ b/runtime/src/kmp_gsupport.cpp
-@@ -622,10 +622,16 @@ LOOP_START(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_STATIC_START), kmp_sch_static)
+@@ -625,10 +625,16 @@ LOOP_START(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_STATIC_START), kmp_sch_static)
  LOOP_NEXT(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_STATIC_NEXT), {})
  LOOP_START(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_DYNAMIC_START),
             kmp_sch_dynamic_chunked)
@@ -65,7 +57,7 @@ index d41e027e..6fad7efb 100644
  LOOP_RUNTIME_START(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_RUNTIME_START),
                     kmp_sch_runtime)
  LOOP_NEXT(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_RUNTIME_NEXT), {})
-@@ -892,6 +898,16 @@ LOOP_NEXT_ULL(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_DYNAMIC_NEXT), {})
+@@ -897,6 +903,16 @@ LOOP_NEXT_ULL(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_DYNAMIC_NEXT), {})
  LOOP_START_ULL(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_GUIDED_START),
                 kmp_sch_guided_chunked)
  LOOP_NEXT_ULL(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_GUIDED_NEXT), {})
@@ -82,7 +74,7 @@ index d41e027e..6fad7efb 100644
  LOOP_RUNTIME_START_ULL(
      KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_RUNTIME_START), kmp_sch_runtime)
  LOOP_NEXT_ULL(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_RUNTIME_NEXT), {})
-@@ -1487,6 +1503,12 @@ PARALLEL_LOOP(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_PARALLEL_LOOP_STATIC),
+@@ -1502,6 +1518,12 @@ PARALLEL_LOOP(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_PARALLEL_LOOP_STATIC),
                kmp_sch_static, OMPT_LOOP_PRE, OMPT_LOOP_POST)
  PARALLEL_LOOP(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_PARALLEL_LOOP_DYNAMIC),
                kmp_sch_dynamic_chunked, OMPT_LOOP_PRE, OMPT_LOOP_POST)
@@ -95,7 +87,7 @@ index d41e027e..6fad7efb 100644
  PARALLEL_LOOP(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_PARALLEL_LOOP_GUIDED),
                kmp_sch_guided_chunked, OMPT_LOOP_PRE, OMPT_LOOP_POST)
  PARALLEL_LOOP(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_PARALLEL_LOOP_RUNTIME),
-@@ -1942,6 +1964,26 @@ KMP_VERSION_SYMBOL(KMP_API_NAME_GOMP_LOOP_ULL_DOACROSS_GUIDED_START, 45,
+@@ -1991,6 +2013,26 @@ KMP_VERSION_SYMBOL(KMP_API_NAME_GOMP_LOOP_ULL_DOACROSS_GUIDED_START, 45,
                     "GOMP_4.5");
  KMP_VERSION_SYMBOL(KMP_API_NAME_GOMP_LOOP_ULL_DOACROSS_RUNTIME_START, 45,
                     "GOMP_4.5");
@@ -119,6 +111,6 @@ index d41e027e..6fad7efb 100644
 +                   "GOMP_4.5");
 +KMP_VERSION_SYMBOL(KMP_API_NAME_GOMP_PARALLEL_LOOP_NONMONOTONIC_GUIDED, 45,
 +                   "GOMP_4.5");
+ #endif
  
  #endif // KMP_USE_VERSION_SYMBOLS
- 
