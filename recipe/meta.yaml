@@ -38,6 +38,10 @@ outputs:
   - name: llvm-openmp
     script: build-llvm-openmp.sh  # [not win]
     script: bld-llvm-openmp.bat   # [win]
+    build:
+      run_exports:
+        strong:
+          - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
     requirements:
       build:
         - {{ compiler("cxx") }}
