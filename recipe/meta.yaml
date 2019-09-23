@@ -18,7 +18,7 @@ test:
   requires:
     - clangdev
     - {{ compiler('cxx') }}  # [unix]
-    - vs2017_{{target_platform}} # [win]
+    - vs2017_{{ target_platform }}  # [win]
   commands:
     - if not exist %LIBRARY_BIN%\\libomp.dll exit 1   # [win]
     - test -f $PREFIX/lib/libomp.so                   # [linux]
@@ -44,7 +44,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('cxx') }}  # [unix]
-        - vs2017_{{target_platform}} # [win]
+        - vs2017_{{ target_platform }}  # [win]
         - cmake
         - perl
         - ninja  # [win]
