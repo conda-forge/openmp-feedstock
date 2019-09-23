@@ -1,16 +1,14 @@
 {% set name = "llvm-openmp" %}
-{% set version = "8.0.1" %}
-{% set sha256 = "3e85dd3cad41117b7c89a41de72f2e6aa756ea7b4ef63bb10dcddf8561a7722c" %}
+{% set version = "9.0.0" %}
+{% set sha256 = "9979eb1133066376cc0be29d1682bc0b0e7fb541075b391061679111ae4d3b5b" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/llvm/llvm-project/releases/download/llvmorg-{{ version }}/openmp-{{ version }}.src.tar.xz
+  url: http://releases.llvm.org/{{ version }}/openmp-{{ version }}.src.tar.xz
   sha256: {{ sha256 }}
-  patches:
-    - D65714.patch
 
 build:
   number: 0
@@ -19,7 +17,8 @@ build:
 test:
   requires:
     - clangdev
-    - {{ compiler('cxx') }}  # [linux]
+    - {{ compiler('cxx') }}  # [unix]
+    - vs2017_{{target_platform}} # [win]
   commands:
     - if not exist %LIBRARY_BIN%\\libomp.dll exit 1   # [win]
     - test -f $PREFIX/lib/libomp.so                   # [linux]
@@ -44,7 +43,8 @@ outputs:
           - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
     requirements:
       build:
-        - {{ compiler("cxx") }}
+        - {{ compiler('cxx') }}  # [unix]
+        - vs2017_{{target_platform}} # [win]
         - cmake
         - perl
         - ninja  # [win]
@@ -54,11 +54,6 @@ outputs:
         - clangdev {{ version }}|{{ version }}.*
         - llvmdev {{ version }}|{{ version }}.*
         - openmp {{ version }}|{{ version }}.*
-
-  - name: openmp
-    requirements:
-      run:
-        - {{ pin_subpackage("llvm-openmp", exact=True) }}
 
 about:
   home: http://openmp.llvm.org/
