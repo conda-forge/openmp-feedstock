@@ -73,7 +73,15 @@ outputs:
       string: 0_llvm                         # [linux]
     about:                                   # [linux]
       summary: OpenMP Implementation Mutex   # [linux]
-      license: BSD                           # [linux]
+      license: NCSA                          # [linux]
+      license_file: LICENSE.txt              # [linux]
+      home: http://openmp.llvm.org/          # [linux]
+
+  about:
+    home: http://openmp.llvm.org/
+    license: NCSA
+    license_file: LICENSE.txt
+    summary: The OpenMP API supports multi-platform shared-memory parallel programming in C/C++ and Fortran.
 
 extra:
   recipe-maintainers:
