@@ -19,10 +19,13 @@ test:
     - clangdev
     - {{ compiler('cxx') }}  # [unix]
     - vs2017_{{ target_platform }}  # [win]
+    - openmp_impl 4.5 *_llvm  # [unix]
   commands:
     - if not exist %LIBRARY_BIN%\\libomp.dll exit 1   # [win]
     - test -f $PREFIX/lib/libomp.so                   # [linux]
     - test -f $PREFIX/lib/libomp.dylib                # [osx]
+    - test -f $PREFIX/lib/libomp.so.1                   # [linux]
+    - test -f $PREFIX/lib/libomp.dylib.1                # [osx]
     - if not exist %LIBRARY_LIB%\\libomp.lib exit 1   # [win]
     - if not exist %LIBRARY_INC%\\omp.h exit 1        # [win]
     - test -f $PREFIX/include/omp.h                   # [unix]
