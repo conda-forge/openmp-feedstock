@@ -1,6 +1,7 @@
 {% set name = "llvm-openmp" %}
 {% set version = "9.0.0" %}
 {% set sha256 = "9979eb1133066376cc0be29d1682bc0b0e7fb541075b391061679111ae4d3b5b" %}
+{% set openmp_ver = "4.5" %}
 
 package:
   name: {{ name|lower }}
@@ -52,6 +53,8 @@ outputs:
         - ninja  # [win]
       host:
         - llvmdev {{ version }}|{{ version }}.*
+      run:
+        - openmp_impl {{ openmp_ver }} *_llvm
       run_constrained:
         - clangdev {{ version }}|{{ version }}.*
         - llvmdev {{ version }}|{{ version }}.*
@@ -59,12 +62,9 @@ outputs:
 
   - name: openmp_impl                # [linux]
     script: build-openmp_impl.sh     # [linux]
-    version: "4.5"                   # [linux]
+    version: {{ openmp_ver }}        # [linux]
     build:                           # [linux]
       string: 0_llvm                 # [linux]
-    requirements:                    # [linux]
-      run:                           # [linux]
-        - llvm-openmp                # [linux]
 
 about:
   home: http://openmp.llvm.org/
