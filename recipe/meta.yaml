@@ -59,8 +59,7 @@ outputs:
   - name: openmp_impl
     script: build-openmp_impl.sh
     version: "4.5"
-    build:
-      number: {{ build_num }}_llvm
+    build: {{ build_num }}_llvm
     requirements:
       host:
         - llvm-openmp
