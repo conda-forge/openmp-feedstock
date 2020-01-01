@@ -20,7 +20,6 @@ test:
     - clangdev
     - {{ compiler('cxx') }}  # [unix]
     - vs2017_{{ target_platform }}  # [win]
-    - {{ pin_subpackage("openmp_impl", exact=True) }}  # [linux]
   commands:
     - if not exist %LIBRARY_BIN%\\libomp.dll exit 1   # [win]
     - test -f $PREFIX/lib/libomp.so                   # [linux]
@@ -53,8 +52,8 @@ outputs:
         - ninja  # [win]
       host:
         - llvmdev {{ version }}|{{ version }}.*
-      run:
-        - openmp_impl {{ openmp_ver }} *_llvm
+      run:                                     # [linux]
+        - openmp_impl {{ openmp_ver }} *_llvm  # [linux]
       run_constrained:
         - clangdev {{ version }}|{{ version }}.*
         - llvmdev {{ version }}|{{ version }}.*
