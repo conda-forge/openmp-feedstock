@@ -20,6 +20,7 @@ test:
     - clangdev
     - {{ compiler('cxx') }}  # [unix]
     - vs2017_{{ target_platform }}  # [win]
+    - {{ pin_subpackage("openmp_impl", exact=True) }}
   commands:
     - if not exist %LIBRARY_BIN%\\libomp.dll exit 1   # [win]
     - test -f $PREFIX/lib/libomp.so                   # [linux]
@@ -52,24 +53,27 @@ outputs:
         - ninja  # [win]
       host:
         - llvmdev {{ version }}|{{ version }}.*
-      run:                                                 # [linux]
-        - {{ pin_subpackage("openmp_impl", exact=True) }}  # [linux]
       run_constrained:
         - clangdev {{ version }}|{{ version }}.*
         - llvmdev {{ version }}|{{ version }}.*
         - openmp {{ version }}|{{ version }}.*
+    about:
+      home: http://openmp.llvm.org/
+      license: NCSA
+      license_file: LICENSE.txt
+      summary: The OpenMP API supports multi-platform shared-memory parallel programming in C/C++ and Fortran.
 
-  - name: openmp_impl                # [linux]
-    script: build-openmp_impl.sh     # [linux]
-    version: {{ openmp_ver }}        # [linux]
-    build:                           # [linux]
-      string: 0_llvm                 # [linux]
-
-about:
-  home: http://openmp.llvm.org/
-  license: NCSA
-  license_file: LICENSE.txt
-  summary: The OpenMP API supports multi-platform shared-memory parallel programming in C/C++ and Fortran.
+  - name: openmp_impl                        # [linux]
+    script: build-openmp_impl.sh             # [linux]
+    version: {{ openmp_ver }}                # [linux]
+    requirements:                            # [linux]
+      run:                                   # [linux]
+        - llvm-openmp                        # [linux]
+    build:                                   # [linux]
+      string: 0_llvm                         # [linux]
+    about:                                   # [linux]
+      summary: OpenMP Implementation Mutex   # [linux]
+      license: BSD                           # [linux]
 
 extra:
   recipe-maintainers:
