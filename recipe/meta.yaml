@@ -63,7 +63,7 @@ outputs:
     build:                           # [linux]
       string: 0_llvm                 # [linux]
     requirements:                    # [linux]
-      host:                          # [linux]
+      run:                           # [linux]
         - llvm-openmp                # [linux]
 
 about:
