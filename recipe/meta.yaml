@@ -1,6 +1,7 @@
 {% set name = "llvm-openmp" %}
 {% set version = "9.0.0" %}
 {% set sha256 = "9979eb1133066376cc0be29d1682bc0b0e7fb541075b391061679111ae4d3b5b" %}
+{% set build_num = "1" %}
 
 package:
   name: {{ name|lower }}
@@ -11,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 0
+  number: {{ build_num }}
   skip: true  # [win and vc<14]
 
 test:
@@ -59,7 +60,7 @@ outputs:
     script: build-openmp_impl.sh
     version: "4.5"
     build:
-      number: 0_llvm
+      number: {{ build_num }}_llvm
     requirements:
       host:
         - llvm-openmp
