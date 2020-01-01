@@ -53,7 +53,7 @@ outputs:
       host:
         - llvmdev {{ version }}|{{ version }}.*
       run:                                     # [linux]
-        - openmp_impl {{ openmp_ver }} *_llvm  # [linux]
+        - openmp_impl * *llvm                  # [linux]
       run_constrained:
         - clangdev {{ version }}|{{ version }}.*
         - llvmdev {{ version }}|{{ version }}.*
