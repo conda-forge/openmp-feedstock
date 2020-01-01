@@ -52,8 +52,8 @@ outputs:
         - ninja  # [win]
       host:
         - llvmdev {{ version }}|{{ version }}.*
-      run:                                     # [linux]
-        - openmp_impl * *llvm                  # [linux]
+      run:                                                 # [linux]
+        - {{ pin_subpackage("openmp_impl", exact=True) }}  # [linux]
       run_constrained:
         - clangdev {{ version }}|{{ version }}.*
         - llvmdev {{ version }}|{{ version }}.*
