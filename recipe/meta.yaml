@@ -55,6 +55,15 @@ outputs:
         - llvmdev {{ version }}|{{ version }}.*
         - openmp {{ version }}|{{ version }}.*
 
+  - name: openmp_impl
+    script: build-openmp_impl.sh
+    version: "4.5"
+    build:
+      number: 0_llvm
+    requirements:
+      host:
+        - llvm-openmp
+
 about:
   home: http://openmp.llvm.org/
   license: NCSA
