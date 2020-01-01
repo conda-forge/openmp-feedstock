@@ -19,13 +19,12 @@ test:
     - clangdev
     - {{ compiler('cxx') }}  # [unix]
     - vs2017_{{ target_platform }}  # [win]
-    - {{ pin_subpackage("openmp_impl", exact=True) }}  # [unix]
+    - {{ pin_subpackage("openmp_impl", exact=True) }}  # [linux]
   commands:
     - if not exist %LIBRARY_BIN%\\libomp.dll exit 1   # [win]
     - test -f $PREFIX/lib/libomp.so                   # [linux]
     - test -f $PREFIX/lib/libomp.dylib                # [osx]
-    - test -f $PREFIX/lib/libomp.so.1                   # [linux]
-    - test -f $PREFIX/lib/libomp.dylib.1                # [osx]
+    - test -f $PREFIX/lib/libgomp.so.1                # [linux]
     - if not exist %LIBRARY_LIB%\\libomp.lib exit 1   # [win]
     - if not exist %LIBRARY_INC%\\omp.h exit 1        # [win]
     - test -f $PREFIX/include/omp.h                   # [unix]
@@ -58,14 +57,14 @@ outputs:
         - llvmdev {{ version }}|{{ version }}.*
         - openmp {{ version }}|{{ version }}.*
 
-  - name: openmp_impl                # [unix]
-    script: build-openmp_impl.sh     # [unix]
-    version: "4.5"                   # [unix]
-    build:                           # [unix]
-      string: 0_llvm                 # [unix]
-    requirements:                    # [unix]
-      host:                          # [unix]
-        - llvm-openmp                # [unix]
+  - name: openmp_impl                # [linux]
+    script: build-openmp_impl.sh     # [linux]
+    version: "4.5"                   # [linux]
+    build:                           # [linux]
+      string: 0_llvm                 # [linux]
+    requirements:                    # [linux]
+      host:                          # [linux]
+        - llvm-openmp                # [linux]
 
 about:
   home: http://openmp.llvm.org/
