@@ -1,5 +1,5 @@
-About llvm-openmp
-=================
+About openmp
+============
 
 Home: http://openmp.llvm.org/
 
@@ -29,17 +29,17 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux</td>
+              <td>linux_target_platformlinux-64</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=5656&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/openmp-feedstock?branchName=master&jobName=linux&configuration=linux_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/openmp-feedstock?branchName=master&jobName=linux&configuration=linux_target_platformlinux-64" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx</td>
+              <td>osx_target_platformosx-64</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=5656&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/openmp-feedstock?branchName=master&jobName=osx&configuration=osx_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/openmp-feedstock?branchName=master&jobName=osx&configuration=osx_target_platformosx-64" alt="variant">
                 </a>
               </td>
             </tr><tr>
@@ -71,10 +71,10 @@ Current release info
 | [![Conda Recipe](https://img.shields.io/badge/recipe-llvm--openmp-green.svg)](https://anaconda.org/conda-forge/llvm-openmp) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/llvm-openmp.svg)](https://anaconda.org/conda-forge/llvm-openmp) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/llvm-openmp.svg)](https://anaconda.org/conda-forge/llvm-openmp) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/llvm-openmp.svg)](https://anaconda.org/conda-forge/llvm-openmp) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-openmp_impl-green.svg)](https://anaconda.org/conda-forge/openmp_impl) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/openmp_impl.svg)](https://anaconda.org/conda-forge/openmp_impl) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/openmp_impl.svg)](https://anaconda.org/conda-forge/openmp_impl) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/openmp_impl.svg)](https://anaconda.org/conda-forge/openmp_impl) |
 
-Installing llvm-openmp
-======================
+Installing openmp
+=================
 
-Installing `llvm-openmp` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
+Installing `openmp` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
 
 ```
 conda config --add channels conda-forge
@@ -131,17 +131,17 @@ Terminology
                   produce the finished article (built conda distributions)
 
 
-Updating llvm-openmp-feedstock
-==============================
+Updating openmp-feedstock
+=========================
 
-If you would like to improve the llvm-openmp recipe or build a new
+If you would like to improve the openmp recipe or build a new
 package version, please fork this repository and submit a PR. Upon submission,
 your changes will be run on the appropriate platforms to give the reviewer an
 opportunity to confirm that the changes result in a successful build. Once
 merged, the recipe will be re-built and uploaded automatically to the
 `conda-forge` channel, whereupon the built conda packages will be available for
 everybody to install and use from the `conda-forge` channel.
-Note that all branches in the conda-forge/llvm-openmp-feedstock are
+Note that all branches in the conda-forge/openmp-feedstock are
 immediately built and any created packages are uploaded, so PRs should be based
 on branches in forks and branches in the main repository should only be used to
 build distinct package versions.
@@ -156,6 +156,7 @@ In order to produce a uniquely identifiable distribution:
 Feedstock Maintainers
 =====================
 
+* [@beckermr](https://github.com/beckermr/)
 * [@inducer](https://github.com/inducer/)
 * [@isuruf](https://github.com/isuruf/)
 * [@jakirkham](https://github.com/jakirkham/)
