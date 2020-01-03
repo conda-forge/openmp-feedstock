@@ -1,4 +1,4 @@
-{% set name = "llvm-openmp-recipe" %}
+{% set name = "llvm-openmp" %}
 {% set version = "9.0.0" %}
 {% set sha256 = "9979eb1133066376cc0be29d1682bc0b0e7fb541075b391061679111ae4d3b5b" %}
 {% set openmp_ver = "4.5" %}
