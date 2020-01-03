@@ -1,4 +1,4 @@
-{% set name = "llvm-openmp" %}
+{% set name = "openmp" %}
 {% set version = "9.0.0" %}
 {% set sha256 = "9979eb1133066376cc0be29d1682bc0b0e7fb541075b391061679111ae4d3b5b" %}
 {% set openmp_ver = "4.5" %}
@@ -86,10 +86,10 @@ about:
   license_file: LICENSE.txt
   summary: The OpenMP API supports multi-platform shared-memory parallel programming in C/C++ and Fortran.
 
-
 extra:
   recipe-maintainers:
     - inducer
     - jakirkham
     - yesimon
     - isuruf
+    - beckermr
