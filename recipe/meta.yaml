@@ -26,6 +26,8 @@ test:
     - test -f $PREFIX/lib/libomp.so                   # [linux]
     - test -f $PREFIX/lib/libomp.dylib                # [osx]
     - test -f $PREFIX/lib/libgomp.so.1                # [linux]
+    - test -f $PREFIX/bin/.openmp_impl-post-link.sh   # [linux]
+    - test -f $PREFIX/bin/.openmp_impl-pre-unlink.sh  # [linux]
     - if not exist %LIBRARY_LIB%\\libomp.lib exit 1   # [win]
     - if not exist %LIBRARY_INC%\\omp.h exit 1        # [win]
     - test -f $PREFIX/include/omp.h                   # [unix]
