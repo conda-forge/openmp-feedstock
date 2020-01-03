@@ -74,7 +74,18 @@ outputs:
       license_file: LICENSE.txt                           # [linux]
       home: http://openmp.llvm.org/                       # [linux]
     test:                                                 # [linux]
-      script: test-openmp_impl.sh                         # [linux]
+      commands:                                           # [linux]
+       - test -f $PREFIX/lib/libgomp.so.1                 # [linux]
+       - test -f $PREFIX/bin/.openmp_impl-post-link.sh    # [linux]
+       - test -f $PREFIX/bin/.openmp_impl-pre-unlink.sh   # [linux]
+
+# here to please the linter - not used
+about:
+  home: http://openmp.llvm.org/
+  license: NCSA
+  license_file: LICENSE.txt
+  summary: The OpenMP API supports multi-platform shared-memory parallel programming in C/C++ and Fortran.
+
 
 extra:
   recipe-maintainers:
