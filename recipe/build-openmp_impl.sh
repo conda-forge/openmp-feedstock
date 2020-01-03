@@ -9,6 +9,8 @@
 # ls -lah
 # popd
 
+mkdir -p $PREFIX/bin
+
 for action in post-link pre-unlink; do
     cp $RECIPE_DIR/openmp_impl-${action}.sh $PREFIX/bin/.openmp_impl-${action}.sh
 done
