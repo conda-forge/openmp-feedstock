@@ -4,6 +4,6 @@ if [ "$PREFIX/lib/libgomp.so.1" -ef "$PREFIX/lib/libomp.so" ]; then
     rm $PREFIX/lib/libgomp.so.1
 else
     echo "\
-${PKG_NAME}-${PKG_VERSION}-${PKG_BUILDNUM}: \$PREFIX/lib/libgomp.so.1 \
-was not a symlink so it was not removed!" >> $PREFIX/.messages.txt
+${PKG_NAME}-${PKG_VERSION}: \$PREFIX/lib/libgomp.so.1 \
+is not a symlink to \$PREFIX/lib/libomp.so so it was not removed!" >> $PREFIX/.messages.txt
 fi

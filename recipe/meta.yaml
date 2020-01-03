@@ -1,4 +1,4 @@
-{% set name = "llvm-openmp" %}
+{% set name = "llvm-openmp-recipe" %}
 {% set version = "9.0.0" %}
 {% set sha256 = "9979eb1133066376cc0be29d1682bc0b0e7fb541075b391061679111ae4d3b5b" %}
 {% set openmp_ver = "4.5" %}
@@ -14,29 +14,6 @@ source:
 build:
   number: 1
   skip: true  # [win and vc<14]
-
-test:
-  requires:
-    - clangdev
-    - {{ compiler('cxx') }}  # [unix]
-    - vs2017_{{ target_platform }}  # [win]
-    - {{ pin_subpackage("openmp_impl", exact=True) }}  # [linux]
-  commands:
-    - if not exist %LIBRARY_BIN%\\libomp.dll exit 1   # [win]
-    - test -f $PREFIX/lib/libomp.so                   # [linux]
-    - test -f $PREFIX/lib/libomp.dylib                # [osx]
-    - test -f $PREFIX/lib/libgomp.so.1                # [linux]
-    - test -f $PREFIX/bin/.openmp_impl-post-link.sh   # [linux]
-    - test -f $PREFIX/bin/.openmp_impl-pre-unlink.sh  # [linux]
-    - if not exist %LIBRARY_LIB%\\libomp.lib exit 1   # [win]
-    - if not exist %LIBRARY_INC%\\omp.h exit 1        # [win]
-    - test -f $PREFIX/include/omp.h                   # [unix]
-    - $PREFIX/bin/clang -v -fopenmp -I$PREFIX/include -L$PREFIX/lib -Wl,-rpath,$PREFIX/lib omp_hello.c -o omp_hello  # [not win]
-    - "%LIBRARY_BIN%\\clang -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe"  # [win]
-    - ./omp_hello            # [unix]
-    - "%cd%\\omp_hello.exe"  # [win]
-  files:
-    - omp_hello.c
 
 outputs:
   - name: llvm-openmp
@@ -64,20 +41,40 @@ outputs:
       license: NCSA
       license_file: LICENSE.txt
       summary: The OpenMP API supports multi-platform shared-memory parallel programming in C/C++ and Fortran.
+    test:
+      requires:
+        - clangdev
+        - {{ compiler('cxx') }}  # [unix]
+        - vs2017_{{ target_platform }}  # [win]
+      commands:
+        - if not exist %LIBRARY_BIN%\\libomp.dll exit 1   # [win]
+        - test -f $PREFIX/lib/libomp.so                   # [linux]
+        - test -f $PREFIX/lib/libomp.dylib                # [osx]
+        - if not exist %LIBRARY_LIB%\\libomp.lib exit 1   # [win]
+        - if not exist %LIBRARY_INC%\\omp.h exit 1        # [win]
+        - test -f $PREFIX/include/omp.h                   # [unix]
+        - $PREFIX/bin/clang -v -fopenmp -I$PREFIX/include -L$PREFIX/lib -Wl,-rpath,$PREFIX/lib omp_hello.c -o omp_hello  # [not win]
+        - "%LIBRARY_BIN%\\clang -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe"  # [win]
+        - ./omp_hello            # [unix]
+        - "%cd%\\omp_hello.exe"  # [win]
+      files:
+        - omp_hello.c
 
-  - name: openmp_impl                        # [linux]
-    script: build-openmp_impl.sh             # [linux]
-    version: {{ openmp_ver }}                # [linux]
-    requirements:                            # [linux]
-      run:                                   # [linux]
-        - llvm-openmp                        # [linux]
-    build:                                   # [linux]
-      string: 0_llvm                         # [linux]
-    about:                                   # [linux]
-      summary: OpenMP Implementation Mutex   # [linux]
-      license: NCSA                          # [linux]
-      license_file: LICENSE.txt              # [linux]
-      home: http://openmp.llvm.org/          # [linux]
+  - name: openmp_impl                                     # [linux]
+    script: build-openmp_impl.sh                          # [linux]
+    version: {{ openmp_ver }}                             # [linux]
+    requirements:                                         # [linux]
+      run:                                                # [linux]
+        - llvm-openmp                                     # [linux]
+    build:                                                # [linux]
+      string: 0_llvm                                      # [linux]
+    about:                                                # [linux]
+      summary: OpenMP Implementation Mutex                # [linux]
+      license: NCSA                                       # [linux]
+      license_file: LICENSE.txt                           # [linux]
+      home: http://openmp.llvm.org/                       # [linux]
+    test:                                                 # [linux]
+      script: test-openmp_impl.sh                         # [linux]
 
 extra:
   recipe-maintainers:
