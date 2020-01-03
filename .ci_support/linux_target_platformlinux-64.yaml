@@ -15,5 +15,7 @@ pin_run_as_build:
     max_pin: x.x.x
   vc:
     max_pin: x
+target_platform:
+- linux-64
 vc:
 - '14'
