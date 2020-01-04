@@ -69,6 +69,8 @@ outputs:
     build:
       string: 0_llvm
       skip: True  # [not linux]
+      always_include_files:
+        - lib/libgomp.so.1
     about:
       summary: OpenMP Implementation Mutex
       license: BSD-3-Clause
