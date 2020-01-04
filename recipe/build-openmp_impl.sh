@@ -1,6 +1,8 @@
 
-if [[ ${targt_platform} == "linux-64" ]]; then
-    rm -f $PREFIX/lib/libgomp.so.1
+rm -f $PREFIX/lib/libgomp${SHLIB_EXT}.1
+if [ -f $PREFIX/lib/libgomp${SHLIB_EXT}.1 ]; then
+    echo "could not remove \$PREFIX/lib/libgomp${SHLIB_EXT}.1"
+    exit 1
 fi
 
 mkdir -p $PREFIX/lib
