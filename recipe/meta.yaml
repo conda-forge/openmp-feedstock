@@ -64,7 +64,7 @@ outputs:
     script: build-openmp_impl.sh                             # [linux]
     version: {{ openmp_ver }}                                # [linux]
     requirements:                                            # [linux]
-      run:                                                   # [linux]
+      host:                                                  # [linux]
         - llvm-openmp                                        # [linux]
     build:                                                   # [linux]
       string: 0_llvm                                         # [linux]
@@ -76,8 +76,8 @@ outputs:
     test:                                                    # [linux]
       commands:                                              # [linux]
        - test -f $PREFIX/lib/libgomp.so.1                    # [linux]
-       - test -f $PREFIX/bin/.openmp_impl-post-link.sh       # [linux]
-       - test -f $PREFIX/bin/.openmp_impl-pre-unlink.sh      # [linux]
+       # - test -f $PREFIX/bin/.openmp_impl-post-link.sh       # [linux]
+       # - test -f $PREFIX/bin/.openmp_impl-pre-unlink.sh      # [linux]
 
 # here to please the linter - not used
 about:
