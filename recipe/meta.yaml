@@ -79,8 +79,16 @@ outputs:
       license_file: LICENSE
       home: https://github.com/conda-forge/openmp-feedstock
     test:
+      requires:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
       commands:
-       - test -f $PREFIX/lib/libgomp.so.1
+        - test -f $PREFIX/lib/libgomp.so.1
+        - if [ ! "$PREFIX/lib/libgomp.so.1" -ef "$PREFIX/lib/libomp.so" ]; then exit 1; fi
+        - rm -f omp_hello && ${CC} -v -fopenmp omp_hello.c -o omp_hello && ./omp_hello
+        - rm -f omp_hello && ${CXX} -v -fopenmp omp_hello.c -o omp_hello && ./omp_hello
+      files:
+        - omp_hello.c
 
 # here to please the linter - not used
 about:
