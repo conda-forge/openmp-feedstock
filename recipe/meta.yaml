@@ -1,13 +1,13 @@
 {% set name = "llvm-openmp" %}
-{% set version = "9.0.0" %}
-{% set sha256 = "9979eb1133066376cc0be29d1682bc0b0e7fb541075b391061679111ae4d3b5b" %}
+{% set version = "9.0.1" %}
+{% set sha256 = "5c94060f846f965698574d9ce22975c0e9f04c9b14088c3af5f03870af75cace" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: http://releases.llvm.org/{{ version }}/openmp-{{ version }}.src.tar.xz
+  url: https://github.com/llvm/llvm-project/releases/download/llvmorg-{{ version }}/openmp-{{ version }}.src.tar.xz
   sha256: {{ sha256 }}
 
 build:
