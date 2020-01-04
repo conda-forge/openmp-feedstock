@@ -60,24 +60,25 @@ outputs:
       files:
         - omp_hello.c
 
-  - name: openmp_impl                                        # [linux]
-    script: build-openmp_impl.sh                             # [linux]
-    version: {{ openmp_ver }}                                # [linux]
-    requirements:                                            # [linux]
-      host:                                                  # [linux]
-        - llvm-openmp                                        # [linux]
-    build:                                                   # [linux]
-      string: 0_llvm                                         # [linux]
-    about:                                                   # [linux]
-      summary: OpenMP Implementation Mutex                   # [linux]
-      license: BSD-3-Clause                                  # [linux]
-      license_file: LICENSE                                  # [linux]
-      home: https://github.com/conda-forge/openmp-feedstock  # [linux]
-    test:                                                    # [linux]
-      commands:                                              # [linux]
-       - test -f $PREFIX/lib/libgomp.so.1                    # [linux]
-       # - test -f $PREFIX/bin/.openmp_impl-post-link.sh       # [linux]
-       # - test -f $PREFIX/bin/.openmp_impl-pre-unlink.sh      # [linux]
+  - name: openmp_impl
+    script: build-openmp_impl.sh
+    version: {{ openmp_ver }}
+    requirements:
+      host:
+        - llvm-openmp
+    build:
+      string: 0_llvm
+      skip: True  # [not linux]
+    about:
+      summary: OpenMP Implementation Mutex
+      license: BSD-3-Clause
+      license_file: LICENSE
+      home: https://github.com/conda-forge/openmp-feedstock
+    test:
+      commands:
+       - test -f $PREFIX/lib/libgomp.so.1
+       # - test -f $PREFIX/bin/.openmp_impl-post-link.sh
+       # - test -f $PREFIX/bin/.openmp_impl-pre-unlink.sh
 
 # here to please the linter - not used
 about:
