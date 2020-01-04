@@ -1,6 +1,6 @@
 
 if [[ ${targt_platform} == "linux-64" ]]; then
-    rm $PREFIX/lib/libgomp.so.1
+    rm -f $PREFIX/lib/libgomp.so.1
 fi
 
 mkdir -p $PREFIX/lib
