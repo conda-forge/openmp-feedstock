@@ -66,6 +66,8 @@ outputs:
     requirements:
       host:
         - llvm-openmp
+      run:
+        - llvm-openmp
     build:
       string: 0_llvm
       skip: True  # [not linux]
