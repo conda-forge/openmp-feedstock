@@ -72,7 +72,11 @@ outputs:
       string: 0_llvm
       skip: True  # [not linux]
       always_include_files:
+        # this major version has to match the libgomp version from gcc
         - lib/libgomp.so.1
+      run_exports:
+        strong:
+          - {{ pin_subpackage("openmp_impl", max_pin="x.x") }}
     about:
       summary: OpenMP Implementation Mutex
       license: BSD-3-Clause
@@ -86,7 +90,9 @@ outputs:
         - test -f $PREFIX/lib/libgomp.so.1
         - if [ ! "$PREFIX/lib/libgomp.so.1" -ef "$PREFIX/lib/libomp.so" ]; then exit 1; fi
         - rm -f omp_hello && ${CC} -v -fopenmp omp_hello.c -o omp_hello && ./omp_hello
+        - if [[ ! `ldd omp_hello | grep "libomp.so"` ]]; then exit 1; fi
         - rm -f omp_hello && ${CXX} -v -fopenmp omp_hello.c -o omp_hello && ./omp_hello
+        - if [[ ! `ldd omp_hello | grep "libomp.so"` ]]; then exit 1; fi
       files:
         - omp_hello.c
 
