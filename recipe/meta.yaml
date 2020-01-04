@@ -65,9 +65,9 @@ outputs:
     version: {{ openmp_ver }}
     requirements:
       host:
-        - llvm-openmp
+        - {{ pin_subpackage("llvm-openmp", exact=True) }}
       run:
-        - llvm-openmp
+        - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
     build:
       string: 0_llvm
       skip: True  # [not linux]
