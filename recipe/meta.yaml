@@ -68,6 +68,8 @@ outputs:
         - {{ pin_subpackage("llvm-openmp", exact=True) }}
       run:
         - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
+      run_constrained:
+        - libgcc-ng * openmp_impl*
     build:
       string: 0_llvm
       skip: True  # [not linux]
