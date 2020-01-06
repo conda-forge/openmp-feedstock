@@ -76,7 +76,7 @@ outputs:
         - lib/libgomp.so.1
       run_exports:
         strong:
-          - {{ pin_subpackage("openmp_impl", max_pin="x.x") }}
+          - {{ pin_subpackage("openmp_impl", max_pin=None) }}
     about:
       summary: OpenMP Implementation Mutex
       license: BSD-3-Clause
