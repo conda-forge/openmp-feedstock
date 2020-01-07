@@ -64,8 +64,8 @@ outputs:
     script: build-openmp_impl.sh
     version: {{ openmp_ver }}
     requirements:
-      host:
-        - llvm-openmp
+      # host:
+      #   - llvm-openmp
       run:
         - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
         - _libgcc_mutex {{ _libgcc_mutex }}
