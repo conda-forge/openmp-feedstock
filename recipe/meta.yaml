@@ -75,6 +75,8 @@ outputs:
       always_include_files:
         # this major version has to match the libgomp version from gcc
         - lib/libgomp.so.1
+      track_features:
+        - llvm_openmp
       run_exports:
         strong:
           - {{ pin_subpackage("openmp_impl", max_pin=None) }}
