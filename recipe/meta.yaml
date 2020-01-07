@@ -92,7 +92,6 @@ outputs:
         - if [ ! "$PREFIX/lib/libgomp.so.1" -ef "$PREFIX/lib/libomp.so" ]; then exit 1; fi
         - rm -f omp_hello && ${CC} -v -fopenmp omp_hello.c -o omp_hello && ./omp_hello
         - rm -f omp_hello && ${CXX} -v -fopenmp omp_hello.c -o omp_hello && ./omp_hello
-        - if [ ! "$PREFIX/lib/libgomp.so" -ef "$PREFIX/lib/libomp.so" ]; then exit 1; fi
       files:
         - omp_hello.c
 
