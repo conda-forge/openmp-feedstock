@@ -65,7 +65,7 @@ outputs:
     version: {{ openmp_ver }}
     requirements:
       host:
-        - {{ pin_subpackage("llvm-openmp", exact=True) }}
+        - llvm-openmp
       run:
         - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
         - _libgcc_mutex {{ _libgcc_mutex }}
