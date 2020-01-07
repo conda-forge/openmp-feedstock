@@ -19,3 +19,5 @@ target_platform:
 - linux-64
 vc:
 - '14'
+_libgcc_mutex:
+- 0.1 conda_forge
