@@ -60,14 +60,32 @@ outputs:
       files:
         - omp_hello.c
 
+  - name: _openmp_mutex_build_shim
+    script: make-build-shim.sh
+    build:
+      skip: True  # [not linux]
+    about:
+      summary: OpenMP Implementation Mutex Build Shim
+      license: BSD-3-Clause
+      license_file: LICENSE
+      home: https://github.com/conda-forge/openmp-feedstock
+      description: |
+        This build shim is needed because we end up with a circular dependency
+        when building `_openmp_mutex * 0_llvm`. This mutex depends on `llvm-openmp`
+        which depends on `libgcc-ng` which depends on `_openmp_mutex * 0_gnu`.
+        By using the build shim, we break this circular dependency in the build.
+    test:
+      commands:
+        - test -f $PREFIX/lib/libomp.so
+
   - name: openmp_impl
     script: build-openmp_impl.sh
     version: {{ openmp_ver }}
     requirements:
       host:
-        - {{ pin_subpackage("llvm-openmp", exact=True) }}
+        - {{ pin_subpackage("_openmp_mutex_build_shim", exact=True) }}
       run:
-        - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
+        - llvm-openmp >={{ version }}
         - _libgcc_mutex {{ _libgcc_mutex }}  # [linux]
     build:
       string: 0_llvm
