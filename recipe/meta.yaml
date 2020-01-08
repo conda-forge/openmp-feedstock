@@ -60,7 +60,7 @@ outputs:
       files:
         - omp_hello.c
 
-  - name: _openmp_mutex
+  - name: openmp_impl
     script: build-openmp_impl.sh
     version: {{ openmp_ver }}
     requirements:
