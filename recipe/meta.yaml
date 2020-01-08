@@ -68,7 +68,7 @@ outputs:
         - {{ pin_subpackage("llvm-openmp", exact=True) }}
       run:
         - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
-        - _libgcc_mutex {{ _libgcc_mutex }}
+        - _libgcc_mutex {{ _libgcc_mutex }}  # [linux]
     build:
       string: 0_llvm
       skip: True  # [not linux]
