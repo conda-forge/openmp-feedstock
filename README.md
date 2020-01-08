@@ -1,13 +1,13 @@
 About openmp
 ============
 
-Home: https://github.com/conda-forge/openmp-feedstock
+Home: http://openmp.llvm.org/
 
-Package license: BSD-3-Clause
+Package license: NCSA
 
 Feedstock license: BSD 3-Clause
 
-Summary: OpenMP Implementation Mutex Build Shim
+Summary: The OpenMP API supports multi-platform shared-memory parallel programming in C/C++ and Fortran.
 
 
 
@@ -68,7 +68,6 @@ Current release info
 
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-_openmp_mutex_build_shim-green.svg)](https://anaconda.org/conda-forge/_openmp_mutex_build_shim) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/_openmp_mutex_build_shim.svg)](https://anaconda.org/conda-forge/_openmp_mutex_build_shim) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/_openmp_mutex_build_shim.svg)](https://anaconda.org/conda-forge/_openmp_mutex_build_shim) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/_openmp_mutex_build_shim.svg)](https://anaconda.org/conda-forge/_openmp_mutex_build_shim) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-llvm--openmp-green.svg)](https://anaconda.org/conda-forge/llvm-openmp) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/llvm-openmp.svg)](https://anaconda.org/conda-forge/llvm-openmp) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/llvm-openmp.svg)](https://anaconda.org/conda-forge/llvm-openmp) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/llvm-openmp.svg)](https://anaconda.org/conda-forge/llvm-openmp) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-openmp_impl-green.svg)](https://anaconda.org/conda-forge/openmp_impl) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/openmp_impl.svg)](https://anaconda.org/conda-forge/openmp_impl) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/openmp_impl.svg)](https://anaconda.org/conda-forge/openmp_impl) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/openmp_impl.svg)](https://anaconda.org/conda-forge/openmp_impl) |
 
@@ -81,16 +80,16 @@ Installing `openmp` from the `conda-forge` channel can be achieved by adding `co
 conda config --add channels conda-forge
 ```
 
-Once the `conda-forge` channel has been enabled, `_openmp_mutex_build_shim, llvm-openmp, openmp_impl` can be installed with:
+Once the `conda-forge` channel has been enabled, `llvm-openmp, openmp_impl` can be installed with:
 
 ```
-conda install _openmp_mutex_build_shim llvm-openmp openmp_impl
+conda install llvm-openmp openmp_impl
 ```
 
-It is possible to list all of the versions of `_openmp_mutex_build_shim` available on your platform with:
+It is possible to list all of the versions of `llvm-openmp` available on your platform with:
 
 ```
-conda search _openmp_mutex_build_shim --channel conda-forge
+conda search llvm-openmp --channel conda-forge
 ```
 
 
