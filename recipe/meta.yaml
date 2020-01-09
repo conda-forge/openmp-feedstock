@@ -66,44 +66,6 @@ outputs:
       files:
         - omp_hello.c
 
-  - name: openmp_impl
-    script: build-openmp_impl.sh
-    version: {{ openmp_ver }}
-    requirements:
-      run:
-        - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
-        # the selector here serves no real purpose, but conda appears
-        # to error without it, so here we are
-        - _libgcc_mutex {{ _libgcc_mutex }}  # [linux]
-    build:
-      string: 0_llvm
-      skip: True  # [not linux]
-      always_include_files:
-        # this major version has to match the libgomp version from gcc
-        - lib/libgomp.so.1
-      track_features:
-        - llvm_openmp
-      ignore_run_exports:
-        - openmp_impl
-    about:
-      summary: OpenMP Implementation Mutex
-      license: BSD-3-Clause
-      license_file: LICENSE
-      home: https://github.com/conda-forge/openmp-feedstock
-    test:
-      requires:
-        - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
-      commands:
-        - test -f $PREFIX/lib/libgomp.so.1
-        - if [ ! "$PREFIX/lib/libgomp.so.1" -ef "$PREFIX/lib/libomp.so" ]; then exit 1; fi
-        - rm -f omp_hello && ${CC} -v -fopenmp omp_hello.c -o omp_hello && ./omp_hello
-        - ldd omp_hello  # [linux]
-        - rm -f omp_hello && ${CXX} -v -fopenmp omp_hello.c -o omp_hello && ./omp_hello
-        - ldd omp_hello  # [linux]
-      files:
-        - omp_hello.c
-
 # here to please the linter - not used
 about:
   home: http://openmp.llvm.org/

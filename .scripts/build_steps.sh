@@ -32,6 +32,9 @@ make_build_number "${FEEDSTOCK_ROOT}" "${RECIPE_ROOT}" "${CONFIG_FILE}"
 conda build "${RECIPE_ROOT}" -m "${CI_SUPPORT}/${CONFIG}.yaml" \
     --clobber-file "${CI_SUPPORT}/clobber_${CONFIG}.yaml"
 
+conda build "${FEEDSTOCK_ROOT}/recipe_mutex" -m "${CI_SUPPORT}/${CONFIG}.yaml" \
+    --clobber-file "${CI_SUPPORT}/clobber_${CONFIG}.yaml"
+
 if [[ "${UPLOAD_PACKAGES}" != "False" ]]; then
     upload_package "${FEEDSTOCK_ROOT}" "${RECIPE_ROOT}" "${CONFIG_FILE}"
 fi
