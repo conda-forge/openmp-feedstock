@@ -22,6 +22,8 @@ outputs:
     build:
       ignore_run_exports:
         - libgcc-ng
+        - libstdcxx-ng
+        - openmp_impl
       run_exports:
         strong:
           - {{ pin_subpackage("llvm-openmp", max_pin=None) }}  # [not linux]

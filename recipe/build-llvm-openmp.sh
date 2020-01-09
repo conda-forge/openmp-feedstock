@@ -6,7 +6,7 @@ if [[ "${target_platform}" == "osx-64" ]]; then
   export CPPFLAGS="-mmacosx-version-min=10.9 -I${PREFIX}/include -D_FORTIFY_SOURCE=2"
 fi
 
-export LDFLAGS="$LDFLAGS -static-libgcc"
+export LDFLAGS="$LDFLAGS -static-libgcc -static-libstdc++"
 
 cmake \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
