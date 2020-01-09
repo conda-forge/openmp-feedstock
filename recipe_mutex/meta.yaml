@@ -16,6 +16,8 @@ outputs:
     script: build-openmp_impl.sh
     version: {{ openmp_ver }}
     requirements:
+      host:
+        - llvm-openmp >=9.0.1
       run:
         - llvm-openmp >=9.0.1
         # the selector here serves no real purpose, but conda appears
