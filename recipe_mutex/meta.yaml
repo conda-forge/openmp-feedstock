@@ -17,7 +17,7 @@ outputs:
     version: {{ openmp_ver }}
     requirements:
       run:
-        - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
+        - llvm-openmp >=9.0.1
         # the selector here serves no real purpose, but conda appears
         # to error without it, so here we are
         - _libgcc_mutex {{ _libgcc_mutex }}  # [linux]
