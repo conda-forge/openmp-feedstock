@@ -28,7 +28,7 @@ outputs:
         strong:
           - {{ pin_subpackage("llvm-openmp", max_pin=None) }}  # [not linux]
           - openmp_impl >={{ openmp_ver }}  # [linux]
-          - openmp_impl {{ openmp_ver }} 0_llvm            # [linux]
+          - openmp_impl * *_llvm            # [linux]
     requirements:
       build:
         - {{ compiler('cxx') }}  # [unix]
@@ -70,8 +70,6 @@ outputs:
     script: build-openmp_impl.sh
     version: {{ openmp_ver }}
     requirements:
-      host:
-        - {{ pin_subpackage("llvm-openmp", exact=True) }}
       run:
         - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
         # the selector here serves no real purpose, but conda appears
