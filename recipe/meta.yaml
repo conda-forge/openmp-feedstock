@@ -20,9 +20,13 @@ outputs:
     script: build-llvm-openmp.sh  # [not win]
     script: bld-llvm-openmp.bat   # [win]
     build:
+      ignore_run_exports:
+        - libgcc-ng
       run_exports:
         strong:
-          - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
+          - {{ pin_subpackage("llvm-openmp", max_pin=None) }}  # [not linux]
+          - openmp_impl >={{ openmp_ver }}  # [linux]
+          - openmp_impl {{ openmp_ver }} 0_llvm            # [linux]
     requirements:
       build:
         - {{ compiler('cxx') }}  # [unix]
@@ -79,6 +83,8 @@ outputs:
         - lib/libgomp.so.1
       track_features:
         - llvm_openmp
+      ignore_run_exports:
+        - openmp_impl
     about:
       summary: OpenMP Implementation Mutex
       license: BSD-3-Clause
