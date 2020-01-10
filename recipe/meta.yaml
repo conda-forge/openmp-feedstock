@@ -1,6 +1,7 @@
-{% set name = "llvm-openmp" %}
+{% set name = "openmp" %}
 {% set version = "9.0.1" %}
 {% set sha256 = "5c94060f846f965698574d9ce22975c0e9f04c9b14088c3af5f03870af75cace" %}
+{% set openmp_ver = "4.5" %}
 
 package:
   name: {{ name|lower }}
@@ -11,36 +12,23 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win and vc<14]
-
-test:
-  requires:
-    - clangdev
-    - {{ compiler('cxx') }}  # [unix]
-    - vs2017_{{ target_platform }}  # [win]
-  commands:
-    - if not exist %LIBRARY_BIN%\\libomp.dll exit 1   # [win]
-    - test -f $PREFIX/lib/libomp.so                   # [linux]
-    - test -f $PREFIX/lib/libomp.dylib                # [osx]
-    - if not exist %LIBRARY_LIB%\\libomp.lib exit 1   # [win]
-    - if not exist %LIBRARY_INC%\\omp.h exit 1        # [win]
-    - test -f $PREFIX/include/omp.h                   # [unix]
-    - $PREFIX/bin/clang -v -fopenmp -I$PREFIX/include -L$PREFIX/lib -Wl,-rpath,$PREFIX/lib omp_hello.c -o omp_hello  # [not win]
-    - "%LIBRARY_BIN%\\clang -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe"  # [win]
-    - ./omp_hello            # [unix]
-    - "%cd%\\omp_hello.exe"  # [win]
-  files:
-    - omp_hello.c
 
 outputs:
   - name: llvm-openmp
     script: build-llvm-openmp.sh  # [not win]
     script: bld-llvm-openmp.bat   # [win]
     build:
+      ignore_run_exports:
+        - libgcc-ng
+        - libstdcxx-ng
+        - _openmp_mutex
       run_exports:
         strong:
           - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
+          - _openmp_mutex >={{ openmp_ver }}  # [linux]
+          - _openmp_mutex * *_llvm            # [linux]
     requirements:
       build:
         - {{ compiler('cxx') }}  # [unix]
@@ -54,6 +42,24 @@ outputs:
         - clangdev {{ version }}|{{ version }}.*
         - llvmdev {{ version }}|{{ version }}.*
         - openmp {{ version }}|{{ version }}.*
+    test:
+      requires:
+        - clangxx
+        - {{ compiler('cxx') }}  # [unix]
+        - vs2017_{{ target_platform }}  # [win]
+      commands:
+        - if not exist %LIBRARY_BIN%\\libomp.dll exit 1   # [win]
+        - test -f $PREFIX/lib/libomp.so                   # [linux]
+        - test -f $PREFIX/lib/libomp.dylib                # [osx]
+        - if not exist %LIBRARY_LIB%\\libomp.lib exit 1   # [win]
+        - if not exist %LIBRARY_INC%\\omp.h exit 1        # [win]
+        - test -f $PREFIX/include/omp.h                   # [unix]
+        - $PREFIX/bin/clang -v -fopenmp -I$PREFIX/include -L$PREFIX/lib -Wl,-rpath,$PREFIX/lib omp_hello.c -o omp_hello  # [not win]
+        - "%LIBRARY_BIN%\\clang -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe"  # [win]
+        - ./omp_hello            # [unix]
+        - "%cd%\\omp_hello.exe"  # [win]
+      files:
+        - omp_hello.c
 
 about:
   home: http://openmp.llvm.org/
@@ -67,3 +73,4 @@ extra:
     - jakirkham
     - yesimon
     - isuruf
+    - beckermr
