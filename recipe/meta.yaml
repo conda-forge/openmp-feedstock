@@ -23,12 +23,12 @@ outputs:
       ignore_run_exports:
         - libgcc-ng
         - libstdcxx-ng
-        - openmp_impl
+        - _openmp_mutex
       run_exports:
         strong:
           - {{ pin_subpackage("llvm-openmp", max_pin=None) }}  # [not linux]
-          - openmp_impl >={{ openmp_ver }}  # [linux]
-          - openmp_impl * *_llvm            # [linux]
+          - _openmp_mutex >={{ openmp_ver }}  # [linux]
+          - _openmp_mutex * *_llvm            # [linux]
     requirements:
       build:
         - {{ compiler('cxx') }}  # [unix]
@@ -42,11 +42,6 @@ outputs:
         - clangdev {{ version }}|{{ version }}.*
         - llvmdev {{ version }}|{{ version }}.*
         - openmp {{ version }}|{{ version }}.*
-    about:
-      home: http://openmp.llvm.org/
-      license: NCSA
-      license_file: LICENSE.txt
-      summary: The OpenMP API supports multi-platform shared-memory parallel programming in C/C++ and Fortran.
     test:
       requires:
         - clangdev
@@ -66,7 +61,6 @@ outputs:
       files:
         - omp_hello.c
 
-# here to please the linter - not used
 about:
   home: http://openmp.llvm.org/
   license: NCSA
