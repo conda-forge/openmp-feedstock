@@ -26,7 +26,7 @@ outputs:
         - _openmp_mutex
       run_exports:
         strong:
-          - {{ pin_subpackage("llvm-openmp", max_pin=None) }}  # [not linux]
+          - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
           - _openmp_mutex >={{ openmp_ver }}  # [linux]
           - _openmp_mutex * *_llvm            # [linux]
     requirements:
@@ -44,7 +44,7 @@ outputs:
         - openmp {{ version }}|{{ version }}.*
     test:
       requires:
-        - clangdev
+        - clangxx
         - {{ compiler('cxx') }}  # [unix]
         - vs2017_{{ target_platform }}  # [win]
       commands:
