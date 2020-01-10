@@ -69,7 +69,6 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-llvm--openmp-green.svg)](https://anaconda.org/conda-forge/llvm-openmp) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/llvm-openmp.svg)](https://anaconda.org/conda-forge/llvm-openmp) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/llvm-openmp.svg)](https://anaconda.org/conda-forge/llvm-openmp) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/llvm-openmp.svg)](https://anaconda.org/conda-forge/llvm-openmp) |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-openmp_impl-green.svg)](https://anaconda.org/conda-forge/openmp_impl) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/openmp_impl.svg)](https://anaconda.org/conda-forge/openmp_impl) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/openmp_impl.svg)](https://anaconda.org/conda-forge/openmp_impl) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/openmp_impl.svg)](https://anaconda.org/conda-forge/openmp_impl) |
 
 Installing openmp
 =================
@@ -80,10 +79,10 @@ Installing `openmp` from the `conda-forge` channel can be achieved by adding `co
 conda config --add channels conda-forge
 ```
 
-Once the `conda-forge` channel has been enabled, `llvm-openmp, openmp_impl` can be installed with:
+Once the `conda-forge` channel has been enabled, `llvm-openmp` can be installed with:
 
 ```
-conda install llvm-openmp openmp_impl
+conda install llvm-openmp
 ```
 
 It is possible to list all of the versions of `llvm-openmp` available on your platform with:
