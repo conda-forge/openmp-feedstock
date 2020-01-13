@@ -34,6 +34,7 @@ outputs:
         - {{ compiler('cxx') }}  # [unix]
         - vs2017_{{ target_platform }}  # [win]
         - cmake
+        - make  # [unix]
         - perl
         - ninja  # [win]
       host:
