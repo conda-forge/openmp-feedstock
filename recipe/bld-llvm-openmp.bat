@@ -17,8 +17,8 @@ cmake --build . --target install
 if errorlevel 1 exit 1
 
 :: delete libiomp5md.dll which is incorrectly copied over in the build
-del /F /Q %LIBRARY_PREFIX%\bin\libiomp5md.dll
-del /F /Q %LIBRARY_PREFIX%\lib\libiomp5md.dll
+:: del /F /Q %LIBRARY_PREFIX%\bin\libiomp5md.dll
+:: del /F /Q %LIBRARY_PREFIX%\lib\libiomp5md.dll
 
 if not exist "%LIBRARY_PREFIX%\lib\clang\%PKG_VERSION%\include\" mkdir "%LIBRARY_PREFIX%\lib\clang\%PKG_VERSION%\include"
 if errorlevel 1 exit 1
