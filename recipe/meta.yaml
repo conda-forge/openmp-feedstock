@@ -1,6 +1,6 @@
 {% set name = "openmp" %}
-{% set version = "9.0.1" %}
-{% set sha256 = "5c94060f846f965698574d9ce22975c0e9f04c9b14088c3af5f03870af75cace" %}
+{% set version = "10.0.0" %}
+{% set sha256 = "3b9ff29a45d0509a1e9667a0feb43538ef402ea8cfc7df3758a01f20df08adfa" %}
 {% set openmp_ver = "4.5" %}
 
 package:
@@ -12,13 +12,13 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 2
+  number: 0
   skip: true  # [win and vc<14]
 
 outputs:
   - name: llvm-openmp
     script: build-llvm-openmp.sh  # [not win]
-    script: bld-llvm-openmp.bat   # [win]
+    script: bld-llvm-openmp.bat  # [win]
     build:
       ignore_run_exports:
         - libgcc-ng
@@ -56,9 +56,9 @@ outputs:
         - if not exist %LIBRARY_INC%\\omp.h exit 1        # [win]
         - test -f $PREFIX/include/omp.h                   # [unix]
         - $PREFIX/bin/clang -v -fopenmp -I$PREFIX/include -L$PREFIX/lib -Wl,-rpath,$PREFIX/lib omp_hello.c -o omp_hello  # [not win]
-        - "%LIBRARY_BIN%\\clang -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe"  # [win]
+        - '%LIBRARY_BIN%\clang -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe'   # [win]
         - ./omp_hello            # [unix]
-        - "%cd%\\omp_hello.exe"  # [win]
+        - '%cd%\omp_hello.exe'   # [win]
       files:
         - omp_hello.c
 
