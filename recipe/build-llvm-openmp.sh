@@ -10,9 +10,9 @@ if [[ "${target_platform}" == "linux"* ]]; then
   export LDFLAGS="$LDFLAGS -static-libgcc -static-libstdc++"
 fi
 
-if [ "$(uname)" == "Darwin" ]; then
-  EXTRA_ARGS='$EXTRA_ARGS -DCMAKE_C_FLAGS="-mlinker-version=305"'
-  EXTRA_ARGS='$EXTRA_ARGS -DCMAKE_CXX_FLAGS="-mlinker-version=305"'
+if [[ "${target_platform}" == "osx-64" ]]; then
+  export CFLAG="$CFLAGS -mlinker-version=305"
+  export CXXFLAGS="$CXXFLAGS -mlinker-version=305"
 fi
 
 cmake \
