@@ -10,10 +10,16 @@ if [[ "${target_platform}" == "linux"* ]]; then
   export LDFLAGS="$LDFLAGS -static-libgcc -static-libstdc++"
 fi
 
+if [ "$(uname)" == "Darwin" ]; then
+  EXTRA_ARGS='$EXTRA_ARGS -DCMAKE_C_FLAGS="-mlinker-version=305"'
+  EXTRA_ARGS='$EXTRA_ARGS -DCMAKE_CXX_FLAGS="-mlinker-version=305"'
+fi
+
 cmake \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_PREFIX_PATH=$PREFIX \
+    $EXTRA_ARGS \
     ..
 
 make -j${CPU_COUNT}
