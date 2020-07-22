@@ -17,8 +17,6 @@ perl:
 pin_run_as_build:
   perl:
     max_pin: x.x.x
-  vc:
-    max_pin: x
 target_platform:
 - osx-64
 vc:
