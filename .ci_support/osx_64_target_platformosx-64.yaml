@@ -1,19 +1,23 @@
+MACOSX_DEPLOYMENT_TARGET:
+- '10.9'
 channel_sources:
 - conda-forge,defaults
 channel_targets:
-- conda-forge main
+- conda-forge llvm_rc
 cxx_compiler:
-- gxx
+- clang_bootstrap
 cxx_compiler_version:
-- '7'
-docker_image:
-- condaforge/linux-anvil-comp7
+- '*'
+macos_machine:
+- x86_64-apple-darwin13.4.0
+macos_min_version:
+- '10.9'
 perl:
 - 5.26.2
 pin_run_as_build:
   perl:
     max_pin: x.x.x
 target_platform:
-- linux-64
+- osx-64
 vc:
 - '14'
