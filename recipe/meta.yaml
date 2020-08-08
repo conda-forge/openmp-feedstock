@@ -1,6 +1,6 @@
 {% set name = "openmp" %}
 {% set version = "11.0.0.rc1" %}
-{% set sha256 = "be015908f29747c24633106b384ea55632b269be34bec1a6ed74e014789f9a94" %}
+{% set sha256 = "6c5919a924f59c5981512020e307e47f594d825db8fe5d66da0e5ce82064e6e1" %}
 {% set openmp_ver = "4.5" %}
 
 package:
@@ -31,8 +31,7 @@ outputs:
           - _openmp_mutex * *_llvm            # [linux]
     requirements:
       build:
-        - {{ compiler('cxx') }}  # [unix]
-        - vs2017_{{ target_platform }}  # [win]
+        - {{ compiler('cxx') }}
         - cmake
         - make  # [unix]
         - perl
@@ -46,8 +45,7 @@ outputs:
     test:
       requires:
         - clangxx
-        - {{ compiler('cxx') }}  # [unix]
-        - vs2017_{{ target_platform }}  # [win]
+        - {{ compiler('cxx') }}
       commands:
         - if not exist %LIBRARY_BIN%\\libomp.dll exit 1   # [win]
         - test -f $PREFIX/lib/libomp.so                   # [linux]
