@@ -15,6 +15,6 @@ c_compiler_version:     # [osx]
 cxx_compiler_version:   # [osx]
   - "*"                 # [osx]
 channel_sources:
-  - conda-forge/label/llvm_rc,conda-forge,defaults
+  - conda-forge/label/llvm_rc,conda-forge,https://conda-web.anaconda.org/conda-forge,defaults
 channel_targets:
   - conda-forge llvm_rc
