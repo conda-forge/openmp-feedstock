@@ -1,5 +1,5 @@
---- a/runtime/src/z_Linux_asm.S   2020-09-02 18:03:36.268029852 -0500
-+++ b/runtime/src/z_Linux_asm.S   2020-09-02 18:04:57.512849121 -0500
+--- runtime/src/z_Linux_asm.S   2020-09-02 18:03:36.268029852 -0500
++++ runtime/src/z_Linux_asm.S   2020-09-02 18:04:57.512849121 -0500
 @@ -1742,6 +1742,14 @@
  #endif /* KMP_ARCH_ARM */
  
