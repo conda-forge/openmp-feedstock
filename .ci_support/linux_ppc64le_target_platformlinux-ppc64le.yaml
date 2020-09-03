@@ -15,5 +15,3 @@ pin_run_as_build:
     max_pin: x.x.x
 target_platform:
 - linux-ppc64le
-vc:
-- '14'
