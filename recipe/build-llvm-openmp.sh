@@ -3,7 +3,7 @@ cd build
 
 if [[ "${target_platform}" == osx-* ]]; then
   # See https://github.com/AnacondaRecipes/aggregate/issues/107
-  export CPPFLAGS="-mmacosx-version-min=10.9 -isystem ${PREFIX}/include -D_FORTIFY_SOURCE=2"
+  export CPPFLAGS="-mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET} -isystem ${PREFIX}/include -D_FORTIFY_SOURCE=2"
 fi
 
 if [[ "${target_platform}" == "linux"* ]]; then
@@ -20,7 +20,7 @@ cmake ${CMAKE_ARGS} \
     -DCMAKE_PREFIX_PATH=$PREFIX \
     ..
 
-make -j${CPU_COUNT}
+make -j${CPU_COUNT} VERBOSE=1
 make install
 
 rm -f $PREFIX/lib/libgomp$SHLIB_EXT
