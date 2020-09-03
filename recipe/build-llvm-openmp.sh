@@ -10,6 +10,10 @@ if [[ "${target_platform}" == "linux"* ]]; then
   export LDFLAGS="$LDFLAGS -static-libgcc -static-libstdc++"
 fi
 
+if [[ "${PKG_VERSION}" == *rc* ]]; then
+  export PKG_VERSION=${PKG_VERSION::${#PKG_VERSION}-4}
+fi
+
 cmake ${CMAKE_ARGS} \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
     -DCMAKE_BUILD_TYPE=Release \
