@@ -5,11 +5,9 @@ Home: http://openmp.llvm.org/
 
 Package license: NCSA
 
-Feedstock license: BSD-3-Clause
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/openmp-feedstock/blob/master/LICENSE.txt)
 
 Summary: The OpenMP API supports multi-platform shared-memory parallel programming in C/C++ and Fortran.
-
-
 
 Current build status
 ====================
