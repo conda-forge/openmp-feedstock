@@ -14,7 +14,7 @@ source:
     - darwin_arm64.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win and vc<14]
 
 outputs:
