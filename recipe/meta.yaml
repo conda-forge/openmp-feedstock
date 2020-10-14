@@ -1,6 +1,6 @@
 {% set name = "openmp" %}
-{% set version = "11.0.0.rc1" %}
-{% set sha256 = "6c5919a924f59c5981512020e307e47f594d825db8fe5d66da0e5ce82064e6e1" %}
+{% set version = "11.0.0" %}
+{% set sha256 = "2d704df8ca67b77d6d94ebf79621b0f773d5648963dd19e0f78efef4404b684c" %}
 {% set openmp_ver = "4.5" %}
 
 package:
