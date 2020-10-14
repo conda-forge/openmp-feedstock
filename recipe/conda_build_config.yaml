@@ -2,8 +2,3 @@ cxx_compiler:        # [osx]
   - clang_bootstrap  # [osx]
 c_compiler:          # [osx]
   - clang_bootstrap  # [osx]
-channel_sources:
-  - conda-forge/label/llvm_rc,conda-forge,defaults                                      # [not (osx and arm64)]
-  - conda-forge/label/llvm_rc,conda-forge,https://conda-web.anaconda.org/conda-forge    # [osx and arm64]
-channel_targets:
-  - conda-forge llvm_rc
