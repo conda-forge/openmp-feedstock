@@ -1,0 +1,24 @@
+--- runtime/src/z_Linux_asm.S   2020-09-02 18:03:36.268029852 -0500
++++ runtime/src/z_Linux_asm.S   2020-09-02 18:04:57.512849121 -0500
+@@ -1742,6 +1742,14 @@
+ #endif /* KMP_ARCH_ARM */
+ 
+ #if KMP_ARCH_PPC64 || KMP_ARCH_AARCH64 || KMP_ARCH_MIPS64 || KMP_ARCH_RISCV64
++# if KMP_OS_DARWIN
++    .data
++    .comm .gomp_critical_user_,32
++    .data
++    .globl ___kmp_unnamed_critical_addr
++___kmp_unnamed_critical_addr:
++    .quad .gomp_critical_user_
++#else
+     .data
+     .comm .gomp_critical_user_,32,8
+     .data
+@@ -1750,6 +1758,7 @@
+ __kmp_unnamed_critical_addr:
+     .8byte .gomp_critical_user_
+     .size __kmp_unnamed_critical_addr,8
++#endif /* KMP_OS_DARWIN */
+ #endif /* KMP_ARCH_PPC64 || KMP_ARCH_AARCH64 || KMP_ARCH_MIPS64 ||
+           KMP_ARCH_RISCV64 */

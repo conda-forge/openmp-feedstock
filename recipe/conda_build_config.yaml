@@ -1,16 +1,4 @@
-cxx_compiler:
+cxx_compiler:        # [osx]
   - clang_bootstrap  # [osx]
-  - gxx              # [linux]
-  - vs2017           # [win]
-c_compiler:
+c_compiler:          # [osx]
   - clang_bootstrap  # [osx]
-  - gcc              # [linux]
-  - vs2017           # [win]
-vc:
-  - 14
-python:
-  - 3.7
-c_compiler_version:     # [osx]
-  - "*"                 # [osx]
-cxx_compiler_version:   # [osx]
-  - "*"                 # [osx]

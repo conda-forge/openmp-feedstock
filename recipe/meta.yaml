@@ -1,6 +1,6 @@
 {% set name = "openmp" %}
-{% set version = "10.0.1" %}
-{% set sha256 = "d19f728c8e04fb1e94566c8d76aef50ec926cd2f95ef3bf1e0a5de4909b28b44" %}
+{% set version = "11.0.0" %}
+{% set sha256 = "2d704df8ca67b77d6d94ebf79621b0f773d5648963dd19e0f78efef4404b684c" %}
 {% set openmp_ver = "4.5" %}
 
 package:
@@ -8,8 +8,10 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/llvm/llvm-project/releases/download/llvmorg-{{ version }}/openmp-{{ version }}.src.tar.xz
+  url: https://github.com/llvm/llvm-project/releases/download/llvmorg-{{ version.replace(".rc", "-rc") }}/openmp-{{ version.replace(".rc", "rc") }}.src.tar.xz
   sha256: {{ sha256 }}
+  patches:
+    - darwin_arm64.patch
 
 build:
   number: 0
@@ -31,8 +33,7 @@ outputs:
           - _openmp_mutex * *_llvm            # [linux]
     requirements:
       build:
-        - {{ compiler('cxx') }}  # [unix]
-        - vs2017_{{ target_platform }}  # [win]
+        - {{ compiler('cxx') }}
         - cmake
         - make  # [unix]
         - perl
@@ -46,8 +47,7 @@ outputs:
     test:
       requires:
         - clangxx
-        - {{ compiler('cxx') }}  # [unix]
-        - vs2017_{{ target_platform }}  # [win]
+        - {{ compiler('cxx') }}
       commands:
         - if not exist %LIBRARY_BIN%\\libomp.dll exit 1   # [win]
         - test -f $PREFIX/lib/libomp.so                   # [linux]
