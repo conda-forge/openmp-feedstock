@@ -1,3 +1,5 @@
+cdt_name:
+- cos7
 channel_sources:
 - conda-forge,defaults
 channel_targets:
@@ -5,13 +7,13 @@ channel_targets:
 cxx_compiler:
 - gxx
 cxx_compiler_version:
-- '7'
+- '8'
 docker_image:
-- condaforge/linux-anvil-comp7
+- condaforge/linux-anvil-ppc64le
 perl:
 - 5.26.2
 pin_run_as_build:
   perl:
     max_pin: x.x.x
 target_platform:
-- linux-64
+- linux-ppc64le
