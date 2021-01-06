@@ -1,6 +1,6 @@
 {% set name = "openmp" %}
-{% set version = "11.0.0" %}
-{% set sha256 = "2d704df8ca67b77d6d94ebf79621b0f773d5648963dd19e0f78efef4404b684c" %}
+{% set version = "11.0.1" %}
+{% set sha256 = "4d15a21b90e7de2f01296503f6e4b16c50197fbe9c82e7e81f9c07e28bd82ca7" %}
 {% set openmp_ver = "4.5" %}
 
 package:
@@ -14,7 +14,7 @@ source:
     - darwin_arm64.patch
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win and vc<14]
 
 outputs:
