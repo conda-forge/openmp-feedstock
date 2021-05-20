@@ -10,8 +10,6 @@ package:
 source:
   url: https://github.com/llvm/llvm-project/releases/download/llvmorg-{{ version.replace(".rc", "-rc") }}/openmp-{{ version.replace(".rc", "rc") }}.src.tar.xz
   sha256: {{ sha256 }}
-  patches:
-    - darwin_arm64.patch
 
 build:
   number: 0
