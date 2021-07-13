@@ -1,8 +1,8 @@
 mkdir build
 cd build
 
-set "CC=cl.exe"
-set "CXX=cl.exe"
+set "CC=clang-cl.exe"
+set "CXX=clang-cl.exe"
 
 cmake -G "Ninja" ^
     -DCMAKE_BUILD_TYPE="Release" ^
