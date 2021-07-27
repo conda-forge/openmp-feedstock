@@ -8,9 +8,11 @@ package:
 source:
   url: https://github.com/llvm/llvm-project/releases/download/llvmorg-{{ version.replace(".rc", "-rc") }}/openmp-{{ version.replace(".rc", "rc") }}.src.tar.xz
   sha256: 60fe79440eaa9ebf583a6ea7f81501310388c02754dbe7dc210776014d06b091
+  patches:
+    - f1b9ce2736d826df2ff4cbd67116864f0856334f.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win and vc<14]
 
 outputs:
