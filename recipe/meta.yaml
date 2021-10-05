@@ -37,6 +37,7 @@ outputs:
         - ninja  # [win]
       host:
         - llvmdev {{ version }}|{{ version }}.*
+        - zlib   # [linux]
       run_constrained:
         - clangdev {{ version }}|{{ version }}.*
         - llvmdev {{ version }}|{{ version }}.*
