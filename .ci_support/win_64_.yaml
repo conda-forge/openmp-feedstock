@@ -1,14 +1,11 @@
 channel_sources:
-- conda-forge
+- conda-forge/label/llvm_rc,conda-forge
 channel_targets:
-- conda-forge main
+- conda-forge llvm_rc
 cxx_compiler:
 - vs2017
 perl:
-- 5.26.2
-pin_run_as_build:
-  perl:
-    max_pin: x.x.x
+- 5.32.1
 target_platform:
 - win-64
 vc:
