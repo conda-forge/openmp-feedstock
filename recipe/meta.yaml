@@ -1,4 +1,5 @@
-{% set version = "13.0.1.rc2" %}
+{% set version = "13.0.1" %}
+{% set version_rc = "13.0.1.rc2" %}
 {% set openmp_ver = "4.5" %}
 
 package:
@@ -6,7 +7,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/llvm/llvm-project/releases/download/llvmorg-{{ version.replace(".rc", "-rc") }}/openmp-{{ version.replace(".rc", "rc") }}.src.tar.xz
+  url: https://github.com/llvm/llvm-project/releases/download/llvmorg-{{ version_rc.replace(".rc", "-rc") }}/openmp-{{ version_rc.replace(".rc", "rc") }}.src.tar.xz
   sha256: fca5ec3e815727c5a3ee5d35bffcb437cd5d946f870baee8fc2f6b3d643ed04e
 
 build:
