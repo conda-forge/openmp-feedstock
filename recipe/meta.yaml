@@ -1,4 +1,4 @@
-{% set version = "13.0.1" %}
+{% set version = "14.0.0.rc1" %}
 {% set openmp_ver = "4.5" %}
 
 package:
@@ -7,10 +7,7 @@ package:
 
 source:
   url: https://github.com/llvm/llvm-project/releases/download/llvmorg-{{ version.replace(".rc", "-rc") }}/openmp-{{ version.replace(".rc", "rc") }}.src.tar.xz
-  sha256: 6b79261371616c31fea18cd3ee1797c79ee38bcaf8417676d4fa366a24c96b4f
-  patches:
-    # minimal backport of https://reviews.llvm.org/D117230 to branch 13.x
-    - patches/0001-openmp-devicertl-Handle-missing-clang_tool.patch
+  sha256: fbb461b3cef6a2402173c8cff349e0dd5949846ea8651d56f1ef7f82e6562a8a
 
 build:
   number: 0
