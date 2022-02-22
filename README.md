@@ -9,6 +9,8 @@ Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/openmp-feedstoc
 
 Summary: The OpenMP API supports multi-platform shared-memory parallel programming in C/C++ and Fortran.
 
+Development: https://github.com/llvm/llvm-project/
+
 Current build status
 ====================
 
