@@ -1,17 +1,13 @@
-{% set name = "openmp" %}
-{% set version = "11.0.0.rc1" %}
-{% set sha256 = "6c5919a924f59c5981512020e307e47f594d825db8fe5d66da0e5ce82064e6e1" %}
+{% set version = "14.0.0.rc1" %}
 {% set openmp_ver = "4.5" %}
 
 package:
-  name: {{ name|lower }}
+  name: openmp
   version: {{ version }}
 
 source:
   url: https://github.com/llvm/llvm-project/releases/download/llvmorg-{{ version.replace(".rc", "-rc") }}/openmp-{{ version.replace(".rc", "rc") }}.src.tar.xz
-  sha256: {{ sha256 }}
-  patches:
-    - darwin_arm64.patch
+  sha256: fbb461b3cef6a2402173c8cff349e0dd5949846ea8651d56f1ef7f82e6562a8a
 
 build:
   number: 0
@@ -34,12 +30,14 @@ outputs:
     requirements:
       build:
         - {{ compiler('cxx') }}
+        - clang  # [win]
         - cmake
-        - make  # [unix]
+        - make   # [unix]
         - perl
         - ninja  # [win]
       host:
         - llvmdev {{ version }}|{{ version }}.*
+        - zlib   # [linux]
       run_constrained:
         - clangdev {{ version }}|{{ version }}.*
         - llvmdev {{ version }}|{{ version }}.*
@@ -65,8 +63,9 @@ outputs:
 about:
   home: http://openmp.llvm.org/
   license: NCSA
-  license_file: LICENSE.txt
+  license_file: LICENSE.TXT
   summary: The OpenMP API supports multi-platform shared-memory parallel programming in C/C++ and Fortran.
+  dev_url: https://github.com/llvm/llvm-project/
 
 extra:
   recipe-maintainers:
@@ -76,3 +75,4 @@ extra:
     - isuruf
     - beckermr
     - katietz
+    - h-vetinari
