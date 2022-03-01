@@ -18,7 +18,7 @@ cmake ${CMAKE_ARGS} \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_PREFIX_PATH=$PREFIX \
-    ..
+    ../openmp
 
 make -j${CPU_COUNT} VERBOSE=1
 make install

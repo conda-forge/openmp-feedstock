@@ -1,4 +1,10 @@
-{% set version = "14.0.0.rc1" %}
+{% set version = "14.0.0.dev55c71c9eac9b" %}
+{% set git_commit = "55c71c9eac9bc7f956a05fa9258fad4f86565450" %}
+{% if git_commit != "" %}
+  {% set archive_file = git_commit %}
+{% else %}
+  {% set archive_file = "refs/tags/llvmorg-" + version.replace(".rc", "-rc") %}
+{% endif %}
 # check https://clang.llvm.org/docs/OpenMPSupport.html
 # occasionally to see last fully supported openmp ver.
 {% set openmp_ver = "4.5" %}
@@ -8,8 +14,8 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/llvm/llvm-project/releases/download/llvmorg-{{ version.replace(".rc", "-rc") }}/openmp-{{ version.replace(".rc", "rc") }}.src.tar.xz
-  sha256: fbb461b3cef6a2402173c8cff349e0dd5949846ea8651d56f1ef7f82e6562a8a
+  url: https://github.com/llvm/llvm-project/archive/{{ archive_file }}.tar.gz
+  sha256: 1459d328ea67802f5b7c64349ba300b5ddc4a78838d6b77a8a970fe99ed3e78c
 
 build:
   number: 0
@@ -65,7 +71,7 @@ outputs:
 about:
   home: http://openmp.llvm.org/
   license: NCSA
-  license_file: LICENSE.TXT
+  license_file: openmp/LICENSE.TXT
   summary: The OpenMP API supports multi-platform shared-memory parallel programming in C/C++ and Fortran.
   dev_url: https://github.com/llvm/llvm-project/
 
