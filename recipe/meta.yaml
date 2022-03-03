@@ -13,8 +13,7 @@ source:
     - patches/0001-openmp-devicertl-Handle-missing-clang_tool.patch
 
 build:
-  number: 0
-  skip: true  # [win and vc<14]
+  number: 1
 
 outputs:
   - name: llvm-openmp
@@ -42,8 +41,6 @@ outputs:
         - llvmdev {{ version }}|{{ version }}.*
         - zlib   # [linux]
       run_constrained:
-        - clangdev {{ version }}|{{ version }}.*
-        - llvmdev {{ version }}|{{ version }}.*
         - openmp {{ version }}|{{ version }}.*
     test:
       requires:
