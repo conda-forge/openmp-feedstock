@@ -12,8 +12,7 @@ source:
   sha256: fbb461b3cef6a2402173c8cff349e0dd5949846ea8651d56f1ef7f82e6562a8a
 
 build:
-  number: 0
-  skip: true  # [win and vc<14]
+  number: 1
 
 outputs:
   - name: llvm-openmp
@@ -41,8 +40,6 @@ outputs:
         - llvmdev {{ version }}|{{ version }}.*
         - zlib   # [linux]
       run_constrained:
-        - clangdev {{ version }}|{{ version }}.*
-        - llvmdev {{ version }}|{{ version }}.*
         - openmp {{ version }}|{{ version }}.*
     test:
       requires:
