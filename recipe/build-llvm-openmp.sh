@@ -1,3 +1,14 @@
+#!/bin/bash
+set -ex
+
+# using subproject sources has been effectively broken in LLVM 14,
+# so we use the entire project, but make sure we don't pick up
+# anything in-tree other than openmp & the shared cmake folder
+mv llvm-project/openmp ./openmp
+mv llvm-project/cmake ./cmake
+rm -rf llvm-project
+cd openmp
+
 mkdir build
 cd build
 
