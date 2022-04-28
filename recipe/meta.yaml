@@ -65,7 +65,7 @@ outputs:
 
 about:
   home: http://openmp.llvm.org/
-  license: NCSA
+  license: Apache-2.0 WITH LLVM-exception
   license_file: openmp/LICENSE.TXT
   summary: The OpenMP API supports multi-platform shared-memory parallel programming in C/C++ and Fortran.
   dev_url: https://github.com/llvm/llvm-project/
