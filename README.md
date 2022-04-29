@@ -3,7 +3,7 @@ About openmp
 
 Home: http://openmp.llvm.org/
 
-Package license: NCSA
+Package license: Apache-2.0 WITH LLVM-exception
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/openmp-feedstock/blob/main/LICENSE.txt)
 
