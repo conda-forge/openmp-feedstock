@@ -3,7 +3,7 @@ channel_sources:
 channel_targets:
 - conda-forge llvm_rc
 cxx_compiler:
-- vs2017
+- vs2019
 perl:
 - 5.32.1
 target_platform:
