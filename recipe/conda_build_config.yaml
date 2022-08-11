@@ -1,7 +1,11 @@
-cxx_compiler:        # [osx]
+c_compiler:
   - clang_bootstrap  # [osx]
-c_compiler:          # [osx]
+  - gcc              # [linux]
+  - vs2019           # [win]
+cxx_compiler:
   - clang_bootstrap  # [osx]
+  - gxx              # [linux]
+  - vs2019           # [win]
 
 channel_targets:
   - conda-forge llvm_rc
