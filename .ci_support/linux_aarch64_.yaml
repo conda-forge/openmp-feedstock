@@ -16,9 +16,6 @@ docker_image:
 - quay.io/condaforge/linux-anvil-aarch64
 perl:
 - 5.32.1
-pin_run_as_build:
-  zlib:
-    max_pin: x.x
 target_platform:
 - linux-aarch64
 zlib:
