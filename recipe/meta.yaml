@@ -40,9 +40,8 @@ outputs:
         - {{ compiler('cxx') }}
         - clang  # [win]
         - cmake
-        - make   # [unix]
+        - ninja
         - perl
-        - ninja  # [win]
       host:
         - llvmdev {{ version }}|{{ version }}.*
         - zlib   # [linux]
