@@ -38,6 +38,8 @@ outputs:
     requirements:
       build:
         - {{ compiler('cxx') }}
+        # build needs C11-capable glibc
+        - sysroot_linux-64 =2.17  # [linux64]
         - clang  # [win]
         - cmake
         - ninja
