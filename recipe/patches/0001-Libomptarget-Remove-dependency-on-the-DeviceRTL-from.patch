@@ -1,8 +1,8 @@
-From 0e93c86ee75c746386bfab04ed23376e9990990c Mon Sep 17 00:00:00 2001
+From fc4c6e05a8f50df8dc7b2803652bc25f3d1fd909 Mon Sep 17 00:00:00 2001
 From: Joseph Huber <jhuber6@vols.utk.edu>
 Date: Thu, 2 Feb 2023 11:00:00 -0600
-Subject: [PATCH 1/2] [Libomptarget] Remove dependency on the DeviceRTL from
- the GPU plugins
+Subject: [PATCH] [Libomptarget] Remove dependency on the DeviceRTL from the
+ GPU plugins
 
 From https://reviews.llvm.org/D143196
 ---
