@@ -13,6 +13,7 @@ source:
   patches:
     # backport D143196 for llvm/llvm-project#60457
     - patches/0001-Libomptarget-Remove-dependency-on-the-DeviceRTL-from.patch
+    - patches/0002-add-missing-cinttypes-header.patch
   # name folder for easier deletion; we do the equivalent of downloading
   # the subproject sources, so the work folder then has openmp in it;
   # for details see build scripts
