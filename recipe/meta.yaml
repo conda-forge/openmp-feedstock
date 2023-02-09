@@ -1,4 +1,4 @@
-{% set version = "14.0.0.rc4" %}
+{% set version = "16.0.0.rc1" %}
 # check https://clang.llvm.org/docs/OpenMPSupport.html
 # occasionally to see last fully supported openmp ver.
 {% set openmp_ver = "4.5" %}
@@ -8,8 +8,15 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/llvm/llvm-project/releases/download/llvmorg-{{ version.replace(".rc", "-rc") }}/openmp-{{ version.replace(".rc", "rc") }}.src.tar.xz
-  sha256: 80689cb1c26df0801f3eabb084ced6857b6fa22f09ffaa2665959b9ecfd542bb
+  url: https://github.com/llvm/llvm-project/releases/download/llvmorg-{{ version.replace(".rc", "-rc") }}/llvm-project-{{ version.replace(".rc", "rc") }}.src.tar.xz
+  sha256: 8399db003b223ce33e3d7a5ee9df8dc3574cedffa5d9be4783660643f8402900
+  patches:
+    # backport D143196 for llvm/llvm-project#60457
+    - patches/0001-Libomptarget-Remove-dependency-on-the-DeviceRTL-from.patch
+  # name folder for easier deletion; we do the equivalent of downloading
+  # the subproject sources, so the work folder then has openmp in it;
+  # for details see build scripts
+  folder: llvm-project
 
 build:
   number: 0
@@ -31,11 +38,12 @@ outputs:
     requirements:
       build:
         - {{ compiler('cxx') }}
+        # build needs C11-capable glibc
+        - sysroot_linux-64 =2.17  # [linux64]
         - clang  # [win]
         - cmake
-        - make   # [unix]
+        - ninja
         - perl
-        - ninja  # [win]
       host:
         - llvmdev {{ version }}|{{ version }}.*
         - zlib   # [linux]
@@ -52,7 +60,8 @@ outputs:
         - if not exist %LIBRARY_LIB%\\libomp.lib exit 1   # [win]
         - if not exist %LIBRARY_INC%\\omp.h exit 1        # [win]
         - test -f $PREFIX/include/omp.h                   # [unix]
-        - $PREFIX/bin/clang -v -fopenmp -I$PREFIX/include -L$PREFIX/lib -Wl,-rpath,$PREFIX/lib omp_hello.c -o omp_hello  # [not win]
+        - export LNK_XTRA="-Wl,--allow-shlib-undefined"   # [linux]
+        - $PREFIX/bin/clang -v -fopenmp -I$PREFIX/include -L$PREFIX/lib -Wl,-rpath,$PREFIX/lib $LNK_XTRA omp_hello.c -o omp_hello  # [unix]
         - '%LIBRARY_BIN%\clang -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe'   # [win]
         - ./omp_hello            # [unix]
         - '%cd%\omp_hello.exe'   # [win]
@@ -61,8 +70,8 @@ outputs:
 
 about:
   home: http://openmp.llvm.org/
-  license: NCSA
-  license_file: LICENSE.TXT
+  license: Apache-2.0 WITH LLVM-exception
+  license_file: openmp/LICENSE.TXT
   summary: The OpenMP API supports multi-platform shared-memory parallel programming in C/C++ and Fortran.
   dev_url: https://github.com/llvm/llvm-project/
 

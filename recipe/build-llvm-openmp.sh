@@ -1,3 +1,14 @@
+#!/bin/bash
+set -ex
+
+# using subproject sources has been effectively broken in LLVM 14,
+# so we use the entire project, but make sure we don't pick up
+# anything in-tree other than openmp & the shared cmake folder
+mv llvm-project/openmp ./openmp
+mv llvm-project/cmake ./cmake
+rm -rf llvm-project
+cd openmp
+
 mkdir build
 cd build
 
@@ -14,14 +25,15 @@ if [[ "${PKG_VERSION}" == *rc* ]]; then
   export PKG_VERSION=${PKG_VERSION::${#PKG_VERSION}-4}
 fi
 
-cmake ${CMAKE_ARGS} \
+cmake -G Ninja \
+    ${CMAKE_ARGS} \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_PREFIX_PATH=$PREFIX \
     ..
 
-make -j${CPU_COUNT} VERBOSE=1
-make install
+cmake --build .
+cmake --install .
 
 rm -f $PREFIX/lib/libgomp$SHLIB_EXT
 
