@@ -15,6 +15,11 @@ if [[ "${target_platform}" == "linux"* ]]; then
   find . -name CMakeLists.txt -print0 | xargs -0 sed -i 's/NO_INSTALL_RPATH/NO_INSTALL_RPATH DISABLE_LLVM_LINK_LLVM_DYLIB/g'
 fi
 
+if [[ "$target_platform" == "linux-ppc64le" ]]; then
+  CFLAGS="$(echo ${CFLAGS} | sed 's/-fno-plt//g')"
+  CXXFLAGS="$(echo ${CXXFLAGS} | sed 's/-fno-plt//g')"
+fi
+
 mkdir build
 cd build
 
