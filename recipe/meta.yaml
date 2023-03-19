@@ -43,6 +43,7 @@ outputs:
       host:
         - llvmdev {{ version }}|{{ version }}.*
         - zlib   # [linux]
+        - zstd   # [linux]
       run_constrained:
         - openmp {{ version }}|{{ version }}.*
     test:
