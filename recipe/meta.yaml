@@ -1,7 +1,7 @@
 {% set version = "16.0.1" %}
 # check https://clang.llvm.org/docs/OpenMPSupport.html
 # occasionally to see last fully supported openmp ver.
-{% set openmp_ver = "4.5" %}
+{% set openmp_ver = "5.1" %}
 
 package:
   name: openmp
@@ -16,7 +16,7 @@ source:
   folder: llvm-project
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: llvm-openmp
