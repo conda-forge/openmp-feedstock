@@ -1,4 +1,4 @@
-{% set version = "16.0.4" %}
+{% set version = "16.0.5" %}
 # check https://clang.llvm.org/docs/OpenMPSupport.html
 # occasionally to see last fully supported openmp ver.
 {% set openmp_ver = "4.5" %}
@@ -9,7 +9,7 @@ package:
 
 source:
   url: https://github.com/llvm/llvm-project/releases/download/llvmorg-{{ version.replace(".rc", "-rc") }}/llvm-project-{{ version.replace(".rc", "rc") }}.src.tar.xz
-  sha256: cf3c2a1152ed7a99866bd7f12c24528ada6d9f6336afb7a08416938762004c9f
+  sha256: 37f540124b9cfd4680666e649f557077f9937c9178489cea285a672e714b2863
   # name folder for easier deletion; we do the equivalent of downloading
   # the subproject sources, so the work folder then has openmp in it;
   # for details see build scripts
