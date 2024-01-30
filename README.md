@@ -88,14 +88,14 @@ Current release info
 Installing openmp
 =================
 
-Installing `openmp` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
+Installing `openmp` from the `conda-forge/label/llvm_rc` channel can be achieved by adding `conda-forge/label/llvm_rc` to your channels with:
 
 ```
-conda config --add channels conda-forge
+conda config --add channels conda-forge/label/llvm_rc
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `llvm-openmp` can be installed with `conda`:
+Once the `conda-forge/label/llvm_rc` channel has been enabled, `llvm-openmp` can be installed with `conda`:
 
 ```
 conda install llvm-openmp
@@ -110,26 +110,26 @@ mamba install llvm-openmp
 It is possible to list all of the versions of `llvm-openmp` available on your platform with `conda`:
 
 ```
-conda search llvm-openmp --channel conda-forge
+conda search llvm-openmp --channel conda-forge/label/llvm_rc
 ```
 
 or with `mamba`:
 
 ```
-mamba search llvm-openmp --channel conda-forge
+mamba search llvm-openmp --channel conda-forge/label/llvm_rc
 ```
 
 Alternatively, `mamba repoquery` may provide more information:
 
 ```
 # Search all versions available on your platform:
-mamba repoquery search llvm-openmp --channel conda-forge
+mamba repoquery search llvm-openmp --channel conda-forge/label/llvm_rc
 
 # List packages depending on `llvm-openmp`:
-mamba repoquery whoneeds llvm-openmp --channel conda-forge
+mamba repoquery whoneeds llvm-openmp --channel conda-forge/label/llvm_rc
 
 # List dependencies of `llvm-openmp`:
-mamba repoquery depends llvm-openmp --channel conda-forge
+mamba repoquery depends llvm-openmp --channel conda-forge/label/llvm_rc
 ```
 
 
