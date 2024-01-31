@@ -14,6 +14,9 @@ source:
   # the subproject sources, so the work folder then has openmp in it;
   # for details see build scripts
   folder: llvm-project
+  patches:
+    # backport https://github.com/llvm/llvm-project/pull/80174
+    - patches/0001-openmp-On-Windows-fix-standalone-cmake-build.patch
 
 build:
   number: 0
