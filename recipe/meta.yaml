@@ -17,6 +17,8 @@ source:
   patches:
     # backport https://github.com/llvm/llvm-project/pull/80174
     - patches/0001-openmp-On-Windows-fix-standalone-cmake-build.patch
+    # intermediate fix for https://github.com/llvm/llvm-project/issues/54596
+    - patches/0002-link-libomp-to-compiler-rt-on-osx-arm.patch
 
 build:
   number: 0
@@ -46,6 +48,8 @@ outputs:
         - llvmdev {{ version }}|{{ version }}.*
         - zlib   # [linux]
         - zstd   # [linux]
+        # see https://github.com/llvm/llvm-project/issues/54596
+        - compiler-rt  # [osx and arm64]
       run_constrained:
         - openmp {{ version }}|{{ version }}.*
     test:
