@@ -2,3 +2,8 @@ c_compiler:          # [osx]
   - clang_bootstrap  # [osx]
 cxx_compiler:        # [osx]    
   - clang_bootstrap  # [osx]
+
+channel_targets:
+  - conda-forge llvm_dev
+channel_sources:
+  - conda-forge/label/llvm_dev,conda-forge
