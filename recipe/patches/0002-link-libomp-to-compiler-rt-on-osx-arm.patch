@@ -1,0 +1,26 @@
+From 9fd9c8c26219bf8995321b7786e853d6c51e1dc8 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Thu, 1 Feb 2024 12:29:07 +0100
+Subject: [PATCH 2/2] link libomp to compiler-rt on osx-arm
+
+---
+ openmp/runtime/src/CMakeLists.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/openmp/runtime/src/CMakeLists.txt b/openmp/runtime/src/CMakeLists.txt
+index 619d4f7ba458..11d9c969e381 100644
+--- a/openmp/runtime/src/CMakeLists.txt
++++ b/openmp/runtime/src/CMakeLists.txt
+@@ -161,6 +161,12 @@ if(OPENMP_STANDALONE_BUILD OR (NOT OPENMP_ENABLE_LIBOMP_PROFILING))
+   add_library(omp ${LIBOMP_LIBRARY_KIND} ${LIBOMP_SOURCE_FILES})
+   # Linking command will include libraries in LIBOMP_CONFIGURED_LIBFLAGS
+   target_link_libraries(omp ${LIBOMP_CONFIGURED_LIBFLAGS} ${LIBOMP_DL_LIBS})
++  if(APPLE AND CMAKE_SYSTEM_PROCESSOR STREQUAL "arm64")
++    cmake_path(SET CLANG_RT_BUILTINS_LIBRARY
++               NORMALIZE
++               "$ENV{PREFIX}/lib/clang/$ENV{PKG_VERSION_MAJOR}/lib/libclang_rt.builtins_arm64_osx.a")
++    target_link_libraries(omp ${CLANG_RT_BUILTINS_LIBRARY})
++  endif()
+ else()
+   add_llvm_library(omp ${LIBOMP_LIBRARY_KIND} ${LIBOMP_SOURCE_FILES} PARTIAL_SOURCES_INTENDED
+     LINK_LIBS ${LIBOMP_CONFIGURED_LIBFLAGS} ${LIBOMP_DL_LIBS}
