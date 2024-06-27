@@ -3,8 +3,8 @@
 :: using subproject sources has been effectively broken in LLVM 14,
 :: so we use the entire project, but make sure we don't pick up
 :: anything in-tree other than openmp & the shared cmake folder
-robocopy llvm-project\openmp .\openmp /E
-robocopy llvm-project\cmake .\cmake /E
+robocopy llvm-project\openmp .\openmp /E >nul
+robocopy llvm-project\cmake .\cmake /E >nul
 :: do not check %ERRORLEVEL%! robocopy returns an exit code
 :: of 1 if one or more files were successfully copied.
 del /f /q llvm-project
