@@ -26,8 +26,8 @@ build:
 
 outputs:
   - name: llvm-openmp
-    script: build-llvm-openmp.sh  # [not win]
-    script: bld-llvm-openmp.bat  # [win]
+    script: build-pkg.sh   # [unix]
+    script: build-pkg.bat  # [win]
     build:
       ignore_run_exports:
         - libgcc-ng
@@ -58,20 +58,25 @@ outputs:
       requires:
         - clangxx
         - {{ compiler('cxx') }}
+      files:
+        - omp_hello.c
       commands:
-        - if not exist %LIBRARY_BIN%\\libomp.dll exit 1   # [win]
+        # headers
+        - test -f $PREFIX/include/omp.h                   # [unix]
+        - if not exist %LIBRARY_INC%\omp.h exit 1         # [win]
+
+        # shared library
         - test -f $PREFIX/lib/libomp.so                   # [linux]
         - test -f $PREFIX/lib/libomp.dylib                # [osx]
-        - if not exist %LIBRARY_LIB%\\libomp.lib exit 1   # [win]
-        - if not exist %LIBRARY_INC%\\omp.h exit 1        # [win]
-        - test -f $PREFIX/include/omp.h                   # [unix]
+        - if not exist %LIBRARY_BIN%\libomp.dll exit 1    # [win]
+        - if not exist %LIBRARY_LIB%\libomp.lib exit 1    # [win]
+
+        # compilation test
         - export LNK_XTRA="-Wl,--allow-shlib-undefined"   # [linux]
         - $PREFIX/bin/clang -v -fopenmp -I$PREFIX/include -L$PREFIX/lib -Wl,-rpath,$PREFIX/lib $LNK_XTRA omp_hello.c -o omp_hello  # [unix]
         - '%LIBRARY_BIN%\clang -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe'   # [win]
         - ./omp_hello            # [unix]
         - '%cd%\omp_hello.exe'   # [win]
-      files:
-        - omp_hello.c
 
 about:
   home: http://openmp.llvm.org/
