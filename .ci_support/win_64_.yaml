@@ -9,7 +9,7 @@ cxx_compiler:
 fortran_compiler:
 - flang
 fortran_compiler_version:
-- '19'
+- '18'
 perl:
 - 5.32.1
 target_platform:
