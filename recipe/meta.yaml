@@ -33,9 +33,10 @@ outputs:
       overlinking_ignore_patterns:  # [ppc64le]
         - "**"                      # [ppc64le]
       ignore_run_exports:
-        - libgcc-ng
-        - libstdcxx-ng
         - _openmp_mutex
+      ignore_run_exports_from:
+        - {{ compiler("cxx") }}
+        - {{ compiler("fortran") }}
       run_exports:
         strong:
           - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
