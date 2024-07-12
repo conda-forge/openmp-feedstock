@@ -29,6 +29,9 @@ outputs:
     script: build-pkg.sh   # [unix]
     script: build-pkg.bat  # [win]
     build:
+      # due to https://github.com/conda/conda-build/issues/5403
+      overlinking_ignore_patterns:  # [ppc64le]
+        - "**"                      # [ppc64le]
       ignore_run_exports:
         - libgcc-ng
         - libstdcxx-ng
