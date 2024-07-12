@@ -1,5 +1,5 @@
 cdt_name:
-- cos6
+- cos7
 channel_sources:
 - conda-forge
 channel_targets:
@@ -15,6 +15,6 @@ perl:
 target_platform:
 - linux-64
 zlib:
-- '1.2'
+- '1'
 zstd:
 - '1.5'
