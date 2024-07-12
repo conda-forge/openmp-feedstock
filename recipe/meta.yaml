@@ -9,8 +9,8 @@ package:
 
 source:
   # url: https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-{{ version.replace(".rc", "-rc") }}.tar.gz 
-  url: https://github.com/llvm/llvm-project/archive/edf5782f1780f480c3ae3fc0a44bf5432f9aa48b.tar.gz
-  sha256: 34129ca709be4fcc1cf3ae5565cb4ed93e497594923f32603e545aa5cd57bb7b
+  url: https://github.com/llvm/llvm-project/archive/3bb25636414ee5b5eaf99c0bdcc191052c9d7ffb.tar.gz
+  sha256: 72bb3117472025b4e6a6fd6b04041abc735fedbe7f023e56c0413c0cfeb3ca0c
   # name folder for easier deletion; we do the equivalent of downloading
   # the subproject sources, so the work folder then has openmp in it;
   # for details see build scripts
@@ -22,17 +22,21 @@ source:
     - patches/0002-link-libomp-to-compiler-rt-on-osx-arm.patch
 
 build:
-  number: 2
+  number: 3
 
 outputs:
   - name: llvm-openmp
     script: build-pkg.sh   # [unix]
     script: build-pkg.bat  # [win]
     build:
+      # due to https://github.com/conda/conda-build/issues/5403
+      overlinking_ignore_patterns:  # [ppc64le]
+        - "**"                      # [ppc64le]
       ignore_run_exports:
-        - libgcc-ng
-        - libstdcxx-ng
         - _openmp_mutex
+      ignore_run_exports_from:
+        - {{ compiler("cxx") }}
+        - {{ compiler("fortran") }}
       run_exports:
         strong:
           - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
