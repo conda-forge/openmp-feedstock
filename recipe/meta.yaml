@@ -21,17 +21,21 @@ source:
     - patches/0002-link-libomp-to-compiler-rt-on-osx-arm.patch
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: llvm-openmp
     script: build-pkg.sh   # [unix]
     script: build-pkg.bat  # [win]
     build:
+      # due to https://github.com/conda/conda-build/issues/5403
+      overlinking_ignore_patterns:  # [ppc64le]
+        - "**"                      # [ppc64le]
       ignore_run_exports:
-        - libgcc-ng
-        - libstdcxx-ng
         - _openmp_mutex
+      ignore_run_exports_from:
+        - {{ compiler("cxx") }}
+        - {{ compiler("fortran") }}
       run_exports:
         strong:
           - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
@@ -39,8 +43,10 @@ outputs:
           - _openmp_mutex * *_llvm            # [linux]
     requirements:
       build:
-        - {{ compiler('cxx') }}
         - {{ stdlib("c") }}
+        - {{ compiler("cxx") }}
+        # build cycle on osx: gfortran_{plat} -> libgfortran5 -> llvm-openmp
+        - {{ compiler("fortran") }}  # [not osx]
         - clang  # [win]
         - cmake
         - ninja
@@ -62,7 +68,9 @@ outputs:
       commands:
         # headers
         - test -f $PREFIX/include/omp.h                   # [unix]
+        - test -f $PREFIX/include/omp_lib.mod             # [linux]
         - if not exist %LIBRARY_INC%\omp.h exit 1         # [win]
+        - if not exist %LIBRARY_INC%\omp_lib.mod exit 1   # [win]
 
         # shared library
         - test -f $PREFIX/lib/libomp.so                   # [linux]
