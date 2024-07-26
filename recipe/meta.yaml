@@ -15,10 +15,8 @@ source:
   # for details see build scripts
   folder: llvm-project
   patches:
-    # backport https://github.com/llvm/llvm-project/pull/80174
-    - patches/0001-openmp-On-Windows-fix-standalone-cmake-build.patch
-    # intermediate fix for https://github.com/llvm/llvm-project/issues/54596
-    - patches/0002-link-libomp-to-compiler-rt-on-osx-arm.patch
+    # fix for https://github.com/llvm/llvm-project/issues/54596
+    - patches/0001-link-libomp-to-compiler-rt-on-osx-arm.patch
 
 build:
   number: 0
