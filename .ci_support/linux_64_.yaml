@@ -27,7 +27,3 @@ zip_keys:
   - cdt_name
 - - cxx_compiler_version
   - fortran_compiler_version
-zlib:
-- '1'
-zstd:
-- '1.5'

@@ -11,7 +11,7 @@ channel_sources:
 channel_targets:
 - conda-forge llvm_rc
 cxx_compiler:
-- clang_bootstrap
+- clangxx
 cxx_compiler_version:
 - '16'
 fortran_compiler:
