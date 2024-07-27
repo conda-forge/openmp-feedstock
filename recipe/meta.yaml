@@ -48,8 +48,6 @@ outputs:
         - perl
       host:
         - llvmdev {{ version }}|{{ version }}.*
-        - zlib   # [linux]
-        - zstd   # [linux]
         # see https://github.com/llvm/llvm-project/issues/54596
         - compiler-rt  # [osx and arm64]
       run_constrained:
