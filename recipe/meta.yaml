@@ -19,7 +19,7 @@ source:
     - patches/0001-link-libomp-to-compiler-rt-on-osx-arm.patch
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: llvm-openmp
@@ -41,7 +41,7 @@ outputs:
         - {{ stdlib("c") }}
         - {{ compiler("cxx") }}
         # build cycle on osx: gfortran_{plat} -> libgfortran5 -> llvm-openmp
-        - {{ compiler("fortran") }}  # [linux]
+        - {{ compiler("fortran") }}  # [not osx]
         - clang  # [win]
         - cmake
         - ninja
@@ -63,7 +63,7 @@ outputs:
         - test -f $PREFIX/include/omp.h                   # [unix]
         - test -f $PREFIX/include/omp_lib.mod             # [linux]
         - if not exist %LIBRARY_INC%\omp.h exit 1         # [win]
-        # - if not exist %LIBRARY_INC%\omp_lib.mod exit 1   # [win]
+        - if not exist %LIBRARY_INC%\omp_lib.mod exit 1   # [win]
 
         # shared library
         - test -f $PREFIX/lib/libomp.so                   # [linux]
