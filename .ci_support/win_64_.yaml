@@ -1,9 +1,15 @@
+c_stdlib:
+- vs
 channel_sources:
 - conda-forge/label/llvm_rc,conda-forge
 channel_targets:
 - conda-forge llvm_rc
 cxx_compiler:
 - vs2019
+fortran_compiler:
+- flang
+fortran_compiler_version:
+- '18'
 perl:
 - 5.32.1
 target_platform:

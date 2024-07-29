@@ -1,4 +1,4 @@
-{% set version = "18.1.0.rc4" %}
+{% set version = "19.1.0.rc1" %}
 # check https://clang.llvm.org/docs/OpenMPSupport.html
 # occasionally to see last fully supported openmp ver.
 {% set openmp_ver = "4.5" %}
@@ -8,30 +8,29 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/llvm/llvm-project/releases/download/llvmorg-{{ version.replace(".rc", "-rc") }}/llvm-project-{{ version.replace(".rc", "rc") }}.src.tar.xz
-  sha256: bc1d243472ee4868e20760c100049078343a89aa34549c69dbab389c68e0c473
+  url: https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-{{ version.replace(".rc", "-rc") }}.tar.gz
+  sha256: cd3b42caf8e78c497712a661303672c1a6279eb1a5ff8735488087319ab95214
   # name folder for easier deletion; we do the equivalent of downloading
   # the subproject sources, so the work folder then has openmp in it;
   # for details see build scripts
   folder: llvm-project
   patches:
-    # backport https://github.com/llvm/llvm-project/pull/80174
-    - patches/0001-openmp-On-Windows-fix-standalone-cmake-build.patch
-    # intermediate fix for https://github.com/llvm/llvm-project/issues/54596
-    - patches/0002-link-libomp-to-compiler-rt-on-osx-arm.patch
+    # fix for https://github.com/llvm/llvm-project/issues/54596
+    - patches/0001-link-libomp-to-compiler-rt-on-osx-arm.patch
 
 build:
   number: 0
 
 outputs:
   - name: llvm-openmp
-    script: build-llvm-openmp.sh  # [not win]
-    script: bld-llvm-openmp.bat  # [win]
+    script: build-pkg.sh   # [unix]
+    script: build-pkg.bat  # [win]
     build:
       ignore_run_exports:
-        - libgcc-ng
-        - libstdcxx-ng
         - _openmp_mutex
+      ignore_run_exports_from:
+        - {{ compiler("cxx") }}
+        - {{ compiler("fortran") }}
       run_exports:
         strong:
           - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
@@ -39,15 +38,16 @@ outputs:
           - _openmp_mutex * *_llvm            # [linux]
     requirements:
       build:
-        - {{ compiler('cxx') }}
+        - {{ stdlib("c") }}
+        - {{ compiler("cxx") }}
+        # build cycle on osx: gfortran_{plat} -> libgfortran5 -> llvm-openmp
+        - {{ compiler("fortran") }}  # [linux]
         - clang  # [win]
         - cmake
         - ninja
         - perl
       host:
         - llvmdev {{ version }}|{{ version }}.*
-        - zlib   # [linux]
-        - zstd   # [linux]
         # see https://github.com/llvm/llvm-project/issues/54596
         - compiler-rt  # [osx and arm64]
       run_constrained:
@@ -56,20 +56,27 @@ outputs:
       requires:
         - clangxx
         - {{ compiler('cxx') }}
+      files:
+        - omp_hello.c
       commands:
-        - if not exist %LIBRARY_BIN%\\libomp.dll exit 1   # [win]
+        # headers
+        - test -f $PREFIX/include/omp.h                   # [unix]
+        - test -f $PREFIX/include/omp_lib.mod             # [linux]
+        - if not exist %LIBRARY_INC%\omp.h exit 1         # [win]
+        # - if not exist %LIBRARY_INC%\omp_lib.mod exit 1   # [win]
+
+        # shared library
         - test -f $PREFIX/lib/libomp.so                   # [linux]
         - test -f $PREFIX/lib/libomp.dylib                # [osx]
-        - if not exist %LIBRARY_LIB%\\libomp.lib exit 1   # [win]
-        - if not exist %LIBRARY_INC%\\omp.h exit 1        # [win]
-        - test -f $PREFIX/include/omp.h                   # [unix]
+        - if not exist %LIBRARY_BIN%\libomp.dll exit 1    # [win]
+        - if not exist %LIBRARY_LIB%\libomp.lib exit 1    # [win]
+
+        # compilation test
         - export LNK_XTRA="-Wl,--allow-shlib-undefined"   # [linux]
         - $PREFIX/bin/clang -v -fopenmp -I$PREFIX/include -L$PREFIX/lib -Wl,-rpath,$PREFIX/lib $LNK_XTRA omp_hello.c -o omp_hello  # [unix]
         - '%LIBRARY_BIN%\clang -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe'   # [win]
         - ./omp_hello            # [unix]
         - '%cd%\omp_hello.exe'   # [win]
-      files:
-        - omp_hello.c
 
 about:
   home: http://openmp.llvm.org/
