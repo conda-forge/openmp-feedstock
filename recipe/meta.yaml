@@ -21,17 +21,15 @@ source:
     - patches/0002-link-libomp-to-compiler-rt-on-osx-arm.patch
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: llvm-openmp
     script: build-pkg.sh   # [unix]
     script: build-pkg.bat  # [win]
     build:
-      ignore_run_exports:
-        - libgcc-ng
-        - libstdcxx-ng
-        - _openmp_mutex
+      ignore_run_exports_from:
+        - {{ compiler('cxx') }}
       run_exports:
         strong:
           - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
