@@ -5,7 +5,7 @@ c_stdlib_version:
 cdt_name:
 - cos7
 channel_sources:
-- conda-forge/label/llvm_rc,conda-forge
+- conda-forge,conda-forge/label/llvm_rc
 channel_targets:
 - conda-forge llvm_rc
 cxx_compiler:
