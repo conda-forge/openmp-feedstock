@@ -36,6 +36,8 @@ requirements:
 
 outputs:
   - name: llvm-openmp
+    script: install_pkg.sh   # [unix]
+    script: install_pkg.bat  # [win]
     build:
       ignore_run_exports_from:
         - {{ compiler("cxx") }}
@@ -47,6 +49,7 @@ outputs:
           - _openmp_mutex * *_llvm            # [linux]
     requirements:
       build:
+        - cmake
         # for run-exports
         - {{ stdlib("c") }}
         - {{ compiler("cxx") }}
@@ -61,9 +64,7 @@ outputs:
       commands:
         # headers
         - test -f $PREFIX/include/omp.h                   # [unix]
-        - test -f $PREFIX/include/omp_lib.mod             # [linux]
         - if not exist %LIBRARY_INC%\omp.h exit 1         # [win]
-        - if not exist %LIBRARY_INC%\omp_lib.mod exit 1   # [win]
 
         # shared library
         - test -f $PREFIX/lib/libomp.so                   # [linux]
@@ -77,6 +78,35 @@ outputs:
         - '%LIBRARY_BIN%\clang -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe'   # [win]
         - ./omp_hello            # [unix]
         - '%cd%\omp_hello.exe'   # [win]
+
+  - name: llvm-openmp-fortran
+    script: install_pkg.sh   # [unix]
+    script: install_pkg.bat  # [win]
+    build:
+      run_exports:
+        strong:
+          - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
+          - _openmp_mutex >={{ openmp_ver }}  # [linux]
+          - _openmp_mutex * *_llvm            # [linux]
+    requirements:
+      build:
+        - cmake
+        # for run-exports
+        - {{ stdlib("c") }}
+        - {{ compiler("cxx") }}
+        - {{ compiler("fortran") }}     # [linux]
+      host:
+        - {{ pin_subpackage("llvm-openmp", exact=True) }}
+      run:
+        - {{ pin_subpackage("llvm-openmp", exact=True) }}
+      run_constrained:
+        - llvm-openmp {{ version }}
+    test:
+      commands:
+        - test -f $PREFIX/include/omp_lib.mod                   # [linux]
+        - test -f $PREFIX/include/omp_lib_kinds.mod             # [linux]
+        - if not exist %LIBRARY_INC%\omp_lib.mod exit 1         # [win]
+        - if not exist %LIBRARY_INC%\omp_lib_kinds.mod exit 1   # [win]
 
 about:
   home: http://openmp.llvm.org/
