@@ -21,10 +21,21 @@ source:
 build:
   number: 0
 
+requirements:
+  build:
+    - {{ stdlib("c") }}
+    - {{ compiler("cxx") }}
+    - {{ compiler("fortran") }}
+    - clang         # [win]
+    - cmake
+    - ninja
+  host:
+    - llvmdev {{ version }}
+    # see https://github.com/llvm/llvm-project/issues/54596
+    - compiler-rt   # [osx and arm64]
+
 outputs:
   - name: llvm-openmp
-    script: build-pkg.sh   # [unix]
-    script: build-pkg.bat  # [win]
     build:
       ignore_run_exports_from:
         - {{ compiler("cxx") }}
@@ -36,18 +47,9 @@ outputs:
           - _openmp_mutex * *_llvm            # [linux]
     requirements:
       build:
+        # for run-exports
         - {{ stdlib("c") }}
         - {{ compiler("cxx") }}
-        # build cycle on osx: gfortran_{plat} -> libgfortran5 -> llvm-openmp
-        - {{ compiler("fortran") }}  # [not osx]
-        - clang  # [win]
-        - cmake
-        - ninja
-        - perl
-      host:
-        - llvmdev {{ version }}|{{ version }}.*
-        # see https://github.com/llvm/llvm-project/issues/54596
-        - compiler-rt  # [osx and arm64]
       run_constrained:
         - openmp {{ version }}|{{ version }}.*
     test:
