@@ -207,6 +207,3 @@ Feedstock Maintainers
 * [@katietz](https://github.com/katietz/)
 * [@yesimon](https://github.com/yesimon/)
 
-
-<!-- dummy commit to enable rerendering -->
-
