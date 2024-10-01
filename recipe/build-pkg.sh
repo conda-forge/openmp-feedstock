@@ -31,9 +31,6 @@ fi
 
 if [[ "${target_platform}" == "linux"* ]]; then
   export LDFLAGS="$LDFLAGS -static-libgcc -static-libstdc++"
-fi
-
-if [[ "${target_platform}" == "linux"* ]]; then
   # This should have been defined by HandleLLVMOptions.cmake
   # Not sure why it is not.
   export CXXFLAGS="$CXXFLAGS -D__STDC_FORMAT_MACROS"
