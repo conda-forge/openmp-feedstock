@@ -66,6 +66,12 @@ outputs:
         - test -f $PREFIX/include/omp.h                   # [unix]
         - if not exist %LIBRARY_INC%\omp.h exit 1         # [win]
 
+        # absence of fortran bits
+        - test ! -f $PREFIX/include/omp_lib.mod             # [linux]
+        - test ! -f $PREFIX/include/omp_lib_kinds.mod       # [linux]
+        - if exist %LIBRARY_INC%\omp_lib.mod exit 1         # [win]
+        - if exist %LIBRARY_INC%\omp_lib_kinds.mod exit 1   # [win]
+
         # shared library
         - test -f $PREFIX/lib/libomp.so                   # [linux]
         - test -f $PREFIX/lib/libomp.dylib                # [osx]
