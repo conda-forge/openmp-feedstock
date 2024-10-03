@@ -108,7 +108,8 @@ outputs:
       run:
         - {{ pin_subpackage("llvm-openmp", exact=True) }}
       run_constrained:
-        - llvm-openmp {{ version }}
+        # already contains the version
+        - {{ compiler("fortran") }}
     test:
       commands:
         - test -f $PREFIX/include/omp_lib.mod                   # [linux]
