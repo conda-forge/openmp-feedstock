@@ -25,8 +25,8 @@ requirements:
   build:
     - {{ stdlib("c") }}
     - {{ compiler("cxx") }}
-    - {{ compiler("fortran") }}
-    - clang         # [win]
+    - {{ compiler("fortran") }}  # [win]
+    - clang                      # [win]
     - cmake
     - ninja
   host:
@@ -83,6 +83,8 @@ outputs:
     script: install_pkg.sh   # [unix]
     script: install_pkg.bat  # [win]
     build:
+      # restricted to windows for now
+      skip: true  # [not win]
       run_exports:
         strong:
           - {{ pin_subpackage("llvm-openmp", max_pin=None) }}

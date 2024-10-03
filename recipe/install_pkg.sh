@@ -14,9 +14,3 @@ if [[ "$target_platform" == linux-* ]]; then
   # move libarcher.so so that it doesn't interfere
   mv $PREFIX/lib/libarcher.so $PREFIX/lib/libarcher.so.bak
 fi
-
-# remove fortran bits from regular llvm-openmp package
-if [[ "${PKG_NAME}" != "llvm-openmp-fortran" ]]; then
-    rm $PREFIX/include/omp_lib.mod
-    rm $PREFIX/include/omp_lib_kinds.mod
-fi
