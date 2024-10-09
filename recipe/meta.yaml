@@ -19,15 +19,29 @@ source:
     - patches/0001-link-libomp-to-compiler-rt-on-osx-arm.patch
 
 build:
-  number: 0
+  number: 1
+
+requirements:
+  build:
+    - {{ stdlib("c") }}
+    - {{ compiler("cxx") }}
+    - {{ compiler("fortran") }}  # [win]
+    - clang                      # [win]
+    - cmake
+    - ninja
+  host:
+    - llvmdev {{ version }}
+    # see https://github.com/llvm/llvm-project/issues/54596
+    - compiler-rt   # [osx and arm64]
 
 outputs:
   - name: llvm-openmp
-    script: build-pkg.sh   # [unix]
-    script: build-pkg.bat  # [win]
+    script: install_pkg.sh   # [unix]
+    script: install_pkg.bat  # [win]
     build:
       ignore_run_exports_from:
         - {{ compiler("cxx") }}
+        - {{ compiler("fortran") }}
       run_exports:
         strong:
           - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
@@ -35,16 +49,10 @@ outputs:
           - _openmp_mutex * *_llvm            # [linux]
     requirements:
       build:
+        - cmake
+        # for run-exports
         - {{ stdlib("c") }}
         - {{ compiler("cxx") }}
-        - clang  # [win]
-        - cmake
-        - ninja
-        - perl
-      host:
-        - llvmdev {{ version }}|{{ version }}.*
-        # see https://github.com/llvm/llvm-project/issues/54596
-        - compiler-rt  # [osx and arm64]
       run_constrained:
         - openmp {{ version }}|{{ version }}.*
     test:
@@ -58,6 +66,12 @@ outputs:
         - test -f $PREFIX/include/omp.h                   # [unix]
         - if not exist %LIBRARY_INC%\omp.h exit 1         # [win]
 
+        # absence of fortran bits
+        - test ! -f $PREFIX/include/omp_lib.mod             # [linux]
+        - test ! -f $PREFIX/include/omp_lib_kinds.mod       # [linux]
+        - if exist %LIBRARY_INC%\omp_lib.mod exit 1         # [win]
+        - if exist %LIBRARY_INC%\omp_lib_kinds.mod exit 1   # [win]
+
         # shared library
         - test -f $PREFIX/lib/libomp.so                   # [linux]
         - test -f $PREFIX/lib/libomp.dylib                # [osx]
@@ -70,6 +84,38 @@ outputs:
         - '%LIBRARY_BIN%\clang -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe'   # [win]
         - ./omp_hello            # [unix]
         - '%cd%\omp_hello.exe'   # [win]
+
+  - name: llvm-openmp-fortran
+    script: install_pkg.sh   # [unix]
+    script: install_pkg.bat  # [win]
+    build:
+      # restricted to windows for now
+      skip: true  # [not win]
+      run_exports:
+        strong:
+          - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
+          - _openmp_mutex >={{ openmp_ver }}  # [linux]
+          - _openmp_mutex * *_llvm            # [linux]
+    requirements:
+      build:
+        - cmake
+        # for run-exports
+        - {{ stdlib("c") }}
+        - {{ compiler("cxx") }}
+        - {{ compiler("fortran") }}     # [linux]
+      host:
+        - {{ pin_subpackage("llvm-openmp", exact=True) }}
+      run:
+        - {{ pin_subpackage("llvm-openmp", exact=True) }}
+      run_constrained:
+        # already contains the version
+        - {{ compiler("fortran") }}
+    test:
+      commands:
+        - test -f $PREFIX/include/omp_lib.mod                   # [linux]
+        - test -f $PREFIX/include/omp_lib_kinds.mod             # [linux]
+        - if not exist %LIBRARY_INC%\omp_lib.mod exit 1         # [win]
+        - if not exist %LIBRARY_INC%\omp_lib_kinds.mod exit 1   # [win]
 
 about:
   home: http://openmp.llvm.org/
