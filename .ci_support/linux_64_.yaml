@@ -1,5 +1,5 @@
 cdt_name:
-- cos6
+- cos7
 channel_sources:
 - conda-forge
 channel_targets:
@@ -7,7 +7,7 @@ channel_targets:
 cxx_compiler:
 - gxx
 cxx_compiler_version:
-- '12'
+- '13'
 docker_image:
 - quay.io/condaforge/linux-anvil-cos7-x86_64
 perl:
@@ -15,6 +15,6 @@ perl:
 target_platform:
 - linux-64
 zlib:
-- '1.2'
+- '1'
 zstd:
 - '1.5'
