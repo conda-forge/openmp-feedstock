@@ -1,4 +1,0 @@
-fortran_compiler:           # [win]
-  - flang                   # [win]
-fortran_compiler_version:   # [win]
-  - 19                      # [win]
