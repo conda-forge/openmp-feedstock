@@ -16,7 +16,7 @@ source:
   folder: llvm-project
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: llvm-openmp
