@@ -7,8 +7,8 @@ build_platform:
   linux_ppc64le: linux_64
   osx_arm64: osx_64
 conda_build:
-  pkg_format: '2'
   error_overlinking: true
+  pkg_format: '2'
 conda_forge_output_validation: true
 github:
   branch_name: main
