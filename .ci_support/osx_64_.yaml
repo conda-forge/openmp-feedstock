@@ -7,7 +7,7 @@ c_stdlib:
 c_stdlib_version:
 - '10.13'
 channel_sources:
-- conda-forge/label/llvm_dev,conda-forge
+- conda-forge,conda-forge/label/llvm_dev
 channel_targets:
 - conda-forge llvm_dev
 cxx_compiler:
