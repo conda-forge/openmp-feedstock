@@ -84,52 +84,53 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-llvm--openmp-green.svg)](https://anaconda.org/conda-forge/llvm-openmp) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/llvm-openmp.svg)](https://anaconda.org/conda-forge/llvm-openmp) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/llvm-openmp.svg)](https://anaconda.org/conda-forge/llvm-openmp) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/llvm-openmp.svg)](https://anaconda.org/conda-forge/llvm-openmp) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-llvm--openmp--fortran-green.svg)](https://anaconda.org/conda-forge/llvm-openmp-fortran) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/llvm-openmp-fortran.svg)](https://anaconda.org/conda-forge/llvm-openmp-fortran) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/llvm-openmp-fortran.svg)](https://anaconda.org/conda-forge/llvm-openmp-fortran) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/llvm-openmp-fortran.svg)](https://anaconda.org/conda-forge/llvm-openmp-fortran) |
 
 Installing openmp
 =================
 
-Installing `openmp` from the `conda-forge/label/llvm_dev` channel can be achieved by adding `conda-forge/label/llvm_dev` to your channels with:
+Installing `openmp` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
 
 ```
-conda config --add channels conda-forge/label/llvm_dev
+conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge/label/llvm_dev` channel has been enabled, `llvm-openmp` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `llvm-openmp, llvm-openmp-fortran` can be installed with `conda`:
 
 ```
-conda install llvm-openmp
+conda install llvm-openmp llvm-openmp-fortran
 ```
 
 or with `mamba`:
 
 ```
-mamba install llvm-openmp
+mamba install llvm-openmp llvm-openmp-fortran
 ```
 
 It is possible to list all of the versions of `llvm-openmp` available on your platform with `conda`:
 
 ```
-conda search llvm-openmp --channel conda-forge/label/llvm_dev
+conda search llvm-openmp --channel conda-forge
 ```
 
 or with `mamba`:
 
 ```
-mamba search llvm-openmp --channel conda-forge/label/llvm_dev
+mamba search llvm-openmp --channel conda-forge
 ```
 
 Alternatively, `mamba repoquery` may provide more information:
 
 ```
 # Search all versions available on your platform:
-mamba repoquery search llvm-openmp --channel conda-forge/label/llvm_dev
+mamba repoquery search llvm-openmp --channel conda-forge
 
 # List packages depending on `llvm-openmp`:
-mamba repoquery whoneeds llvm-openmp --channel conda-forge/label/llvm_dev
+mamba repoquery whoneeds llvm-openmp --channel conda-forge
 
 # List dependencies of `llvm-openmp`:
-mamba repoquery depends llvm-openmp --channel conda-forge/label/llvm_dev
+mamba repoquery depends llvm-openmp --channel conda-forge
 ```
 
 

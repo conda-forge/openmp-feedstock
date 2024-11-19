@@ -34,8 +34,6 @@ if [[ "${target_platform}" == "linux"* ]]; then
   # This should have been defined by HandleLLVMOptions.cmake
   # Not sure why it is not.
   export CXXFLAGS="$CXXFLAGS -D__STDC_FORMAT_MACROS"
-  # not possible on osx due to build cycle, see meta.yaml
-  export EXTRA_CMAKE="-DLIBOMP_FORTRAN_MODULES=ON"
 fi
 
 if [[ "${PKG_VERSION}" == *rc* ]]; then
@@ -49,18 +47,6 @@ cmake -G Ninja \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_PREFIX_PATH=$PREFIX \
-    ${EXTRA_CMAKE} \
     ..
 
 cmake --build .
-cmake --install .
-
-rm -f $PREFIX/lib/libgomp$SHLIB_EXT
-
-mkdir -p $PREFIX/lib/clang/$PKG_VERSION/include
-# Standalone libomp build doesn't put omp.h in clang's default search path
-cp $PREFIX/include/omp.h $PREFIX/lib/clang/$PKG_VERSION/include
-if [[ "$target_platform" == linux-* ]]; then
-  # move libarcher.so so that it doesn't interfere
-  mv $PREFIX/lib/libarcher.so $PREFIX/lib/libarcher.so.bak
-fi
