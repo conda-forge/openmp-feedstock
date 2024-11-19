@@ -7,6 +7,12 @@ cmake --install .
 
 rm -f $PREFIX/lib/libgomp$SHLIB_EXT
 
+if [[ "${PKG_VERSION}" == *rc* ]]; then
+  export PKG_VERSION=${PKG_VERSION::${#PKG_VERSION}-4}
+elif [[ "${PKG_VERSION}" == *dev* ]]; then
+  export PKG_VERSION=${PKG_VERSION::${#PKG_VERSION}-5}
+fi
+
 mkdir -p $PREFIX/lib/clang/$PKG_VERSION/include
 # Standalone libomp build doesn't put omp.h in clang's default search path
 cp $PREFIX/include/omp.h $PREFIX/lib/clang/$PKG_VERSION/include

@@ -38,7 +38,10 @@ fi
 
 if [[ "${PKG_VERSION}" == *rc* ]]; then
   export PKG_VERSION=${PKG_VERSION::${#PKG_VERSION}-4}
+elif [[ "${PKG_VERSION}" == *dev* ]]; then
+  export PKG_VERSION=${PKG_VERSION::${#PKG_VERSION}-5}
 fi
+
 # used in patch to construct path to libclang_rt.builtins
 export PKG_VERSION_MAJOR=$(echo ${PKG_VERSION} | cut -d "." -f1)
 
