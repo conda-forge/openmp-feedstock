@@ -84,6 +84,7 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-llvm--openmp-green.svg)](https://anaconda.org/conda-forge/llvm-openmp) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/llvm-openmp.svg)](https://anaconda.org/conda-forge/llvm-openmp) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/llvm-openmp.svg)](https://anaconda.org/conda-forge/llvm-openmp) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/llvm-openmp.svg)](https://anaconda.org/conda-forge/llvm-openmp) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-llvm--openmp--fortran-green.svg)](https://anaconda.org/conda-forge/llvm-openmp-fortran) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/llvm-openmp-fortran.svg)](https://anaconda.org/conda-forge/llvm-openmp-fortran) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/llvm-openmp-fortran.svg)](https://anaconda.org/conda-forge/llvm-openmp-fortran) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/llvm-openmp-fortran.svg)](https://anaconda.org/conda-forge/llvm-openmp-fortran) |
 
 Installing openmp
 =================
@@ -95,16 +96,16 @@ conda config --add channels conda-forge/label/llvm_rc
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge/label/llvm_rc` channel has been enabled, `llvm-openmp` can be installed with `conda`:
+Once the `conda-forge/label/llvm_rc` channel has been enabled, `llvm-openmp, llvm-openmp-fortran` can be installed with `conda`:
 
 ```
-conda install llvm-openmp
+conda install llvm-openmp llvm-openmp-fortran
 ```
 
 or with `mamba`:
 
 ```
-mamba install llvm-openmp
+mamba install llvm-openmp llvm-openmp-fortran
 ```
 
 It is possible to list all of the versions of `llvm-openmp` available on your platform with `conda`:
