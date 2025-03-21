@@ -12,9 +12,9 @@ if %ERRORLEVEL% neq 0 exit 1
 :: paths for several likely clang versions. Since we have basically no constraints on
 :: the version of `llvm-openmp`, environments will tend to have the newest one. In turn,
 :: this means that the compiler version is (almost) always ≤ the openmp version, hence
-:: it suffices to loop until the major version here. We start from clang 16, because
-:: that is when clang switch to using only the major version in the path.
-for /L %%I in (16,1,%PKG_VERSION:~0,2%) do (
+:: it suffices to loop until the major version here. We start from clang 18, because
+:: https://github.com/conda-forge/clangdev-feedstock/pull/345 is not backported further.
+for /L %%I in (18,1,%PKG_VERSION:~0,2%) do (
     if not exist "%LIBRARY_LIB%\clang\%%I\include\" mkdir "%LIBRARY_LIB%\clang\%%I\include"
     cp %LIBRARY_INC%\omp.h %LIBRARY_LIB%\clang\%%I\include
     if %ERRORLEVEL% neq 0 exit 1

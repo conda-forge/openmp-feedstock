@@ -68,7 +68,7 @@ outputs:
         - if not exist %LIBRARY_INC%\omp.h exit 1         # [win]
         # clang-specific one (symlink on unix; copies on win, see install_pkg.bat)
         - test -f $PREFIX/lib/clang/{{ major }}/include/omp.h               # [unix]
-        {% for ver in range(16, major + 1) %}
+        {% for ver in range(18, major + 1) %}
         - if not exist %LIBRARY_LIB%\clang\{{ ver }}\include\omp.h exit 1   # [win]
         {% endfor %}
 
