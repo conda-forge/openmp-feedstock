@@ -3,6 +3,12 @@
 # occasionally to see last fully supported openmp ver.
 {% set openmp_ver = "4.5" %}
 
+# on osx we need to use cxx_compiler_version, rest can use package version
+{% set clang_major = version.split(".")[0]|int %}
+{% if cxx_compiler_version is not undefined %}
+{% set clang_major = cxx_compiler_version.split(".")[0]|int %}  # [osx]
+{% endif %}
+
 package:
   name: openmp
   version: {{ version }}
@@ -53,7 +59,9 @@ outputs:
         - openmp {{ version }}|{{ version }}.*
     test:
       requires:
-        - clangxx
+        # ensure we don't pull in too-new clang (when on maintenance branch),
+        # which breaks assumption about symlink below
+        - clangxx <={{ version }}
         - {{ compiler('cxx') }}
       files:
         - omp_hello.c
@@ -61,6 +69,11 @@ outputs:
         # headers
         - test -f $PREFIX/include/omp.h                   # [unix]
         - if not exist %LIBRARY_INC%\omp.h exit 1         # [win]
+        # clang-specific one (symlink on unix; copies on win, see install_pkg.bat)
+        - test -f $PREFIX/lib/clang/{{ clang_major }}/include/omp.h         # [unix]
+        {% for ver in range(18, clang_major + 1) %}
+        - if not exist %LIBRARY_LIB%\clang\{{ ver }}\include\omp.h exit 1   # [win]
+        {% endfor %}
 
         # shared library
         - test -f $PREFIX/lib/libomp.so                   # [linux]
