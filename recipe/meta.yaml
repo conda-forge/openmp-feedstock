@@ -59,7 +59,9 @@ outputs:
         - openmp {{ version }}|{{ version }}.*
     test:
       requires:
-        - clangxx
+        # ensure we don't pull in too-new clang (when on maintenance branch),
+        # which breaks assumption about symlink below
+        - clangxx <={{ version }}
         - {{ compiler('cxx') }}
       files:
         - omp_hello.c
