@@ -5,7 +5,9 @@
 
 # on osx we need to use cxx_compiler_version, rest can use package version
 {% set clang_major = version.split(".")[0]|int %}
+{% if cxx_compiler_version is not undefined %}
 {% set clang_major = cxx_compiler_version.split(".")[0]|int %}  # [osx]
+{% endif %}
 
 package:
   name: openmp
