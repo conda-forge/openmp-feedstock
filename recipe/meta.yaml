@@ -1,4 +1,5 @@
 {% set version = "20.1.1" %}
+{% set major = version.split(".")[0]|int %}
 # check https://clang.llvm.org/docs/OpenMPSupport.html
 # occasionally to see last fully supported openmp ver.
 {% set openmp_ver = "4.5" %}
@@ -65,6 +66,11 @@ outputs:
         # headers
         - test -f $PREFIX/include/omp.h                   # [unix]
         - if not exist %LIBRARY_INC%\omp.h exit 1         # [win]
+        # clang-specific one (symlink on unix; copies on win, see install_pkg.bat)
+        - test -f $PREFIX/lib/clang/{{ major }}/include/omp.h               # [unix]
+        {% for ver in range(16, major + 1) %}
+        - if not exist %LIBRARY_LIB%\clang\{{ ver }}\include\omp.h exit 1   # [win]
+        {% endfor %}
 
         # absence of fortran bits
         - test ! -f $PREFIX/include/omp_lib.mod             # [linux]
