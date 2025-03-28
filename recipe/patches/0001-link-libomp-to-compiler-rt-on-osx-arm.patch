@@ -1,4 +1,4 @@
-From 15211abaf2331a43855f09978bda20b030fffd25 Mon Sep 17 00:00:00 2001
+From 736412f91094ccb2f25e5efa0c8f90e7fb209cb9 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Thu, 1 Feb 2024 12:29:07 +0100
 Subject: [PATCH] link libomp to compiler-rt on osx-arm
@@ -8,10 +8,10 @@ Subject: [PATCH] link libomp to compiler-rt on osx-arm
  1 file changed, 6 insertions(+)
 
 diff --git a/openmp/runtime/src/CMakeLists.txt b/openmp/runtime/src/CMakeLists.txt
-index f106694841ce..6a016b76f4b6 100644
+index 698e185d9c4d..4136ac9026d3 100644
 --- a/openmp/runtime/src/CMakeLists.txt
 +++ b/openmp/runtime/src/CMakeLists.txt
-@@ -175,6 +175,12 @@ if(OPENMP_STANDALONE_BUILD OR (NOT OPENMP_ENABLE_LIBOMP_PROFILING))
+@@ -181,6 +181,12 @@ if(OPENMP_STANDALONE_BUILD OR (NOT OPENMP_ENABLE_LIBOMP_PROFILING))
    set_property(TARGET omp PROPERTY FOLDER "OpenMP/Libraries")
    # Linking command will include libraries in LIBOMP_CONFIGURED_LIBFLAGS
    target_link_libraries(omp ${LIBOMP_CONFIGURED_LIBFLAGS} ${LIBOMP_DL_LIBS})
