@@ -3,11 +3,13 @@
 # occasionally to see last fully supported openmp ver.
 {% set openmp_ver = "4.5" %}
 
-# on osx we need to use cxx_compiler_version, rest can use package version
 {% set clang_major = version.split(".")[0]|int %}
-{% if cxx_compiler_version is not undefined %}
-{% set clang_major = cxx_compiler_version.split(".")[0]|int %}  # [osx]
-{% endif %}
+{% set tail_version = version.split(".")[-1] %}
+# for builds from upstream main we intentionally don't pull in half-baked compilers
+# from conda-forge/label/llvm_dev, so we need to adjust down to previous version
+{% set clang_major = clang_major - 1 if tail_version|trim("0123456789") == "dev" else clang_major %}        # [linux]
+# on osx we need to use cxx_compiler_version regardless; if-condition to shut up linter
+{% set clang_major = 0 if cxx_compiler_version is undefined else cxx_compiler_version.split(".")[0]|int %}  # [osx]
 
 package:
   name: openmp
