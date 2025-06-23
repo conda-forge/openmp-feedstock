@@ -5,7 +5,7 @@ cd openmp/build
 
 cmake --install .
 
-rm -f $PREFIX/lib/libgomp$SHLIB_EXT
+rm -f $PREFIX/lib/libgomp*${SHLIB_EXT}*
 
 if [[ "${PKG_VERSION}" == *rc* ]]; then
   export PKG_VERSION=${PKG_VERSION::${#PKG_VERSION}-4}
