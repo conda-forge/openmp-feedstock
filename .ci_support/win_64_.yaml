@@ -1,11 +1,11 @@
 c_stdlib:
 - vs
 channel_sources:
-- conda-forge,conda-forge/label/llvm_rc
+- conda-forge
 channel_targets:
-- conda-forge llvm_rc
+- conda-forge main
 cxx_compiler:
-- vs2019
+- vs2022
 fortran_compiler:
 - flang
 fortran_compiler_version:
