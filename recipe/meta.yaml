@@ -27,7 +27,7 @@ source:
     - patches/0001-link-libomp-to-compiler-rt-on-osx-arm.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -63,6 +63,7 @@ outputs:
         - {{ compiler("cxx") }}
       run_constrained:
         - openmp {{ version }}|{{ version }}.*
+        - intel-openmp <0.0a0
     test:
       requires:
         # ensure we don't pull in too-new clang (when on maintenance branch),
