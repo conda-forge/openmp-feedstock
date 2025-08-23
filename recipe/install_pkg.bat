@@ -20,6 +20,15 @@ for /L %%I in (18,1,%PKG_VERSION:~0,2%) do (
     if %ERRORLEVEL% neq 0 exit 1
 )
 
+del "%LIBRARY_BIN%\libiomp5md.dll"
+if "%target_platform% == "win-64" (
+  set ARCH=AMD64
+) else (
+  echo "Unknown platform: %target_platform%"
+  exit 1
+)
+python %SRC_DIR%\\create_forwarder_dll.py "%LIBRARY_BIN%\libomp.dll" "%LIBRARY_BIN%\libiomp5md.dll" --arch %ARCH%
+
 :: remove fortran bits from regular llvm-openmp package
 if "%PKG_NAME%" NEQ "llvm-openmp-fortran" (
     del /s /q %LIBRARY_INC%\omp_lib.mod
