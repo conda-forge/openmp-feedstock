@@ -20,8 +20,8 @@ for /L %%I in (18,1,%PKG_VERSION:~0,2%) do (
     if %ERRORLEVEL% neq 0 exit 1
 )
 
-del "%LIBRARY_BIN%\libiomp5md.dll"
-if "%target_platform% == "win-64" (
+del /q "%LIBRARY_BIN%\\libiomp5md.dll"
+if "%target_platform%" == "win-64" (
   set ARCH=AMD64
 ) else (
   echo "Unknown platform: %target_platform%"
