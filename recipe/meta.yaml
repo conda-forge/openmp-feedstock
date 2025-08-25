@@ -14,18 +14,21 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-{{ version.replace(".rc", "-rc") }}.tar.gz
-  sha256: a6cbad9b2243b17e87795817cfff2107d113543a12486586f8a055a2bb044963
-  # name folder for easier deletion; we do the equivalent of downloading
-  # the subproject sources, so the work folder then has openmp in it;
-  # for details see build scripts
-  folder: llvm-project
-  patches:
-    # fix for https://github.com/llvm/llvm-project/issues/54596
-    - patches/0001-link-libomp-to-compiler-rt-on-osx-arm.patch
+  - url: https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-{{ version.replace(".rc", "-rc") }}.tar.gz
+    sha256: a6cbad9b2243b17e87795817cfff2107d113543a12486586f8a055a2bb044963
+    # name folder for easier deletion; we do the equivalent of downloading
+    # the subproject sources, so the work folder then has openmp in it;
+    # for details see build scripts
+    folder: llvm-project
+    patches:
+      # fix for https://github.com/llvm/llvm-project/issues/54596
+      - patches/0001-link-libomp-to-compiler-rt-on-osx-arm.patch
+
+  - url: https://github.com/isuruf/create-forwarder-dll/archive/refs/tags/v0.3.tar.gz
+    sha256: d96f5386685a1b6f4b6ba041181a0b5df39f4fa7dbc93efc3f72c5fe19fa9983
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
@@ -48,6 +51,7 @@ outputs:
       ignore_run_exports_from:
         - {{ compiler("cxx") }}
         - {{ compiler("fortran") }}
+        - python *
       run_exports:
         strong:
           - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
@@ -59,6 +63,8 @@ outputs:
         # for run-exports
         - {{ stdlib("c") }}
         - {{ compiler("cxx") }}
+        - python >=3
+      host:
       run_constrained:
         - openmp {{ version }}|{{ version }}.*
         - intel-openmp <0.0a0
