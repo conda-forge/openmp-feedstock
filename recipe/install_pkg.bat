@@ -20,14 +20,13 @@ for /L %%I in (18,1,%PKG_VERSION:~0,2%) do (
     if %ERRORLEVEL% neq 0 exit 1
 )
 
+:: this package creates a copy of 'libomp.dll' and installs it as 'libiomp5md.dll' to
+:: replace Intel's openmp library. The issue with copying is that if a process loads
+:: both 'libimp5md.dll' and 'libomp.dll', one of them will complain that another OpenMP
+:: runtime is being loaded even though they are literally the same.
+:: To avoid this, let's make 'libiomp5md.dll' a DLL that forwards to 'libomp.dll'
 del /q "%LIBRARY_BIN%\\libiomp5md.dll"
-if "%target_platform%" == "win-64" (
-  set ARCH=AMD64
-) else (
-  echo "Unknown platform: %target_platform%"
-  exit 1
-)
-python %SRC_DIR%\\create_forwarder_dll.py "%LIBRARY_BIN%\libomp.dll" "%LIBRARY_BIN%\libiomp5md.dll" --arch %ARCH% --no-temp-dir
+python %SRC_DIR%\\create_forwarder_dll.py "%LIBRARY_BIN%\libomp.dll" "%LIBRARY_BIN%\libiomp5md.dll" --no-temp-dir
 
 :: remove fortran bits from regular llvm-openmp package
 if "%PKG_NAME%" NEQ "llvm-openmp-fortran" (
