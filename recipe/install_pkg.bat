@@ -27,7 +27,7 @@ if "%target_platform%" == "win-64" (
   echo "Unknown platform: %target_platform%"
   exit 1
 )
-python %SRC_DIR%\\create_forwarder_dll.py "%LIBRARY_BIN%\libomp.dll" "%LIBRARY_BIN%\libiomp5md.dll" --arch %ARCH%
+python %SRC_DIR%\\create_forwarder_dll.py "%LIBRARY_BIN%\libomp.dll" "%LIBRARY_BIN%\libiomp5md.dll" --arch %ARCH% --no-temp-dir
 
 :: remove fortran bits from regular llvm-openmp package
 if "%PKG_NAME%" NEQ "llvm-openmp-fortran" (

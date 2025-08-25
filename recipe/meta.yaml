@@ -24,8 +24,8 @@ source:
       # fix for https://github.com/llvm/llvm-project/issues/54596
       - patches/0001-link-libomp-to-compiler-rt-on-osx-arm.patch
 
-  - url: https://github.com/isuruf/create-forwarder-dll/archive/refs/tags/v0.1.tar.gz
-    sha256: 5ab3ef811169b19fec4aa8d6eddd9a0e847ede23a69beab3a1d9d5915b5a2579
+  - url: https://github.com/isuruf/create-forwarder-dll/archive/refs/tags/v0.2.tar.gz
+    sha256: 6a6df09d7c78486c0e771f6bffbaeb8ca0c3ac9e23fd31b9b9e6cd985f95b921
 
 build:
   number: 2
