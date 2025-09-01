@@ -28,13 +28,13 @@ source:
     sha256: d96f5386685a1b6f4b6ba041181a0b5df39f4fa7dbc93efc3f72c5fe19fa9983
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
     - {{ stdlib("c") }}
     - {{ compiler("cxx") }}
-    - {{ compiler("fortran") }}  # [win]
+    - {{ compiler("fortran") }}
     - clang                      # [win]
     - cmake
     - ninja
@@ -122,7 +122,7 @@ outputs:
         # for run-exports
         - {{ stdlib("c") }}
         - {{ compiler("cxx") }}
-        - {{ compiler("fortran") }}     # [linux]
+        - {{ compiler("fortran") }}
       host:
         - {{ pin_subpackage("llvm-openmp", exact=True) }}
       run:
