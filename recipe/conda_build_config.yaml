@@ -1,0 +1,4 @@
+# unresolved segfaults on windows; don't publish to main until resolved, see
+# https://github.com/llvm/llvm-project/issues/157514
+channel_targets:            # [win]
+  - conda-forge llvm_dev    # [win]
