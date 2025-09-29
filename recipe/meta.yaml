@@ -97,6 +97,7 @@ outputs:
         - test -f $PREFIX/lib/libomp.so                   # [linux]
         - test -f $PREFIX/lib/libomp.dylib                # [osx]
         - if not exist %LIBRARY_BIN%\libomp.dll exit 1    # [win]
+        - if not exist %LIBRARY_BIN%\libiomp5md.dll exit 1  # [win]
         - if not exist %LIBRARY_LIB%\libomp.lib exit 1    # [win]
 
         # compilation test
