@@ -3,11 +3,8 @@
 # occasionally to see last fully supported openmp ver.
 {% set openmp_ver = "4.5" %}
 
-# on osx we need to use cxx_compiler_version, rest can use package version
 {% set clang_major = version.split(".")[0]|int %}
-{% if cxx_compiler_version is not undefined %}
-{% set clang_major = cxx_compiler_version.split(".")[0]|int %}  # [osx]
-{% endif %}
+{% set clang_test_version = "19" %}
 
 package:
   name: openmp
@@ -71,18 +68,18 @@ outputs:
         - intel-openmp <0.0a0
     test:
       requires:
-        # ensure we don't pull in too-new clang (when on maintenance branch),
-        # which breaks assumption about symlink below
-        - clangxx <={{ version }}
+        - clang-{{ clang_test_version }}
         - {{ compiler('cxx') }}
+        - ld64                      # [osx]
       files:
         - omp_hello.c
       commands:
         # headers
+        - "@echo on"                                      # [win]
         - test -f $PREFIX/include/omp.h                   # [unix]
         - if not exist %LIBRARY_INC%\omp.h exit 1         # [win]
         # clang-specific one (symlink on unix; copies on win, see install_pkg.bat)
-        - test -f $PREFIX/lib/clang/{{ clang_major }}/include/omp.h         # [unix]
+        - test -f $PREFIX/lib/clang/{{ clang_test_version }}/include/omp.h  # [unix]
         {% for ver in range(18, clang_major + 1) %}
         - if not exist %LIBRARY_LIB%\clang\{{ ver }}\include\omp.h exit 1   # [win]
         {% endfor %}
@@ -102,8 +99,8 @@ outputs:
 
         # compilation test
         - export LNK_XTRA="-Wl,--allow-shlib-undefined"   # [linux]
-        - $PREFIX/bin/clang -v -fopenmp -I$PREFIX/include -L$PREFIX/lib -Wl,-rpath,$PREFIX/lib $LNK_XTRA omp_hello.c -o omp_hello  # [unix]
-        - '%LIBRARY_BIN%\clang -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe'   # [win]
+        - $PREFIX/bin/clang-{{ clang_test_version }} -v -fopenmp -I$PREFIX/include -L$PREFIX/lib -Wl,-rpath,$PREFIX/lib $LNK_XTRA omp_hello.c -o omp_hello  # [unix]
+        - '%LIBRARY_BIN%\clang-{{ clang_test_version }} -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe'   # [win]
         - ./omp_hello            # [unix]
         - '%cd%\omp_hello.exe'   # [win]
 
