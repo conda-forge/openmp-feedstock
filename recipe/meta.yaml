@@ -11,6 +11,8 @@
 # on osx we need to use cxx_compiler_version regardless; if-condition to shut up linter
 {% set clang_major = 0 if cxx_compiler_version is undefined else cxx_compiler_version.split(".")[0]|int %}      # [osx]
 
+{% set clang_test_version = "19" %}
+
 package:
   name: openmp
   version: {{ version }}
@@ -70,9 +72,7 @@ outputs:
         - intel-openmp <0.0a0
     test:
       requires:
-        # ensure we don't pull in too-new clang (when on maintenance branch),
-        # which breaks assumption about symlink below
-        - clangxx <={{ version }}
+        - clang-{{ clang_test_version }}
         - {{ compiler('cxx') }}
         - ld64                      # [osx]
       files:
@@ -102,8 +102,8 @@ outputs:
 
         # compilation test
         - export LNK_XTRA="-Wl,--allow-shlib-undefined"   # [linux]
-        - $PREFIX/bin/clang -v -fopenmp -I$PREFIX/include -L$PREFIX/lib -Wl,-rpath,$PREFIX/lib $LNK_XTRA omp_hello.c -o omp_hello  # [unix]
-        - '%LIBRARY_BIN%\clang -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe'   # [win]
+        - $PREFIX/bin/clang-{{ clang_test_version }} -v -fopenmp -I$PREFIX/include -L$PREFIX/lib -Wl,-rpath,$PREFIX/lib $LNK_XTRA omp_hello.c -o omp_hello  # [unix]
+        - '%LIBRARY_BIN%\clang-{{ clang_test_version }} -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe'   # [win]
         - ./omp_hello            # [unix]
         - '%cd%\omp_hello.exe'   # [win]
 
