@@ -64,6 +64,7 @@ outputs:
         - {{ stdlib("c") }}
         - {{ compiler("cxx") }}
         - python >=3
+        - create-forwarder-dll       # [win]
       host:
       run_constrained:
         - openmp {{ version }}|{{ version }}.*
@@ -96,6 +97,7 @@ outputs:
         - test -f $PREFIX/lib/libomp.so                   # [linux]
         - test -f $PREFIX/lib/libomp.dylib                # [osx]
         - if not exist %LIBRARY_BIN%\libomp.dll exit 1    # [win]
+        - if not exist %LIBRARY_BIN%\libiomp5md.dll exit 1  # [win]
         - if not exist %LIBRARY_LIB%\libomp.lib exit 1    # [win]
 
         # compilation test
@@ -123,6 +125,7 @@ outputs:
         - {{ stdlib("c") }}
         - {{ compiler("cxx") }}
         - {{ compiler("fortran") }}     # [linux]
+        - create-forwarder-dll          # [win]
       host:
         - {{ pin_subpackage("llvm-openmp", exact=True) }}
       run:
