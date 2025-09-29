@@ -74,6 +74,7 @@ outputs:
         # which breaks assumption about symlink below
         - clangxx <={{ version }}
         - {{ compiler('cxx') }}
+        - ld64                      # [osx]
       files:
         - omp_hello.c
       commands:
@@ -100,6 +101,8 @@ outputs:
 
         # compilation test
         - export LNK_XTRA="-Wl,--allow-shlib-undefined"   # [linux]
+        # avoid picking up system linker on macos which demands a deployment target >=14.0
+        - export LD=$PREFIX/bin/ld                        # [osx]
         - $PREFIX/bin/clang -v -fopenmp -I$PREFIX/include -L$PREFIX/lib -Wl,-rpath,$PREFIX/lib $LNK_XTRA omp_hello.c -o omp_hello  # [unix]
         - '%LIBRARY_BIN%\clang -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe'   # [win]
         - ./omp_hello            # [unix]
