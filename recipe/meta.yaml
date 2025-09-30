@@ -37,7 +37,6 @@ requirements:
     - {{ compiler("cxx") }}
     - {{ compiler("fortran") }}  # [win]
     - clang                      # [win]
-    - create-forwarder-dll       # [win]
     - cmake
     - ninja
   host:
@@ -66,6 +65,7 @@ outputs:
         - {{ stdlib("c") }}
         - {{ compiler("cxx") }}
         - python >=3
+        - create-forwarder-dll       # [win]
       host:
       run_constrained:
         - openmp {{ version }}|{{ version }}.*

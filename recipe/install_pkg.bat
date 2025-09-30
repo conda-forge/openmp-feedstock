@@ -27,6 +27,7 @@ for /L %%I in (18,1,%PKG_VERSION:~0,2%) do (
 :: To avoid this, let's make 'libiomp5md.dll' a DLL that forwards to 'libomp.dll'
 del /q "%LIBRARY_BIN%\\libiomp5md.dll"
 create_forwarder_dll "%LIBRARY_BIN%\libomp.dll" "%LIBRARY_BIN%\libiomp5md.dll" --no-temp-dir
+if %ERRORLEVEL% neq 0 exit 1
 
 :: remove fortran bits from regular llvm-openmp package
 if "%PKG_NAME%" NEQ "llvm-openmp-fortran" (
