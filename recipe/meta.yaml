@@ -79,7 +79,7 @@ outputs:
         - omp_hello.c
       commands:
         # headers
-        - @echo on                                        # [win]
+        - "@echo on"                                      # [win]
         - test -f $PREFIX/include/omp.h                   # [unix]
         - if not exist %LIBRARY_INC%\omp.h exit 1         # [win]
         # clang-specific one (symlink on unix; copies on win, see install_pkg.bat)
