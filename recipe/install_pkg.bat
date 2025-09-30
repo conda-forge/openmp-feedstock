@@ -26,7 +26,8 @@ for /L %%I in (18,1,%PKG_VERSION:~0,2%) do (
 :: runtime is being loaded even though they are literally the same.
 :: To avoid this, let's make 'libiomp5md.dll' a DLL that forwards to 'libomp.dll'
 del /q "%LIBRARY_BIN%\\libiomp5md.dll"
-python %SRC_DIR%\\create_forwarder_dll.py "%LIBRARY_BIN%\libomp.dll" "%LIBRARY_BIN%\libiomp5md.dll" --no-temp-dir
+create-forwarder-dll "%LIBRARY_BIN%\libomp.dll" "%LIBRARY_BIN%\libiomp5md.dll" --no-temp-dir
+if %ERRORLEVEL% neq 0 exit 1
 
 :: remove fortran bits from regular llvm-openmp package
 if "%PKG_NAME%" NEQ "llvm-openmp-fortran" (
