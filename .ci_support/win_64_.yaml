@@ -3,7 +3,7 @@ c_stdlib:
 channel_sources:
 - conda-forge
 channel_targets:
-- conda-forge llvm_dev
+- conda-forge main
 cxx_compiler:
 - vs2022
 fortran_compiler:
