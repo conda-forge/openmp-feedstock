@@ -4,13 +4,6 @@
 {% set openmp_ver = "4.5" %}
 
 {% set clang_major = version.split(".")[0]|int %}
-{% set tail_version = version.split(".")[-1] %}
-# for rc/dev builds we intentionally don't pull in half-baked compilers
-# from conda-forge/label/llvm_{rc,dev}, so we need to adjust down to previous version
-{% set clang_major = clang_major - 1 if tail_version|trim("0123456789") in ("rc", "dev") else clang_major %}    # [linux]
-# on osx we need to use cxx_compiler_version regardless; if-condition to shut up linter
-{% set clang_major = 0 if cxx_compiler_version is undefined else cxx_compiler_version.split(".")[0]|int %}      # [osx]
-
 {% set clang_test_version = "19" %}
 
 package:
@@ -29,7 +22,7 @@ source:
     - patches/0001-link-libomp-to-compiler-rt-on-osx-arm.patch
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
@@ -83,6 +76,7 @@ outputs:
         - test -f $PREFIX/include/omp.h                   # [unix]
         - if not exist %LIBRARY_INC%\omp.h exit 1         # [win]
         # clang-specific one (symlink on unix; copies on win, see install_pkg.bat)
+        - test -f $PREFIX/lib/clang/{{ clang_test_version }}/include/omp.h  # [unix]
         {% for ver in range(18, clang_major + 1) %}
         - if not exist %LIBRARY_LIB%\clang\{{ ver }}\include\omp.h exit 1   # [win]
         {% endfor %}
@@ -101,8 +95,9 @@ outputs:
         - if not exist %LIBRARY_LIB%\libomp.lib exit 1    # [win]
 
         # compilation test
-        - export LNK_XTRA="-Wl,--allow-shlib-undefined"   # [linux]
-        - $PREFIX/bin/clang-{{ clang_test_version }} -v -fopenmp -I$PREFIX/include -L$PREFIX/lib -Wl,-rpath,$PREFIX/lib $LNK_XTRA omp_hello.c -o omp_hello  # [unix]
+        - export LNK="-L$PREFIX/lib -Wl,-rpath,$PREFIX/lib"     # [unix]
+        - export LNK="${LNK} -Wl,--allow-shlib-undefined"       # [linux]
+        - $PREFIX/bin/clang-{{ clang_test_version }} -v -fopenmp -I$PREFIX/include $LNK omp_hello.c -o omp_hello                    # [unix]
         - '%LIBRARY_BIN%\clang-{{ clang_test_version }} -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe'   # [win]
         - ./omp_hello            # [unix]
         - '%cd%\omp_hello.exe'   # [win]
