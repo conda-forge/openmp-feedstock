@@ -35,7 +35,7 @@ requirements:
   host:
     - llvmdev {{ version }}
     # see https://github.com/llvm/llvm-project/issues/54596
-    - compiler-rt   # [osx and arm64]
+    - compiler-rt {{ version }}  # [osx and arm64]
 
 outputs:
   - name: llvm-openmp
