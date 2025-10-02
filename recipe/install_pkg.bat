@@ -14,7 +14,8 @@ if %ERRORLEVEL% neq 0 exit 1
 :: this means that the compiler version is (almost) always ≤ the openmp version, hence
 :: it suffices to loop until the major version here. We start from clang 18, because
 :: https://github.com/conda-forge/clangdev-feedstock/pull/345 is not backported further.
-for /L %%I in (18,1,%PKG_VERSION:~0,2%) do (
+:: We do the copy in clang 21 and upwards, so this is unnecessary
+for /L %%I in (18,1,20) do (
     if not exist "%LIBRARY_LIB%\clang\%%I\include\" mkdir "%LIBRARY_LIB%\clang\%%I\include"
     cp %LIBRARY_INC%\omp.h %LIBRARY_LIB%\clang\%%I\include
     if %ERRORLEVEL% neq 0 exit 1

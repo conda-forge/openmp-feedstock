@@ -22,7 +22,7 @@ source:
     - patches/0001-link-libomp-to-compiler-rt-on-osx-arm.patch
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
@@ -77,7 +77,7 @@ outputs:
         - if not exist %LIBRARY_INC%\omp.h exit 1         # [win]
         # clang-specific one (symlink on unix; copies on win, see install_pkg.bat)
         - test -f $PREFIX/lib/clang/{{ clang_test_version }}/include/omp.h  # [unix]
-        {% for ver in range(18, clang_major + 1) %}
+        {% for ver in range(18, 21) %}
         - if not exist %LIBRARY_LIB%\clang\{{ ver }}\include\omp.h exit 1   # [win]
         {% endfor %}
 
