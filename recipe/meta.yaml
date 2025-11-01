@@ -28,7 +28,7 @@ requirements:
   build:
     - {{ stdlib("c") }}
     - {{ compiler("cxx") }}
-    - {{ compiler("fortran") }}
+    - {{ compiler("fortran") }}  # [win]
     - clang                      # [win]
     - cmake
     - ninja
@@ -119,7 +119,7 @@ outputs:
         # for run-exports
         - {{ stdlib("c") }}
         - {{ compiler("cxx") }}
-        - {{ compiler("fortran") }}
+        - {{ compiler("fortran") }}     # [linux]
         - create-forwarder-dll       # [win]
       host:
         - {{ pin_subpackage("llvm-openmp", exact=True) }}
