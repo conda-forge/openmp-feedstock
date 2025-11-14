@@ -11,7 +11,7 @@ del /f /q llvm-project
 cd openmp
 
 :: delete existing LLVM setup in image that often gets higher precedence
-rmdir /s /q C:\Program Files\Microsoft Visual Studio/2022\Enterprise\VC\Tools\Llvm
+rmdir /s /q C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\Llvm
 
 mkdir build
 cd build
