@@ -1,14 +1,6 @@
 #!/bin/bash
 set -ex
 
-# using subproject sources has been effectively broken in LLVM 14,
-# so we use the entire project, but make sure we don't pick up
-# anything in-tree other than openmp & the shared cmake folder
-mv llvm-project/openmp ./openmp
-mv llvm-project/cmake ./cmake
-rm -rf llvm-project
-cd openmp
-
 if [[ "${target_platform}" == "linux"* ]]; then
   # Make sure libomptarget does not link to libLLVM.so
   find . -name CMakeLists.txt -print0 | xargs -0 sed -i 's/LLVM_LINK_LLVM_DYLIB/LLVM_LINK_LLVM_DYLIB2/g'
@@ -47,6 +39,6 @@ cmake -G Ninja \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_PREFIX_PATH=$PREFIX \
-    ..
+    ../openmp
 
 cmake --build .

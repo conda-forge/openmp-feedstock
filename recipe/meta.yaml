@@ -13,10 +13,6 @@ package:
 source:
   url: https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-{{ version.replace(".rc", "-rc") }}.tar.gz
   sha256: 5e863258ba98f215686330a86cfb0acf7c0b73fb23499f15e8f3ffe12fc6f833
-  # name folder for easier deletion; we do the equivalent of downloading
-  # the subproject sources, so the work folder then has openmp in it;
-  # for details see build scripts
-  folder: llvm-project
   patches:
     # fix for https://github.com/llvm/llvm-project/issues/54596
     - patches/0001-link-libomp-to-compiler-rt-on-osx-arm.patch

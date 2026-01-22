@@ -1,7 +1,7 @@
 @echo on
 setlocal enabledelayedexpansion
 
-cd openmp/build
+cd build
 
 cmake --install .
 if %ERRORLEVEL% neq 0 exit 1
