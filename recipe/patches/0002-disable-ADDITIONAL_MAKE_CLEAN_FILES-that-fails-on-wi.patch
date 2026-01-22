@@ -1,0 +1,21 @@
+From e17f4c4e11518dfb9baa49ade9e324dc367e0ca8 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Thu, 22 Jan 2026 17:13:39 +1100
+Subject: [PATCH 2/2] disable ADDITIONAL_MAKE_CLEAN_FILES that fails on windows
+
+---
+ openmp/module/CMakeLists.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/openmp/module/CMakeLists.txt b/openmp/module/CMakeLists.txt
+index 48f5b0f7a2e8..478e1c929127 100644
+--- a/openmp/module/CMakeLists.txt
++++ b/openmp/module/CMakeLists.txt
+@@ -57,7 +57,6 @@ elseif (LIBOMP_FORTRAN_MODULES)
+             ${LIBOMP_CONFIGURED_FFLAGS} ${LIBOMP_FORTRAN_SOURCE_FILE} "-J${CMAKE_CURRENT_BINARY_DIR}/../runtime/src"
+     DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/${LIBOMP_FORTRAN_SOURCE_FILE}"
+   )
+-  set_property(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/../runtime/src" PROPERTY ADDITIONAL_MAKE_CLEAN_FILES "omp_lib${CMAKE_C_OUTPUT_EXTENSION}")
+   set(BUILD_FORTRAN_MODULES True)
+ endif ()
+ 

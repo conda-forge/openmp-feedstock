@@ -1,17 +1,17 @@
-From 15211abaf2331a43855f09978bda20b030fffd25 Mon Sep 17 00:00:00 2001
+From 41826bd1d9589e0ac2218f0a26618ea08aebd945 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Thu, 1 Feb 2024 12:29:07 +0100
-Subject: [PATCH] link libomp to compiler-rt on osx-arm
+Subject: [PATCH 1/2] link libomp to compiler-rt on osx-arm
 
 ---
  openmp/runtime/src/CMakeLists.txt | 6 ++++++
  1 file changed, 6 insertions(+)
 
 diff --git a/openmp/runtime/src/CMakeLists.txt b/openmp/runtime/src/CMakeLists.txt
-index f106694841ce..6a016b76f4b6 100644
+index 53f83c006b04..636ab0033aaf 100644
 --- a/openmp/runtime/src/CMakeLists.txt
 +++ b/openmp/runtime/src/CMakeLists.txt
-@@ -175,6 +175,12 @@ if(OPENMP_STANDALONE_BUILD OR (NOT OPENMP_ENABLE_LIBOMP_PROFILING))
+@@ -179,6 +179,12 @@ if(OPENMP_STANDALONE_BUILD OR (NOT OPENMP_ENABLE_LIBOMP_PROFILING))
    set_property(TARGET omp PROPERTY FOLDER "OpenMP/Libraries")
    # Linking command will include libraries in LIBOMP_CONFIGURED_LIBFLAGS
    target_link_libraries(omp ${LIBOMP_CONFIGURED_LIBFLAGS} ${LIBOMP_DL_LIBS})
@@ -22,5 +22,5 @@ index f106694841ce..6a016b76f4b6 100644
 +    target_link_libraries(omp ${CLANG_RT_BUILTINS_LIBRARY})
 +  endif()
  else()
-   add_llvm_library(omp ${LIBOMP_LIBRARY_KIND} ${LIBOMP_SOURCE_FILES} PARTIAL_SOURCES_INTENDED
+   add_llvm_library(omp ${LIBOMP_LIBRARY_KIND} $<TARGET_OBJECTS:obj.omp> PARTIAL_SOURCES_INTENDED
      LINK_LIBS ${LIBOMP_CONFIGURED_LIBFLAGS} ${LIBOMP_DL_LIBS}
