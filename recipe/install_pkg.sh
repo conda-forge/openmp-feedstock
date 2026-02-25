@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 
-cd openmp/build
+cd build
 
 cmake --install .
 
