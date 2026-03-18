@@ -7,8 +7,6 @@ channel_targets:
 cxx_compiler:
 - vs2022
 fortran_compiler:
-- flang
-fortran_compiler_version:
-- '19'
+- gfortran
 target_platform:
-- win-64
+- win-arm64
