@@ -25,7 +25,7 @@ requirements:
   build:
     - {{ stdlib("c") }}
     - {{ compiler("cxx") }}
-    - {{ compiler("fortran") }}  # [win]
+    - {{ compiler("fortran") }}  # [win and x86_64]
     - clang                      # [win]
     - cmake
     - ninja
@@ -104,7 +104,7 @@ outputs:
     script: install_pkg.bat  # [win]
     build:
       # restricted to windows for now
-      skip: true  # [not win]
+      skip: true  # [not (win and x86_64)]
       run_exports:
         strong:
           - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
