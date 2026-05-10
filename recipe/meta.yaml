@@ -19,7 +19,7 @@ source:
     - patches/0002-disable-ADDITIONAL_MAKE_CLEAN_FILES-that-fails-on-wi.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
