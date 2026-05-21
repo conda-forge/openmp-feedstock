@@ -14,9 +14,7 @@ source:
   url: https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-{{ version.replace(".rc", "-rc") }}.tar.gz
   sha256: ba534c6835a5b9c2162c806e269799fe41fca952a3c25baff1afcff23841ec2b
   patches:
-    # fix for https://github.com/llvm/llvm-project/issues/54596
-    - patches/0001-link-libomp-to-compiler-rt-on-osx-arm.patch
-    - patches/0002-disable-ADDITIONAL_MAKE_CLEAN_FILES-that-fails-on-wi.patch
+    - patches/0001-disable-ADDITIONAL_MAKE_CLEAN_FILES-that-fails-on-wi.patch
 
 build:
   number: 0
@@ -31,8 +29,6 @@ requirements:
     - ninja
   host:
     - llvmdev {{ version }}
-    # see https://github.com/llvm/llvm-project/issues/54596
-    - compiler-rt {{ version }}  # [osx and arm64]
 
 outputs:
   - name: llvm-openmp
