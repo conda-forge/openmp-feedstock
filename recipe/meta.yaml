@@ -17,9 +17,6 @@ source:
   # the subproject sources, so the work folder then has openmp in it;
   # for details see build scripts
   folder: llvm-project
-  patches:
-    # fix for https://github.com/llvm/llvm-project/issues/54596
-    - patches/0001-link-libomp-to-compiler-rt-on-osx-arm.patch
 
 build:
   number: 1
@@ -34,8 +31,6 @@ requirements:
     - ninja
   host:
     - llvmdev {{ version }}
-    # see https://github.com/llvm/llvm-project/issues/54596
-    - compiler-rt {{ version }}  # [osx and arm64]
 
 outputs:
   - name: llvm-openmp
