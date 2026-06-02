@@ -1,4 +1,4 @@
-{% set version = "22.1.6" %}
+{% set version = "22.1.7" %}
 # check https://clang.llvm.org/docs/OpenMPSupport.html
 # occasionally to see last fully supported openmp ver.
 {% set openmp_ver = "4.5" %}
@@ -12,7 +12,7 @@ package:
 
 source:
   url: https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-{{ version.replace(".rc", "-rc") }}.tar.gz
-  sha256: ba534c6835a5b9c2162c806e269799fe41fca952a3c25baff1afcff23841ec2b
+  sha256: da1578ea1faf2050e4b1923fce150b5656db1dbdeda71fe02498ac04f35b03d3
   patches:
     - patches/0001-disable-ADDITIONAL_MAKE_CLEAN_FILES-that-fails-on-wi.patch
 
