@@ -29,6 +29,7 @@ requirements:
     - llvm-tools                 # [win]
     - cmake
     - ninja
+    - python >=3
   host:
     - llvmdev {{ version }}
 
