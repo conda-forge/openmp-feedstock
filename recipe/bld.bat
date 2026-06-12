@@ -15,6 +15,9 @@ if "%target_platform%" == "win-64" (
     set "CMAKE_ARGS=%CMAKE_ARGS% -DLIBOMP_FORTRAN_MODULES=OFF"
     set "CFLAGS=%CFLAGS% --target=aarch64-pc-windows-msvc"
     set "CXXFLAGS=%CXXFLAGS% --target=aarch64-pc-windows-msvc"
+    for /f "delims=" %%I in ('where armasm64.exe') do (
+        set "ASM_MASM=%%I"
+    )
 )
 
 :: remove other MSVC installs in the image that interfere
