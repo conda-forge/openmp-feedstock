@@ -25,6 +25,8 @@ requirements:
     - {{ compiler("cxx") }}
     - {{ compiler("fortran") }}  # [win and x86_64]
     - clang                      # [win]
+    # for llvm-mt & llvm-rc
+    - llvm-tools                 # [win]
     - cmake
     - ninja
   host:

@@ -6,6 +6,8 @@ cd build
 
 set "CC=clang-cl.exe"
 set "CXX=clang-cl.exe"
+set "MT=%BUILD_PREFIX%\Library\bin\llvm-mt.exe"
+set "RC=%BUILD_PREFIX%\Library\bin\llvm-rc.exe"
 
 if "%target_platform%" == "win-64" (
     set "CMAKE_ARGS=%CMAKE_ARGS% -DLIBOMP_FORTRAN_MODULES=ON"
