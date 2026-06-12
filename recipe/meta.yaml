@@ -15,6 +15,7 @@ source:
   sha256: da1578ea1faf2050e4b1923fce150b5656db1dbdeda71fe02498ac04f35b03d3
   patches:
     - patches/0001-disable-ADDITIONAL_MAKE_CLEAN_FILES-that-fails-on-wi.patch
+    - patches/0002-don-t-try-to-build-z_Linux_asm.S-with-MSVC.patch
 
 build:
   number: 0

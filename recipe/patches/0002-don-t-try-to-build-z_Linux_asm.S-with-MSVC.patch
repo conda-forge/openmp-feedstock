@@ -1,0 +1,22 @@
+From 47a5f0928126839576654d72149aaeeef661a098 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Fri, 12 Jun 2026 20:45:48 +1100
+Subject: [PATCH 2/2] don't try to build z_Linux_asm.S with MSVC
+
+---
+ openmp/runtime/src/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/openmp/runtime/src/CMakeLists.txt b/openmp/runtime/src/CMakeLists.txt
+index 81fa9f0f2aaf..57bb046379f7 100644
+--- a/openmp/runtime/src/CMakeLists.txt
++++ b/openmp/runtime/src/CMakeLists.txt
+@@ -111,7 +111,7 @@ else()
+     libomp_append(LIBOMP_CXXFILES z_Windows_NT-586_util.cpp)
+     if(${LIBOMP_ARCH} STREQUAL "i386" OR ${LIBOMP_ARCH} STREQUAL "x86_64")
+       libomp_append(LIBOMP_ASMFILES z_Windows_NT-586_asm.asm) # Windows assembly file
+-    elseif((${LIBOMP_ARCH} STREQUAL "aarch64" OR ${LIBOMP_ARCH} STREQUAL "arm") AND (NOT MSVC OR CMAKE_C_COMPILER_ID STREQUAL "Clang"))
++    elseif((${LIBOMP_ARCH} STREQUAL "aarch64" OR ${LIBOMP_ARCH} STREQUAL "arm") AND (NOT MSVC))
+       # z_Linux_asm.S works for AArch64 and ARM Windows too.
+       libomp_append(LIBOMP_GNUASMFILES z_Linux_asm.S)
+     else()
