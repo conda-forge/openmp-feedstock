@@ -99,7 +99,7 @@ outputs:
     script: install_pkg.sh  # [unix]
     script: install_pkg.bat  # [win]
     build:
-      # restricted to windows for now
+      # restricted to win64 for now
       skip: true  # [not (win and x86_64)]
       run_exports:
         strong:
