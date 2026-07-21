@@ -22,13 +22,13 @@ source:
     - patches/0001-link-libomp-to-compiler-rt-on-osx-arm.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
     - {{ stdlib("c") }}
     - {{ compiler("cxx") }}
-    - {{ compiler("fortran") }}  # [win]
+    - {{ compiler("fortran") }}
     - clang                      # [win]
     - cmake
     - ninja
@@ -119,7 +119,7 @@ outputs:
         # for run-exports
         - {{ stdlib("c") }}
         - {{ compiler("cxx") }}
-        - {{ compiler("fortran") }}     # [linux]
+        - {{ compiler("fortran") }}
         - create-forwarder-dll       # [win]
       host:
         - {{ pin_subpackage("llvm-openmp", exact=True) }}
