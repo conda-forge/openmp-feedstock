@@ -1,18 +1,11 @@
-azure:
-  settings_win:
-    variables:
-      CONDA_BLD_PATH: C:\\bld\\
-      MINIFORGE_HOME: C:\Miniforge
 bot:
   abi_migration_branches:
+  - 21.x
   - 20.x
   - 19.x
 build_platform:
-  linux_aarch64: linux_64
   linux_ppc64le: linux_64
-  osx_arm64: osx_64
-# we need to sort llvm_rc after the main channel to avoid old rc-compilers
-channel_priority: flexible
+  win_arm64: win_64
 conda_build:
   error_overlinking: true
   pkg_format: '2'
@@ -21,6 +14,13 @@ github:
   branch_name: main
   tooling_branch_name: main
 provider:
-  linux_aarch64: azure
-  linux_ppc64le: azure
+  linux_aarch64: default
+  osx_arm64: default
 test: native_and_emulated
+workflow_settings:
+  build_workspace_dir:
+    - value: C:\bld
+      os: win
+  tools_install_dir:
+    - value: C:\Miniforge
+      os: win
