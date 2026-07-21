@@ -31,7 +31,8 @@ cmake -G "Ninja" !CMAKE_ARGS! ^
     -DCMAKE_BUILD_TYPE="Release" ^
     -DCMAKE_PREFIX_PATH=%LIBRARY_PREFIX% ^
     -DCMAKE_INSTALL_PREFIX:PATH=%LIBRARY_PREFIX% ^
-    ../openmp
+    -DLLVM_ENABLE_RUNTIMES=openmp ^
+    ../runtimes
 if %ERRORLEVEL% neq 0 exit 1
 
 cmake --build .

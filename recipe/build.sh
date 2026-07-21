@@ -39,6 +39,7 @@ cmake -G Ninja \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_PREFIX_PATH=$PREFIX \
-    ../openmp
+    -DLLVM_ENABLE_RUNTIMES=openmp \
+    ../runtimes
 
 cmake --build .
