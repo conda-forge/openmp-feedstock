@@ -14,8 +14,7 @@ source:
   url: https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-{{ version.replace(".rc", "-rc") }}.zip
   sha256: 22d3522a95df84e86ba599d8ea2e2a245801f725f7550d31b2bb6d5eacbb6151
   patches:
-    - patches/0001-disable-ADDITIONAL_MAKE_CLEAN_FILES-that-fails-on-wi.patch
-    - patches/0002-don-t-build-z_Linux_asm.S-with-MSVC-ensure-__kmp_inv.patch
+    - patches/0001-don-t-build-z_Linux_asm.S-with-MSVC-ensure-__kmp_inv.patch
 
 build:
   number: 0
