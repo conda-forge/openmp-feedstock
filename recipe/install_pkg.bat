@@ -29,9 +29,3 @@ for /L %%I in (18,1,20) do (
 del /q "%LIBRARY_BIN%\\libiomp5md.dll"
 create-forwarder-dll "%LIBRARY_BIN%\libomp.dll" "%LIBRARY_BIN%\libiomp5md.dll" --no-temp-dir
 if %ERRORLEVEL% neq 0 exit 1
-
-:: remove fortran bits from regular llvm-openmp package
-if "%PKG_NAME%" NEQ "llvm-openmp-fortran" (
-    del /s /q %LIBRARY_INC%\omp_lib.mod
-    del /s /q %LIBRARY_INC%\omp_lib_kinds.mod
-)
