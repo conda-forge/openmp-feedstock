@@ -6,7 +6,5 @@ channel_targets:
 - conda-forge llvm_rc
 cxx_compiler:
 - vs2022
-fortran_compiler:
-- gfortran
 target_platform:
 - win-arm64
