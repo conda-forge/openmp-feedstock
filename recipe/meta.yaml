@@ -11,7 +11,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-{{ version.replace(".rc", "-rc") }}.zip
+  url: https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-{{ version.replace(".rc", "-rc") }}.tar.gz
   sha256: 33ee052ab60c3e2ef3f169d23e835fa5b3599858f4a9c34b03038617349d8ee0
   patches:
     - patches/0001-don-t-build-z_Linux_asm.S-with-MSVC-ensure-__kmp_inv.patch
