@@ -18,7 +18,7 @@ source:
     - patches/0002-don-t-build-z_Linux_asm.S-with-MSVC-ensure-__kmp_inv.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
