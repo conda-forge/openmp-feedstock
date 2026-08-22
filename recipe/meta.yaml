@@ -17,12 +17,9 @@ source:
   # the subproject sources, so the work folder then has openmp in it;
   # for details see build scripts
   folder: llvm-project
-  patches:
-    # fix for https://github.com/llvm/llvm-project/issues/54596
-    - patches/0001-link-libomp-to-compiler-rt-on-osx-arm.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -34,8 +31,6 @@ requirements:
     - ninja
   host:
     - llvmdev {{ version }}
-    # see https://github.com/llvm/llvm-project/issues/54596
-    - compiler-rt   # [osx and arm64]
 
 outputs:
   - name: llvm-openmp
@@ -65,7 +60,7 @@ outputs:
         - intel-openmp <0.0a0
     test:
       requires:
-        - clang-{{ clang_test_version }}
+        - clang-{{ clang_test_version }}    # [not riscv64]
         - {{ compiler('cxx') }}
         - ld64                      # [osx]
       files:
@@ -76,7 +71,7 @@ outputs:
         - test -f $PREFIX/include/omp.h                   # [unix]
         - if not exist %LIBRARY_INC%\omp.h exit 1         # [win]
         # clang-specific one (symlink on unix; copies on win, see install_pkg.bat)
-        - test -f $PREFIX/lib/clang/{{ clang_test_version }}/include/omp.h  # [unix]
+        - test -f $PREFIX/lib/clang/{{ clang_test_version }}/include/omp.h  # [unix and not riscv64]
         {% for ver in range(18, 21) %}
         - if not exist %LIBRARY_LIB%\clang\{{ ver }}\include\omp.h exit 1   # [win]
         {% endfor %}
@@ -97,9 +92,9 @@ outputs:
         # compilation test
         - export LNK="-L$PREFIX/lib -Wl,-rpath,$PREFIX/lib"     # [unix]
         - export LNK="${LNK} -Wl,--allow-shlib-undefined"       # [linux]
-        - $PREFIX/bin/clang-{{ clang_test_version }} -v -fopenmp -I$PREFIX/include $LNK omp_hello.c -o omp_hello                    # [unix]
+        - $PREFIX/bin/clang-{{ clang_test_version }} -v -fopenmp -I$PREFIX/include $LNK omp_hello.c -o omp_hello                    # [unix and not riscv64]
         - '%LIBRARY_BIN%\clang-{{ clang_test_version }} -v -fopenmp -I%LIBRARY_INC% -L%LIBRARY_LIB% omp_hello.c -o omp_hello.exe'   # [win]
-        - ./omp_hello            # [unix]
+        - ./omp_hello            # [unix and not riscv64]
         - '%cd%\omp_hello.exe'   # [win]
 
   - name: llvm-openmp-fortran
