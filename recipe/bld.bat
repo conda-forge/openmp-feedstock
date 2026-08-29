@@ -9,10 +9,7 @@ set "CXX=clang-cl.exe"
 set "MT=%BUILD_PREFIX%\Library\bin\llvm-mt.exe"
 set "RC=%BUILD_PREFIX%\Library\bin\llvm-rc.exe"
 
-if "%target_platform%" == "win-64" (
-    set "CMAKE_ARGS=%CMAKE_ARGS% -DLIBOMP_FORTRAN_MODULES=ON"
-) else (
-    set "CMAKE_ARGS=%CMAKE_ARGS% -DLIBOMP_FORTRAN_MODULES=OFF"
+if "%target_platform%" == "win-arm64" (
     set "CFLAGS=%CFLAGS% --target=aarch64-pc-windows-msvc"
     set "CXXFLAGS=%CXXFLAGS% --target=aarch64-pc-windows-msvc"
     for /f "delims=" %%I in ('where armasm64.exe') do (
@@ -31,6 +28,7 @@ cmake -G "Ninja" !CMAKE_ARGS! ^
     -DCMAKE_BUILD_TYPE="Release" ^
     -DCMAKE_PREFIX_PATH=%LIBRARY_PREFIX% ^
     -DCMAKE_INSTALL_PREFIX:PATH=%LIBRARY_PREFIX% ^
+    -DLIBOMP_FORTRAN_MODULES=ON ^
     ../openmp
 if %ERRORLEVEL% neq 0 exit 1
 

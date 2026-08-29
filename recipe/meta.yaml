@@ -4,7 +4,7 @@
 {% set openmp_ver = "4.5" %}
 
 {% set clang_major = version.split(".")[0]|int %}
-{% set clang_test_version = "21" %}
+{% set clang_test_version = "22" %}
 
 package:
   name: openmp
@@ -18,13 +18,13 @@ source:
     - patches/0002-don-t-build-z_Linux_asm.S-with-MSVC-ensure-__kmp_inv.patch
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
     - {{ stdlib("c") }}
     - {{ compiler("cxx") }}
-    - {{ compiler("fortran") }}  # [win and x86_64]
+    - {{ compiler("fortran") }}  # [win]
     - clang                      # [win]
     # for llvm-mt & llvm-rc
     - llvm-tools                 # [win]
@@ -103,8 +103,8 @@ outputs:
     script: install_pkg.sh  # [unix]
     script: install_pkg.bat  # [win]
     build:
-      # restricted to win64 for now
-      skip: true  # [not (win and x86_64)]
+      # restricted to Windows for now
+      skip: true  # [not win]
       run_exports:
         strong:
           - {{ pin_subpackage("llvm-openmp", max_pin=None) }}
