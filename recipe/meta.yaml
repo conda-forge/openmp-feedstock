@@ -17,7 +17,7 @@ source:
     - patches/0001-don-t-build-z_Linux_asm.S-with-MSVC-ensure-__kmp_inv.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -52,7 +52,7 @@ outputs:
         - {{ stdlib("c") }}
         - {{ compiler("cxx") }}
         - python >=3
-        - create-forwarder-dll       # [win]
+        - create-forwarder-dll >=0.11    # [win]
       host:
       run_constrained:
         - openmp {{ version }}|{{ version }}.*
