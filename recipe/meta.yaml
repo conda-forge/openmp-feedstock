@@ -72,7 +72,7 @@ outputs:
         # clang-specific one (symlink on unix; copies on win, see install_pkg.bat)
         - test -f $PREFIX/lib/clang/{{ clang_test_version }}/include/omp.h  # [unix]
         {% for ver in range(18, 21) %}
-        - if not exist %LIBRARY_LIB%\clang\{{ ver }}\include\omp.h exit 1   # [win]
+        - if not exist %LIBRARY_LIB%\clang\{{ ver }}\include\omp.h exit 1   # [win and x86_64]
         {% endfor %}
 
         # absence of fortran bits
