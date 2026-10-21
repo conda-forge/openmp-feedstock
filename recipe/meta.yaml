@@ -4,7 +4,7 @@
 {% set openmp_ver = "4.5" %}
 
 {% set clang_major = version.split(".")[0]|int %}
-{% set clang_test_version = "21" %}
+{% set clang_test_version = "22" %}
 
 package:
   name: openmp
