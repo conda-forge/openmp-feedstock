@@ -1,7 +1,10 @@
-c_compiler:          # [osx]
-  - clang_bootstrap  # [osx]
-cxx_compiler:        # [osx]
-  - clang_bootstrap  # [osx]
+c_compiler:             # [osx]
+  - clang_bootstrap     # [osx]
+cxx_compiler:           # [osx]
+  - clang_bootstrap     # [osx]
+
+c_stdlib_version:       # [osx]
+  - 15.5                # [osx]
 
 channel_targets:
   - conda-forge llvm_dev
