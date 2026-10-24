@@ -1,0 +1,10 @@
+c_stdlib:
+- vs
+channel_sources:
+- conda-forge,conda-forge/label/llvm_dev
+channel_targets:
+- conda-forge llvm_dev
+cxx_compiler:
+- vs2022
+target_platform:
+- win-arm64

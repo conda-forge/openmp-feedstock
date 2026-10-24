@@ -1,0 +1,46 @@
+From 9e877bc05df458a92f3508cc5d57287fb5693a30 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Fri, 12 Jun 2026 20:45:48 +1100
+Subject: [PATCH] don't build z_Linux_asm.S with MSVC; ensure
+ __kmp_invoke_microtask is there
+
+z_Linux_asm.S would normally define __kmp_invoke_microtask, see
+https://github.com/llvm/llvm-project/blob/llvmorg-22.1.7/openmp/runtime/src/CMakeLists.txt#L118-L119
+but that requires a GNU-toolchain due to ASM-isms not supported by MSVC.
+
+To ensure the required symbol gets defined, also tweak the header guard; due to
+the way KMP_COMPILER_MSVC isn't being populated for clang-cl as it should, see
+https://github.com/llvm/llvm-project/blob/llvmorg-22.1.7/openmp/runtime/src/kmp_os.h#L59-L76
+---
+ openmp/runtime/src/CMakeLists.txt            | 2 +-
+ openmp/runtime/src/z_Windows_NT-586_util.cpp | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/openmp/runtime/src/CMakeLists.txt b/openmp/runtime/src/CMakeLists.txt
+index 42729674481e..b4be09f65925 100644
+--- a/openmp/runtime/src/CMakeLists.txt
++++ b/openmp/runtime/src/CMakeLists.txt
+@@ -113,7 +113,7 @@ else()
+     libomp_append(LIBOMP_CXXFILES z_Windows_NT-586_util.cpp)
+     if(LIBOMP_ARCH STREQUAL "i386" OR LIBOMP_ARCH STREQUAL "x86_64")
+       libomp_append(LIBOMP_ASMFILES z_Windows_NT-586_asm.asm) # Windows assembly file
+-    elseif((LIBOMP_ARCH STREQUAL "aarch64" OR LIBOMP_ARCH STREQUAL "arm") AND (NOT MSVC OR CMAKE_C_COMPILER_ID STREQUAL "Clang"))
++    elseif((LIBOMP_ARCH STREQUAL "aarch64" OR LIBOMP_ARCH STREQUAL "arm") AND (NOT MSVC))
+       # z_Linux_asm.S works for AArch64 and ARM Windows too.
+       libomp_append(LIBOMP_GNUASMFILES z_Linux_asm.S)
+     else()
+diff --git a/openmp/runtime/src/z_Windows_NT-586_util.cpp b/openmp/runtime/src/z_Windows_NT-586_util.cpp
+index 4ed309365b56..2e4c2aa0bdb5 100644
+--- a/openmp/runtime/src/z_Windows_NT-586_util.cpp
++++ b/openmp/runtime/src/z_Windows_NT-586_util.cpp
+@@ -135,8 +135,8 @@ kmp_uint64 __kmp_test_then_and64(volatile kmp_uint64 *p, kmp_uint64 d) {
+   return old_value;
+ }
+ 
+-#if KMP_ARCH_AARCH64 && KMP_COMPILER_MSVC
+-// For !KMP_COMPILER_MSVC, this function is provided in assembly form
++#if KMP_ARCH_AARCH64 && defined(_MSC_VER)
++// For a GNU-ish toolchain, this function is provided in assembly form
+ // by z_Linux_asm.S.
+ int __kmp_invoke_microtask(microtask_t pkfn, int gtid, int tid, int argc,
+                            void *p_argv[]
