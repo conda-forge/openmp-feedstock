@@ -10,4 +10,4 @@ cxx_compiler_version:   # [osx]
 channel_targets:
   - conda-forge llvm_dev
 channel_sources:
-  - conda-forge,conda-forge/label/llvm_dev
+  - conda-forge/label/llvm_dev,conda-forge
