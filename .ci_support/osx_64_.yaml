@@ -1,17 +1,17 @@
 MACOSX_SDK_VERSION:
-- '15.5'
+- '11.0'
 c_stdlib:
 - macosx_deployment_target
 c_stdlib_version:
-- '15.5'
+- '11.0'
 channel_sources:
-- conda-forge,conda-forge/label/llvm_dev
+- conda-forge/label/llvm_dev,conda-forge
 channel_targets:
 - conda-forge llvm_dev
 cxx_compiler:
 - clang_bootstrap
 cxx_compiler_version:
-- '21'
+- '*'
 macos_machine:
 - x86_64-apple-darwin13.4.0
 target_platform:
